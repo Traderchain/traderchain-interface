@@ -1,3 +1,4 @@
+import Button from 'components/Button';
 
 export default function Home() {
   return (
@@ -5,6 +6,7 @@ export default function Home() {
       <h2>Home</h2>
       <p>NODE_ENV: {process.env.NODE_ENV}</p>
       <p>REACT_APP_DOMAIN: {process.env.REACT_APP_DOMAIN}</p>
+      <Button />
     </div>
   );
 }
