@@ -1,4 +1,8 @@
 import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { VuiTheme } from 'traderchain-ui';
+
 import logo from 'assets/images/logo.svg';
 import 'assets/css/App.css';
 import Home from 'pages/Home';
@@ -6,16 +10,19 @@ import About from 'pages/About';
 
 export default function App() {
   return (    
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>              
-    </BrowserRouter>    
+    <ThemeProvider theme={VuiTheme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>              
+      </BrowserRouter>    
+    </ThemeProvider>
   );
 }
 
