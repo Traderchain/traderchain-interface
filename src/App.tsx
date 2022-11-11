@@ -1,11 +1,11 @@
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
 
 import logo from './logo.svg';
 import './App.css';
 
 export default function App() {
   return (    
-    <div>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -15,7 +15,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>              
-    </div>    
+    </BrowserRouter>    
   );
 }
 
