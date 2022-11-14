@@ -7,6 +7,7 @@ import logo from 'assets/images/logo.svg';
 import 'assets/css/App.css';
 import Home from 'pages/Home';
 import About from 'pages/About';
+import Experiment from 'pages/Experiment';
 
 export default function App() {
   return (    
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
+            <Route path="experiment" element={<Experiment />} />
             
             <Route path="*" element={<NotFound />} />
           </Route>
