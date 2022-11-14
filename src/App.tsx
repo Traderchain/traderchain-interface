@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Outlet, Link } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { Context } from 'traderchain-ui';
-import { VuiTheme, VuiBox } from 'traderchain-ui';
+import { CssBaseline } from "@mui/material";
+import { Context, VuiTheme, VuiBox } from 'traderchain-ui';
 
 import Header from 'components/Header';
+import Footer from 'components/Footer';
 
 import Home from 'pages/Home';
 import About from 'pages/About';
@@ -50,6 +50,7 @@ function Layout() {
     >
       <Header />
       <Outlet />
+      <Footer />
     </VuiBox>
   );
 }

@@ -1,21 +1,7 @@
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Icon from "@mui/material/Icon";
-import { Context } from 'traderchain-ui';
-import { HeaderStyles } from 'traderchain-ui';
-import { VuiBox, VuiInput } from 'traderchain-ui';
-
-const {
-  useVisionUIController,
-} = Context;
-
-const {
-  navbar,
-  navbarContainer,
-  navbarRow,
-  navbarIconButton,  
-} = HeaderStyles;
+import { AppBar, Toolbar, IconButton, Icon } from '@mui/material';
+import { Context, HeaderStyles, VuiBox, VuiInput } from 'traderchain-ui';
+const { useVisionUIController } = Context;
+const { navbar, navbarContainer, navbarRow, navbarIconButton } = HeaderStyles;
 
 export default function Header() {  
   const [controller] = useVisionUIController();
