@@ -8,12 +8,12 @@ import Provider from 'contracts/provider';
 import ERC20 from 'contracts/ERC20';
 import Traderchain from 'contracts/Traderchain';
 import TradingSystem from 'contracts/TradingSystem';
-import SystemVault from 'contracts/SystemVault';
+// import SystemVault from 'contracts/SystemVault';
 import { ethers } from 'ethers';
 const formatUnits = ethers.utils.formatUnits;
 
 async function test() {
-  const provider = Provider.getProvider();
+  // const provider = Provider.getProvider();
   const accounts = await Provider.getAccounts();
   console.log({accounts});
   
@@ -43,7 +43,7 @@ async function test() {
   const vault = await system.getSystemVault(systemId);
   console.log({vault});  
   
-  const usdcAmount = ethers.utils.parseUnits('100', 6);
+  // const usdcAmount = ethers.utils.parseUnits('100', 6);
   // await usdc.approve(tc.address, usdcAmount);
   // await tc.buyShares(systemId, usdcAmount, {gasLimit: '1000000'});    
   
