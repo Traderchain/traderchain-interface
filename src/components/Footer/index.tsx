@@ -10,7 +10,7 @@ export default function Footer() {
       component="footer"
       position="fixed"
       bottom="0"
-      padding="10px 0"
+      padding="30px 0"
     >
       <VuiBox item="true" xs={12} sx={{ textAlign: "center" }}>
         <VuiTypography

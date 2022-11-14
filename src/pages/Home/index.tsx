@@ -1,9 +1,10 @@
+import Intro from './components/Intro';
 
 export default function Home() {
 
   return (
-    <div>
-      <h2>Home</h2>      
+    <div id="home">
+      <Intro />
     </div>
   );
 }
