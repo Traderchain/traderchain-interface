@@ -9,6 +9,7 @@ import Footer from 'components/Footer';
 import Home from 'pages/Home';
 import Trade from 'pages/Trade';
 import Invest from 'pages/Invest';
+import System from 'pages/System';
 import About from 'pages/About';
 import Experiment from 'pages/Experiment';
 
@@ -25,6 +26,7 @@ export default function App() {
               <Route path="/" element={<Home />} index />
               <Route path="trade" element={<Trade />} />
               <Route path="invest" element={<Invest />} />
+              <Route path="system/:systemId" element={<System />} />
               <Route path="about" element={<About />} />
               <Route path="experiment" element={<Experiment />} />
               

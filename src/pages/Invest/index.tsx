@@ -32,7 +32,7 @@ export default function Invest() {
           type = {type}
           title = {"Trading System #" + systemId}
           body = {<VuiTypography color="text">System description...</VuiTypography>}
-          more = {{label: "Detail"}}
+          more = {{label: "Detail", to: `/system/${systemId}`}}
         />
         <Divider />
       </div>

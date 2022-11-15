@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Card, Icon } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 
@@ -25,10 +26,11 @@ export default function Section({ type, title, body, more }: any) {
           </VuiTypography>
           {body}
         </VuiBox>
+        
+        {more && 
         <VuiBox justifySelf="flex-end">
-          <VuiTypography
-            component="a"
-            href="#"
+          <Link to={more.to || "#"}>
+          <VuiTypography            
             variant="button"
             color="white"
             fontWeight="regular"
@@ -54,7 +56,9 @@ export default function Section({ type, title, body, more }: any) {
             {more.label}
             <Icon sx={{ fontWeight: "bold", ml: "5px" }}>arrow_forward</Icon>
           </VuiTypography>
-        </VuiBox>
+          </Link>
+        </VuiBox>}
+        
       </VuiBox>
     </Card>
   );
