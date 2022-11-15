@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
@@ -6,6 +7,13 @@ import * as TC from 'utils/tc';
 
 export default function Invest() {
   const [systems, setSystems] = useState<any[]>([]);
+  
+  useEffect(() => {
+    async function init() {
+      await fetchTradingSystems();
+    }
+    init();
+  }, []);
     
   async function fetchTradingSystems() {
     const accounts = await TC.getAccounts();
@@ -15,24 +23,18 @@ export default function Invest() {
     setSystems(systems => newSystems);
   }
   
-  useEffect(() => {
-    async function init() {
-      await fetchTradingSystems();
-    }
-    init();
-  }, []);
-  
   const systemList = systems.map((system,k) => {
     const {systemId} = system;
     const type = ["", "blue", "jelly"][systemId % 3];
+    const to = `/system/${systemId}`;
     
     return (
       <div key={k}>
         <Section
           type = {type}
-          title = {"Trading System #" + systemId}
+          title = {`Trading System #${systemId}`}
           body = {<VuiTypography color="text">System description...</VuiTypography>}
-          more = {{label: "Detail", to: `/system/${systemId}`}}
+          more = {{label: "Detail", to}}
         />
         <Divider />
       </div>

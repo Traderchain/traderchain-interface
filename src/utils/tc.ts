@@ -30,3 +30,25 @@ export async function fetchSystems(trader: string) {
 
   return newSystems;
 }
+
+export async function fetchSystem(systemId: string) {
+  const nav = await tc.currentSystemNAV(systemId);
+  const totalShares = await tc.totalSystemShares(systemId);
+  const sharePrice = await tc.currentSystemSharePrice(systemId);
+  const assetPrice = await tc.getAssetPrice();
+  console.log({nav: nav.toString(), totalShares: totalShares.toString(), sharePrice: sharePrice.toString(), assetPrice: assetPrice.toString()});
+  
+  const vault = await system.getSystemVault(systemId);
+  const vaultBalance = await usdc.balanceOf(vault);
+  const vaultAsset = await weth.balanceOf(vault);
+  console.log({vaultBalance: vaultBalance.toString(), vaultAsset: vaultAsset.toString()});  
+  
+  return { systemId, nav, totalShares, sharePrice, assetPrice, vault, vaultBalance, vaultAsset };
+}
+
+export async function fetchSystemInvestor(systemId: string, investor: string) {
+  const shares = await system.balanceOf(investor, systemId);
+  console.log({shares: shares.toString()});
+  
+  return { systemId, shares };
+}

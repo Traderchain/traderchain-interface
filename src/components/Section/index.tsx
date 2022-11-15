@@ -21,9 +21,12 @@ export default function Section({ type, title, body, more }: any) {
     <Card sx={({ breakpoints }: any) => (sx)}>
       <VuiBox display="flex" flexDirection="column" sx={{ minHeight: "210px" }}>
         <VuiBox display="flex" flexDirection="column" mb="auto">     
-          <VuiTypography color="white" variant="h3" fontWeight="bold" mb="3px">
-            {title}
-          </VuiTypography>
+          <Link to={(more && more.to) || "#"}>
+            <VuiTypography color="white" variant="h3" fontWeight="bold" mb="3px">
+              {title}
+            </VuiTypography>
+          </Link>
+          
           {body}
         </VuiBox>
         

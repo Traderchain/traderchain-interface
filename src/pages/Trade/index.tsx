@@ -7,6 +7,13 @@ import * as TC from 'utils/tc';
 export default function Trade() {
   const [systems, setSystems] = useState<any[]>([]);
     
+  useEffect(() => {
+    async function init() {
+      await fetchTradingSystems();
+    }
+    init();
+  }, []);
+  
   async function fetchTradingSystems() {
     const accounts = await TC.getAccounts();
     const trader = accounts[0];
@@ -21,13 +28,6 @@ export default function Trade() {
     
     // setSystems(systems => [...systems, system]);
   }
-  
-  useEffect(() => {
-    async function init() {
-      await fetchTradingSystems();
-    }
-    init();
-  }, []);
   
   const systemList = systems.map((system,k) => {
     const {systemId} = system;
