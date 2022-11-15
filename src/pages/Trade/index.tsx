@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
-import { Address } from 'utils/constants';
 import * as TC from 'utils/tc';
 
 export default function Trade() {
