@@ -1,15 +1,17 @@
 import { Divider } from "@mui/material";
-import Intro from './components/Intro';
-import Investor from './components/Investor';
+import TraderchainSection from './components/TraderchainSection';
+import TraderSection from './components/TraderSection';
+import InvestorSection from './components/InvestorSection';
 
 export default function Home() {
 
   return (
     <div id="home">
-      <Intro />
-      <Divider />
-      <Investor />
-      <Divider />
+      <TraderchainSection />
+      <Divider />      
+      <TraderSection />
+      <Divider />      
+      <InvestorSection />      
     </div>
   );
 }

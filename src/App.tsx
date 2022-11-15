@@ -49,7 +49,11 @@ function Layout() {
       })}
     >
       <Header />
-      <Outlet />
+      <VuiBox sx={() => ({
+        padding: "30px 0 50px 0"
+      })}>
+        <Outlet />
+      </VuiBox>
       <Footer />
     </VuiBox>
   );

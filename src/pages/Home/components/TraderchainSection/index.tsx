@@ -1,27 +1,21 @@
 import { Card, Icon } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 
-import cardBg from "assets/images/card-bg.png";
+import cardBg from "assets/images/card-bg-jellyfish.png";
 
-const Intro = () => {
+const TraderchainSection = () => {
   return (
-    <Card
-      sx={({ breakpoints }) => ({
-        height: "250px",
-        background: `url(${cardBg})`,
-        backgroundSize: "cover",
-        borderRadius: "20px",        
-        [breakpoints.only("xl")]: {
-          gridArea: "1 / 1 / 2 / 2",
-        },
-      })}
-    >
-      <VuiBox display="flex" flexDirection="column" sx={{ height: "100%" }}>
+    <Card sx={({ breakpoints }: any) => ({
+      backgroundImage: `url(${cardBg})`,
+      backgroundSize: "cover",
+      backgroundPosition: "50%",      
+    })}>
+      <VuiBox display="flex" flexDirection="column" sx={{ minHeight: "210px" }}>
         <VuiBox display="flex" flexDirection="column" mb="auto">
-          <VuiTypography color="white" variant="h3" fontWeight="bold" mb="3px">
-            Traderchain
+          <VuiTypography color="white" variant="h3" mb="3px">
+            TRADERCHAIN <b>PROTOCOL</b>
           </VuiTypography>
-          <VuiTypography color="white" variant="h6" fontWeight="regular">
+          <VuiTypography color="white" variant="h6" fontWeight="bold">
             Decentralized Marketplace for Trading Systems            
           </VuiTypography>
           <VuiTypography color="text" variant="h6" fontWeight="regular">            
@@ -57,7 +51,7 @@ const Intro = () => {
               },
             }}
           >
-            Getting started
+            Learn more
             <Icon sx={{ fontWeight: "bold", ml: "5px" }}>arrow_forward</Icon>
           </VuiTypography>
         </VuiBox>
@@ -66,4 +60,4 @@ const Intro = () => {
   );
 };
 
-export default Intro;
+export default TraderchainSection;
