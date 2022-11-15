@@ -11,7 +11,7 @@ const InvestorSection = () => {
           <VuiTypography color="white" variant="h6" fontWeight="bold">
             Funds are stored in Non-Custodial Vaults
           </VuiTypography>
-          <VuiTypography color="text" variant="h6" fontWeight="regular">            
+          <VuiTypography color="text" variant="h6" fontWeight="bold">            
             Easy to follow a Trading System by buying its Shares similar to Mutual Funds<br/>
             Withdraw funds anytime by selling shares without worrying about Fund Insolvency
           </VuiTypography>

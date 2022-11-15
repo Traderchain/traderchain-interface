@@ -6,15 +6,14 @@ import cardBgJelly from "assets/images/card-bg-jellyfish.png";
 
 export default function Section({ type, title, body, more }: any) {
   let sx: any = {};
-  if (type) {    
-    sx.backgroundSize = "cover";
-    sx.backgroundPosition = "50%";    
-  }
   if (type == "blue") {
-    sx.backgroundImage = `url(${cardBg})`;          
+    sx.backgroundImage = `url(${cardBg})`;              
+    sx.backgroundSize = "cover";
   }
-  if (type == "jelly") {
+  else if (type == "jelly") {
     sx.backgroundImage = `url(${cardBgJelly})`;          
+    sx.backgroundSize = "cover";
+    sx.backgroundPosition = "50%";
   }
     
   return (
