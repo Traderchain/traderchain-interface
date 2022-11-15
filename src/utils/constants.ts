@@ -18,3 +18,9 @@ export enum Address {
   TEST_ACCOUNT1 = '0xE68968Cac6a959F525d5166D0BF0c0881a2Ac0ca',
   TEST_ACCOUNT2 = '0x001277f50C8FDf49F8e2546994dC16E340fffe02',
 }
+
+export enum Page {
+  ANY = '',
+  INVEST = 'invest',
+  TRADE = 'trade',
+}

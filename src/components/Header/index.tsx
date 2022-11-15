@@ -1,15 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Icon } from '@mui/material';
 import { Context, HeaderStyles, VuiBox, VuiInput, VuiTypography } from 'traderchain-ui';
+import { Page } from 'utils/constants';
+
 const { useVisionUIController } = Context;
 const { navbar, navbarContainer, navbarRow, navbarIconButton } = HeaderStyles;
 
 export default function Header() {  
+  const location = useLocation();
   const [controller] = useVisionUIController();
   const { transparentNavbar } = controller;
   const absolute = false;
   const light = false;
   const isMini = false;  
+  
+  let page: Page = Page.ANY;
+  if (location.pathname.startsWith('/invest'))  page = Page.INVEST;
+  if (location.pathname.startsWith('/trade'))  page = Page.TRADE;  
   
   return (
     <AppBar
@@ -31,20 +38,14 @@ export default function Header() {
           </VuiBox>                    
           <VuiBox mr="30px">
             <Link to="/invest">
-              <VuiTypography                
-                variant="button"
-                color="white"
-              >
+              <VuiTypography variant="button" color={page == Page.INVEST ? "white" : "text"}>
                 Invest
               </VuiTypography>
             </Link>
           </VuiBox>
           <VuiBox mr="30px">
             <Link to="/trade">
-              <VuiTypography                
-                variant="button"
-                color="text"
-              >
+              <VuiTypography variant="button" color={page == Page.TRADE ? "white" : "text"}>
                 Trade
               </VuiTypography>
             </Link>
