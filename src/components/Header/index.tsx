@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Icon } from '@mui/material';
-import { Context, HeaderStyles, VuiBox, VuiInput } from 'traderchain-ui';
+import { Context, HeaderStyles, VuiBox, VuiInput, VuiTypography } from 'traderchain-ui';
 const { useVisionUIController } = Context;
 const { navbar, navbarContainer, navbarRow, navbarIconButton } = HeaderStyles;
 
@@ -17,9 +18,38 @@ export default function Header() {
       sx={(theme: any) => navbar(theme, { transparentNavbar, absolute, light })}   
     >
       <Toolbar sx={(theme: any) => navbarContainer(theme)}>
-        <VuiBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme: any) => navbarRow(theme, { isMini })}>
-          <Icon>home</Icon>
-        </VuiBox>
+        <VuiBox color="inherit" sx={(theme: any) => navbarRow(theme, { isMini })}>          
+          <VuiBox mr="30px">
+            <Link to="/">
+              <IconButton                              
+                color="inherit"
+                sx={navbarIconButton}
+              >
+                <Icon>home</Icon>
+              </IconButton>              
+            </Link>
+          </VuiBox>                    
+          <VuiBox mr="30px">
+            <Link to="/invest">
+              <VuiTypography                
+                variant="button"
+                color="white"
+              >
+                Invest
+              </VuiTypography>
+            </Link>
+          </VuiBox>
+          <VuiBox mr="30px">
+            <Link to="/trade">
+              <VuiTypography                
+                variant="button"
+                color="text"
+              >
+                Trade
+              </VuiTypography>
+            </Link>
+          </VuiBox>
+        </VuiBox>        
         <VuiBox sx={(theme: any) => navbarRow(theme, { isMini })}>
           <VuiBox pr={1}>
             <VuiInput
@@ -30,7 +60,7 @@ export default function Header() {
           <VuiBox color="inherit">
             <IconButton
               size="small"
-              color="inherit"     
+              color="inherit"
               sx={navbarIconButton}
             >
               <Icon>settings</Icon>

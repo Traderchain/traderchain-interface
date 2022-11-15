@@ -7,6 +7,8 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 import Home from 'pages/Home';
+import Trade from 'pages/Trade';
+import Invest from 'pages/Invest';
 import About from 'pages/About';
 import Experiment from 'pages/Experiment';
 
@@ -21,6 +23,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="/" element={<Home />} index />
+              <Route path="trade" element={<Trade />} />
+              <Route path="invest" element={<Invest />} />
               <Route path="about" element={<About />} />
               <Route path="experiment" element={<Experiment />} />
               
