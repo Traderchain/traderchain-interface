@@ -1,29 +1,30 @@
 import { Card, Icon } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 
-import cardBg from "assets/images/card-bg-jellyfish.png";
+import cardBg from "assets/images/card-bg.png";
+import cardBgJelly from "assets/images/card-bg-jellyfish.png";
 
-const TraderchainSection = () => {
+export default function Section({ type, title, body, more }: any) {
+  let sx: any = {};
+  if (type) {    
+    sx.backgroundSize = "cover";
+    sx.backgroundPosition = "50%";    
+  }
+  if (type == "blue") {
+    sx.backgroundImage = `url(${cardBg})`;          
+  }
+  if (type == "jelly") {
+    sx.backgroundImage = `url(${cardBgJelly})`;          
+  }
+    
   return (
-    <Card sx={({ breakpoints }: any) => ({
-      backgroundImage: `url(${cardBg})`,
-      backgroundSize: "cover",
-      backgroundPosition: "50%",      
-    })}>
+    <Card sx={({ breakpoints }: any) => (sx)}>
       <VuiBox display="flex" flexDirection="column" sx={{ minHeight: "210px" }}>
-        <VuiBox display="flex" flexDirection="column" mb="auto">
-          <VuiTypography color="white" variant="h3" mb="3px">
-            TRADERCHAIN <b>PROTOCOL</b>
+        <VuiBox display="flex" flexDirection="column" mb="auto">     
+          <VuiTypography color="white" variant="h3" fontWeight="bold" mb="3px">
+            {title}
           </VuiTypography>
-          <VuiTypography color="white" variant="h6" fontWeight="bold">
-            Decentralized Marketplace for Trading Systems            
-          </VuiTypography>
-          <VuiTypography color="text" variant="h6" fontWeight="regular">            
-            Decentralized Platform for Copy Trading<br/>          
-          	Decentralized Platform for Mutual Funds<br/>          
-          	Decentralized Platform for Hedge Funds<br/>	          
-          	Decentralized Exchange for ETFs
-          </VuiTypography>
+          {body}
         </VuiBox>
         <VuiBox justifySelf="flex-end">
           <VuiTypography
@@ -51,13 +52,11 @@ const TraderchainSection = () => {
               },
             }}
           >
-            Learn more
+            {more.label}
             <Icon sx={{ fontWeight: "bold", ml: "5px" }}>arrow_forward</Icon>
           </VuiTypography>
         </VuiBox>
       </VuiBox>
     </Card>
   );
-};
-
-export default TraderchainSection;
+}
