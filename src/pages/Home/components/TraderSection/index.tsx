@@ -16,7 +16,8 @@ const TraderSection = () => {
         </VuiBox>
       )}
       more = {{
-        label: "Getting started"
+        label: "Getting started",
+        to: "/trade",
       }}
     />
   );

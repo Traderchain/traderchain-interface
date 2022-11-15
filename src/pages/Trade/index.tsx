@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
+import SystemList from 'components/SystemList';
 import * as TC from 'utils/tc';
 
 export default function Trade() {
@@ -29,30 +30,14 @@ export default function Trade() {
     // setSystems(systems => [...systems, system]);
   }
   
-  const systemList = systems.map((system,k) => {
-    const {systemId} = system;
-    const type = ["", "blue", "jelly"][systemId % 3];
-    
-    return (
-      <div key={k}>
-        <Section
-          type = {type}
-          title = {"Trading System #" + systemId}
-          body = {<VuiTypography color="text">System description...</VuiTypography>}
-          more = {{label: "Detail", to: `/system/${systemId}`}}
-        />
-        <Divider />
-      </div>
-    );
-  });
-  
   return (
     <div id="trade">
       <VuiButton variant="contained" color="info" onClick={createTradingSystem}>
         Create a Trading System
       </VuiButton>
       <Divider />
-      {systemList}
+      
+      <SystemList systems={systems} />
     </div>
   );
 }

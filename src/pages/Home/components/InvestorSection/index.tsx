@@ -18,7 +18,8 @@ const InvestorSection = () => {
         </VuiBox>
       )}
       more = {{
-        label: "Start investing"
+        label: "Start investing",
+        to: "/invest",
       }}
     />
   );

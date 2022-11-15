@@ -18,9 +18,7 @@ export default function Home() {
           <InvestorSection />      
         </Grid>
       </Grid>
-      <Divider />
-      
-      
+      <Divider />            
     </div>
   );
 }
