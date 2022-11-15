@@ -1,7 +1,7 @@
 // import { useEffect } from 'react';
 import Button from "@mui/material/Button";
 import { VuiButton } from 'traderchain-ui';
-import { isDevelopmentEnv, isProductionEnv } from 'utils';
+import { isDevelopmentEnv, isProductionEnv } from 'utils/env';
 import { ServerStatus, Address } from 'utils/constants';
 
 import Provider from 'contracts/provider';
