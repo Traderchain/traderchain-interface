@@ -7,10 +7,10 @@ const Intro = () => {
   return (
     <Card
       sx={({ breakpoints }) => ({
+        height: "250px",
         background: `url(${cardBg})`,
         backgroundSize: "cover",
-        borderRadius: "20px",
-        height: "100%",
+        borderRadius: "20px",        
         [breakpoints.only("xl")]: {
           gridArea: "1 / 1 / 2 / 2",
         },
@@ -21,19 +21,13 @@ const Intro = () => {
           <VuiTypography color="white" variant="h3" fontWeight="bold" mb="3px">
             Traderchain
           </VuiTypography>
-          <VuiTypography color="white" variant="button" fontWeight="regular">
-            Decentralized Marketplace for Trading Systems
+          <VuiTypography color="white" variant="h6" fontWeight="regular">
+            Decentralized Marketplace for Trading Systems            
           </VuiTypography>
-          <VuiTypography color="white" variant="button" fontWeight="regular">
-            Decentralized Platform for Copy Trading	
-          </VuiTypography>
-          <VuiTypography color="white" variant="button" fontWeight="regular">
-          	Decentralized Platform for Mutual Funds
-          </VuiTypography>
-          <VuiTypography color="white" variant="button" fontWeight="regular">
-          	Decentralized Platform for Hedge Funds	
-          </VuiTypography>
-          <VuiTypography color="white" variant="button" fontWeight="regular">
+          <VuiTypography color="text" variant="h6" fontWeight="regular">            
+            Decentralized Platform for Copy Trading<br/>          
+          	Decentralized Platform for Mutual Funds<br/>          
+          	Decentralized Platform for Hedge Funds<br/>	          
           	Decentralized Exchange for ETFs
           </VuiTypography>
         </VuiBox>
@@ -44,6 +38,7 @@ const Intro = () => {
             variant="button"
             color="white"
             fontWeight="regular"
+            mt="10px"
             sx={{
               mr: "5px",
               display: "inline-flex",
