@@ -85,7 +85,7 @@ export default function System() {
       <Divider />
       
       <Section        
-        title = {`Trading System #${system.systemId}`}
+        title = {`Trading System ${system.systemId}`}
         body = {
           <VuiBox>
             <VuiTypography color="text">System description...</VuiTypography>
