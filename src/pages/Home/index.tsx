@@ -7,14 +7,14 @@ export default function Home() {
 
   return (
     <div id="home">
-      <IntroSection />
-      <Divider />      
-      
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
+          <IntroSection />
+        </Grid>                
+        <Grid item xs={12} md={11}>
           <TraderSection />
-        </Grid>        
-        <Grid item xs={12} md={12}>
+        </Grid>                        
+        <Grid item xs={12} md={10}>
           <InvestorSection />      
         </Grid>
       </Grid>

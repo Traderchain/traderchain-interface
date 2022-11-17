@@ -9,11 +9,11 @@ const InvestorSection = () => {
       body = {(
         <VuiBox>
           <VuiTypography color="white" variant="h6" fontWeight="bold">
-            Funds are stored in Non-Custodial Vaults
+            Funds are Stored in Non-Custodial Vaults
           </VuiTypography>
-          <VuiTypography color="text" variant="h6" fontWeight="bold">            
+          <VuiTypography color="text" variant="h6" fontWeight="regular">            
             Easy to follow a Trading System by buying its Shares similar to Mutual Funds<br/>
-            Withdraw funds anytime by selling shares without worrying about Fund Insolvency
+            Withdraw funds anytime by selling Shares without worrying about Fund Insolvency
           </VuiTypography>
         </VuiBox>
       )}

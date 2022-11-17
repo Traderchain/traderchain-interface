@@ -8,7 +8,7 @@ const IntroSection = () => {
       title = {<span><span style={{fontWeight:"400"}}>TRADERCHAIN</span> PROTOCOL</span>}
       body = {(
         <VuiBox>
-          <VuiTypography color="white" variant="h6" fontWeight="bold">
+          <VuiTypography color="white" variant="h6" fontWeight="bold" mb="5px">
             Decentralized Marketplace for Trading Systems            
           </VuiTypography>
           <VuiTypography color="text" variant="h6" fontWeight="regular">            
@@ -19,10 +19,8 @@ const IntroSection = () => {
             Decentralized Governance for DAO Funds<br/>
           </VuiTypography>
         </VuiBox>
-      )}
-      more = {{
-        label: "Learn more"
-      }}
+      )}      
+      minHeight = "280px"
     />
   );
 };

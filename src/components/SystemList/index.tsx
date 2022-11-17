@@ -1,4 +1,4 @@
-import { Divider } from '@mui/material';
+import { Grid, Divider } from '@mui/material';
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
 
@@ -9,10 +9,10 @@ interface SystemListProps {
 export default function SystemList({ systems }: SystemListProps) {
   const systemList = systems.map((system,k) => {
     const {systemId} = system;
-    const type = ["", "blue", "jelly"][systemId % 3];
+    const type = ["jelly", "", "blue"][(systemId-1) % 3];
     
     return (
-      <div key={k}>
+      <Grid key={k} item xs={12} md={4}>
         <Section
           type = {type}
           title = {"Trading System #" + systemId}
@@ -20,13 +20,15 @@ export default function SystemList({ systems }: SystemListProps) {
           more = {{label: "Show details", to: `/system/${systemId}`}}
         />
         <Divider />
-      </div>
+      </Grid>                
     );
   });
   
   return (
     <VuiBox>
-      {systemList}
+      <Grid container spacing={2}>
+        {systemList}  
+      </Grid>      
     </VuiBox>
   );
 }

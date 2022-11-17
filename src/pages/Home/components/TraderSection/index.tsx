@@ -8,10 +8,10 @@ const TraderSection = () => {
       body = {(
         <VuiBox>
           <VuiTypography color="white" variant="h6" fontWeight="regular">
-            <b>Place orders directly on Uniswap</b>
+            <b>Place Orders Directly on Uniswap</b>
           </VuiTypography>
-          <VuiTypography color="text" variant="h6" fontWeight="bold">
-            Manage funds and get commission like a Hedge Fund Manager
+          <VuiTypography color="text" variant="h6" fontWeight="regular">
+            Manage funds and get Commission like a Hedge Fund Manager
           </VuiTypography>
         </VuiBox>
       )}

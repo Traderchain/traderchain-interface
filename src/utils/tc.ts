@@ -30,7 +30,7 @@ export async function fetchSystems(trader: string) {
     const sid = await system.getTraderSystemByIndex(trader, i);          
     newSystems.push({systemId: sid.toString()});
   }
-  newSystems.sort((a,b) => { return b.systemId - a.systemId; });
+  // newSystems.sort((a,b) => { return b.systemId - a.systemId; });
 
   return newSystems;
 }
