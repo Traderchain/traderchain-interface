@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
-    "@vercel/node": "^2.6.3"
+    "@vercel/node": "^2.6.3",
+    "loader-utils": "^3.2.1"
   }
 }
