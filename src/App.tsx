@@ -42,21 +42,15 @@ export default function App() {
 function Layout() {
   return (
     <VuiBox
-      sx={({ breakpoints, transitions, functions: { pxToRem } }: any) => ({
-        p: 3,
-        position: "relative",
+      sx={({ breakpoints }: any) => ({        
         [breakpoints.up("xl")]: {
-          marginLeft: pxToRem(274),
-          transition: transitions.create(["margin-left", "margin-right"], {
-            easing: transitions.easing.easeInOut,
-            duration: transitions.duration.standard,
-          }),
+          margin: "0 15%"          
         },
       })}
     >
       <Header />
       <VuiBox sx={() => ({
-        padding: "30px 0 50px 0"
+        padding: "30px 15px 50px 15px"
       })}>
         <Outlet />
       </VuiBox>

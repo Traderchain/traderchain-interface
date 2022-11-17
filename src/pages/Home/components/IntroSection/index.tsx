@@ -15,7 +15,8 @@ const IntroSection = () => {
             Decentralized Platform for Copy Trading<br/>          
             Decentralized Platform for Mutual Funds<br/>          
             Decentralized Platform for Hedge Funds<br/>	          
-            Decentralized Exchange for ETFs
+            Decentralized Exchange for ETFs<br/>
+            Decentralized Governance for DAO Funds<br/>
           </VuiTypography>
         </VuiBox>
       )}
