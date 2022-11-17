@@ -27,13 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // const item = await collection1.findOne(query);
     // result = item;
         
-    res.status(200).json({
-      body: req.body,
-      query: req.query,
-      cookies: req.cookies,
-      REACT_APP_DOMAIN: process.env.REACT_APP_DOMAIN,
-      result,
-    });  
+    res.status(200).json(result);
   }
   catch(err) {
     console.log(err);
