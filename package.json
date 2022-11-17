@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.0.8",
     "ethers": "^5.7.2",
     "mongodb": "^4.12.0",
+    "nth-check": "^2.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
@@ -23,6 +24,10 @@
     "traderchain-ui": "github:Traderchain/traderchain-ui",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@vercel/node": "^2.6.3",
+    "loader-utils": "^3.2.1"
   },
   "scripts": {
     "vercel": "vercel dev",
@@ -49,10 +54,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@vercel/node": "^2.6.3",
-    "loader-utils": "^3.2.1",
-    "nth-check": "^2.1.1"
   }
 }
