@@ -1,21 +1,34 @@
 import { ethers } from 'ethers';
-import { Web3Provider } from '@ethersproject/providers';
+import { Web3Provider, AlchemyProvider } from '@ethersproject/providers';
 import { BigNumber } from '@ethersproject/bignumber'
 
 class Provider {
-  provider: any
+  provider: any;
   
-  constructor() {    
-    // TODO: handle undefined
-    this.provider = new Web3Provider(window.ethereum);
+  constructor() {        
+    if (this.isConnected()) {
+      this.provider = new Web3Provider(window.ethereum);
+    }
+    else {
+      this.provider = new AlchemyProvider("goerli");
+    }
+  }
+  
+  isConnected() {
+    return (typeof window.ethereum !== 'undefined');
   }
   
   getProvider() {
     return this.provider;
   }
   
-  getSigner() {
-    return this.provider.getSigner();
+  getSigner() {    
+    if (this.isConnected()) {
+      return this.provider.getSigner();  
+    }
+    else {
+      return this.provider;
+    }    
   }
   
   async getAccounts() {

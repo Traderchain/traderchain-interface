@@ -15,10 +15,14 @@ export const tc: Contract = new Traderchain(Address.TRADERCHAIN).getContract();
 export const system: Contract = new TradingSystem(Address.TRADING_SYSTEM).getContract();
     
 export async function getAccounts() {
+  if (!Provider.isConnected())  return [];
+  
   return await Provider.getAccounts();
 }
 
 export async function fetchSystems(trader: string) {    
+  if (!Provider.isConnected())  return [];
+  
   const systemCount = await system.getTraderSystemsCount(trader);
 
   let newSystems = [];
@@ -32,6 +36,8 @@ export async function fetchSystems(trader: string) {
 }
 
 export async function fetchSystem(systemId: string) {
+  if (!Provider.isConnected())  return { systemId };
+  
   const nav = await tc.currentSystemNAV(systemId);
   const totalShares = await tc.totalSystemShares(systemId);
   const sharePrice = await tc.currentSystemSharePrice(systemId);
@@ -49,6 +55,8 @@ export async function fetchSystem(systemId: string) {
 }
 
 export async function fetchSystemInvestor(systemId: string, investor: string) {
+  if (!Provider.isConnected())  return { systemId, investor };
+  
   const shares = await system.balanceOf(investor, systemId);
   // console.log({shares: shares.toString()});
   
