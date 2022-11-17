@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <div id="home">
-      <Grid container spacing={2}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <IntroSection />
         </Grid>                

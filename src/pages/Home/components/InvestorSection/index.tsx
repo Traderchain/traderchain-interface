@@ -9,16 +9,17 @@ const InvestorSection = () => {
       body = {(
         <VuiBox>
           <VuiTypography color="white" variant="h6" fontWeight="bold">
-            Funds are Stored in Non-Custodial Vaults
+            Assets are Stored in Non-Custodial Vaults
           </VuiTypography>
           <VuiTypography color="text" variant="h6" fontWeight="regular">            
-            Easy to follow a Trading System by buying its Shares similar to Mutual Funds<br/>
-            Withdraw funds anytime by selling Shares without worrying about Fund Insolvency
+            Invest in a Fund Simply by Buying its Shares<br/>
+            Withdraw from a Fund Anytime by Selling its Shares<br/>
+            No Risk of Fund Insolvency<br/>
           </VuiTypography>
         </VuiBox>
       )}
       more = {{
-        label: "Start investing",
+        label: "Start Investing",
         to: "/invest",
       }}
     />

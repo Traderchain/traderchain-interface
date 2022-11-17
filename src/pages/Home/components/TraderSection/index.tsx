@@ -11,12 +11,12 @@ const TraderSection = () => {
             <b>Place Orders Directly on Uniswap</b>
           </VuiTypography>
           <VuiTypography color="text" variant="h6" fontWeight="regular">
-            Manage funds and get Commission like a Hedge Fund Manager
+            Manage Portfolio and Get Commission like a Hedge Fund Manager<br/>
           </VuiTypography>
         </VuiBox>
       )}
       more = {{
-        label: "Getting started",
+        label: "Getting Started",
         to: "/trade",
       }}
     />

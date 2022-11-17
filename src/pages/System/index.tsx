@@ -65,10 +65,10 @@ export default function System() {
     <div id="system">
       <VuiBox>
         <VuiButton variant="contained" color="info" onClick={buyShares} sx={{margin: "10px"}}>
-          Buy Shares
+          BUY SHARES
         </VuiButton>
         <VuiButton variant="contained" color="error" onClick={sellShares} sx={{margin: "10px"}}>
-          Sell Shares
+          SELL SHARES
         </VuiButton>
       </VuiBox>
       <Divider />
@@ -76,23 +76,23 @@ export default function System() {
       {isTrader && 
       <VuiBox>
         <VuiButton variant="contained" color="info" onClick={placeBuyOrder} sx={{margin: "10px"}}>
-          Place Buy Order
+          PLACE BUY ORDER
         </VuiButton>
         <VuiButton variant="contained" color="error" onClick={placeSellOrder} sx={{margin: "10px"}}>
-          Place Sell Order
+          PLACE SELL ORDER
         </VuiButton>
       </VuiBox>}
       <Divider />
       
       <Section        
-        title = {`Trading System ${system.systemId}`}
+        title = {`Fund ${system.systemId}`}
         body = {
           <VuiBox>
-            <VuiTypography color="text">System description...</VuiTypography>
+            <VuiTypography color="text">Fund description...</VuiTypography>
             <Divider />
             
             <VuiTypography color="text">
-              <b>System Stats</b><br/>
+              <b>Fund Stats</b><br/>
               NAV: {system.nav && system.nav.toString()}<br/>
               Total Shares: {system.totalShares && system.totalShares.toString()}<br/>
               Share Price: {system.sharePrice && system.sharePrice.toString()}<br/>
@@ -104,7 +104,7 @@ export default function System() {
             <Divider />
             
             <VuiTypography color="text">
-              <b>System Investor Stats</b><br/>
+              <b>Your Investment</b><br/>
               Investor: {systemInvestor.investor && systemInvestor.investor}<br/>
               Shares: {systemInvestor.shares && systemInvestor.shares.toString()}<br/>
               Value: {systemInvestor.shares && system.sharePrice && (systemInvestor.shares.mul(system.sharePrice)).toString()}<br/>

@@ -25,12 +25,7 @@ export default function Invest() {
   }
     
   return (
-    <div id="invest">
-      <VuiTypography variant="h4" color="text" fontWeight="bold">
-        Choose a trading system to invest
-      </VuiTypography>
-      <Divider />
-      
+    <div id="invest">      
       <SystemList systems={systems} />
     </div>
   );

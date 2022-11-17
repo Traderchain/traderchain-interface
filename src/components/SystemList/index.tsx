@@ -15,9 +15,9 @@ export default function SystemList({ systems }: SystemListProps) {
       <Grid key={k} item xs={12} md={4}>
         <Section
           type = {type}
-          title = {"Trading System #" + systemId}
-          body = {<VuiTypography color="text">System description...</VuiTypography>}
-          more = {{label: "Show details", to: `/system/${systemId}`}}
+          title = {"Fund " + systemId}
+          body = {<VuiTypography color="text">Fund description...</VuiTypography>}
+          more = {{label: "See Details", to: `/system/${systemId}`}}
         />
         <Divider />
       </Grid>                

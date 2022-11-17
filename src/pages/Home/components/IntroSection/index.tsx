@@ -20,7 +20,7 @@ const IntroSection = () => {
           </VuiTypography>
         </VuiBox>
       )}      
-      minHeight = "280px"
+      minHeight = "250px"
     />
   );
 };

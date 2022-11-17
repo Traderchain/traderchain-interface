@@ -33,7 +33,7 @@ export default function Trade() {
   return (
     <div id="trade">
       <VuiButton variant="contained" color="info" onClick={createTradingSystem}>
-        Create a Trading System
+        START FUND
       </VuiButton>
       <Divider />
       
