@@ -4,6 +4,7 @@ import Section from 'components/Section';
 const TraderSection = () => {
   return (
     <Section       
+      type = "blue"
       title = "Traders"
       body = {(
         <VuiBox>
@@ -19,6 +20,7 @@ const TraderSection = () => {
         label: "Getting Started",
         to: "/trade",
       }}
+      minHeight = "190px"
     />
   );
 };

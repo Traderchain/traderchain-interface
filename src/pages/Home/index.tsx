@@ -12,10 +12,10 @@ export default function Home() {
           <IntroSection />
         </Grid>                
         <Grid item xs={12} md={11}>
-          <TraderSection />
+          <InvestorSection />
         </Grid>                        
-        <Grid item xs={12} md={10}>
-          <InvestorSection />      
+        <Grid item xs={12} md={10}>          
+          <TraderSection />
         </Grid>
       </Grid>
       <Divider />            

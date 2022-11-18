@@ -3,8 +3,7 @@ import Section from 'components/Section';
 
 const InvestorSection = () => {
   return (
-    <Section 
-      type = "blue"
+    <Section       
       title = "Investors"
       body = {(
         <VuiBox>
@@ -22,6 +21,7 @@ const InvestorSection = () => {
         label: "Start Investing",
         to: "/invest",
       }}
+      minHeight = "220px"
     />
   );
 };
