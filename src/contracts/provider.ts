@@ -14,35 +14,27 @@ class Provider {
     }
   }
   
+  async connect() {
+    if (!this.hasWallet())  throw Error('Please install a Web3 Wallet');
+    
+    this.provider = new Web3Provider(window.ethereum);
+    return await this.getAccounts();
+  }
+  
   hasWallet() {
     return (typeof window.ethereum !== 'undefined');
   }
-  
-  isConnected() {
-    return this.hasWallet();
-  }
-  
+    
   getProvider() {
     return this.provider;
   }
   
   getSigner() {    
-    if (this.hasWallet()) {
-      return this.provider.getSigner();  
-    }
-    else {
-      return this.provider;
-    }    
+    return this.provider.getSigner();    
   }
   
   async getAccounts() {
-    try {
-      return await this.provider.send("eth_requestAccounts", []);  
-    }
-    catch(err) {
-      console.error(err);
-      return [];
-    }
+    return await this.provider.send("eth_requestAccounts", []);
   }
   
   async sendTransaction(to: string, amount: string) {

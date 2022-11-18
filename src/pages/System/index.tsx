@@ -4,7 +4,8 @@ import { ethers } from 'ethers';
 import { Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
-import * as TC from 'utils/tc';
+import { useAuth } from 'utils';
+import { useTcContracts } from 'utils/tc';
 import { Address } from 'utils/constants';
 
 export default function System() {
@@ -12,34 +13,36 @@ export default function System() {
   const [system, setSystem] = useState<any>({ systemId });
   const [systemInvestor, setSystemInvestor] = useState<any>({ systemId });
   const [isTrader, setIsTrader] = useState<boolean>(false);
+  const { isAuthenticated } = useAuth();
+  const { usdc, weth, tc, getAccounts, fetchSystem, fetchSystems, fetchSystemInvestor } = useTcContracts();
   
   useEffect(() => {
     async function init() {      
-      await fetchSystem();
-      await fetchSystemInvestor();
+      await loadSystem();
+      await loadSystemInvestor();
     }
     init();
-  }, []);
+  }, [isAuthenticated]);
 
-  async function fetchSystem() {
-    const accounts = await TC.getAccounts();
+  async function loadSystem() {
+    const accounts = await getAccounts();
     const trader = accounts[0];    
-    const _system = await TC.fetchSystem(systemId!);    
+    const _system = await fetchSystem(systemId!);
     setSystem(_system);    
     setIsTrader(_system.trader && trader && _system.trader.toLowerCase() == trader.toLowerCase());
   }
     
-  async function fetchSystemInvestor() {    
-    const accounts = await TC.getAccounts();
+  async function loadSystemInvestor() {    
+    const accounts = await getAccounts();
     const investor = accounts[0];    
-    setSystemInvestor(await TC.fetchSystemInvestor(systemId!, investor));
+    setSystemInvestor(await fetchSystemInvestor(systemId!, investor));
   }
   
   async function buyShares() {
     const usdcAmount = ethers.utils.parseUnits('100', 6);
-    await TC.usdc.approve(TC.tc.address, usdcAmount);
+    await usdc.approve(tc.address, usdcAmount);
     // TODO: listen to approve event
-    const tx = await TC.tc.buyShares(systemId, usdcAmount, {gasLimit: '1000000'});    
+    const tx = await tc.buyShares(systemId, usdcAmount, {gasLimit: '1000000'});    
     console.log(tx);
   }
   
@@ -47,18 +50,18 @@ export default function System() {
     if (!systemInvestor.shares)  return;
     
     const numberOfShares = systemInvestor.shares.div(ethers.BigNumber.from(2));
-    const tx = await TC.tc.sellShares(systemId, numberOfShares);    
+    const tx = await tc.sellShares(systemId, numberOfShares);    
     console.log(tx);
   }
 
   async function placeBuyOrder() {
     const usdcAmount = ethers.utils.parseUnits('50', 6);
-    await TC.tc.placeBuyOrder(systemId, usdcAmount);
+    await tc.placeBuyOrder(systemId, usdcAmount);
   }
   
   async function placeSellOrder() {
     const wethAmount = ethers.utils.parseUnits('0.01', 18);
-    await TC.tc.placeSellOrder(systemId, wethAmount);
+    await tc.placeSellOrder(systemId, wethAmount);
   }
 
   return (

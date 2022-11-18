@@ -1,18 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
 import { AppBar, Toolbar, IconButton, Icon } from '@mui/material';
 import { Context, HeaderStyles, VuiBox, VuiInput, VuiTypography, VuiButton } from 'traderchain-ui';
 import * as Utils from 'utils';
+import { useTcContracts } from 'utils/tc';
 import { Page } from 'utils/constants';
 
 const { useVisionUIController } = Context;
 const { navbar, navbarContainer, navbarRow, navbarIconButton } = HeaderStyles;
 
 export default function Header() {  
-  const { isAuthenticated } = useSelector((state: any) => state.auth);
-  const dispatch = useDispatch();
-  const {showDialog, hideDialog} = Utils.useAlertDialog();
+  const { isAuthenticated } = Utils.useAuth();
+  const { showDialog, hideDialog } = Utils.useAlertDialog();
+  const { connect } = useTcContracts();
   const location = useLocation();
   const [controller] = useVisionUIController();
   const { transparentNavbar } = controller;
@@ -23,9 +23,22 @@ export default function Header() {
   let page: Page = Page.ANY;
   if (location.pathname.startsWith('/invest'))  page = Page.INVEST;
   if (location.pathname.startsWith('/trade'))  page = Page.TRADE;  
+  
+  useEffect(() => {
+    async function init() {
+      // TODO: save authenticated to localStorage
+      // onConnect();
+    }
+    init();
+  }, [isAuthenticated]);
         
-  async function connect() {
-    showDialog({ title: 'Title1', content: 'Content1' });
+  async function onConnect() {
+    try {
+      const accounts = await connect();
+    }
+    catch(err: any) {
+      showDialog({ title: 'Error', content: err.message });
+    }
   }
   
   return (
@@ -68,9 +81,16 @@ export default function Header() {
               icon={{ component: "search", direction: "left" }}
             />            
           </VuiBox>
-          <VuiButton variant="contained" color="primary" size="medium" onClick={connect}>
-            Connect
+          
+          {isAuthenticated ?
+          <VuiButton variant="text" color="info" size="medium">
+            Connected
           </VuiButton>
+          :  
+          <VuiButton variant="contained" color="primary" size="medium" onClick={onConnect}>
+            Connect
+          </VuiButton>}
+          
           <VuiBox color="inherit" sx={{ display: "none" }}>
             <IconButton size="small" color="inherit" sx={navbarIconButton}>
               <Icon>settings</Icon>

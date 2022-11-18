@@ -15,3 +15,14 @@ export function useAlertDialog() {
   
   return { showDialog, hideDialog };
 }
+
+export function useAuth() {
+  const { isAuthenticated } = useSelector((state: any) => state.auth );
+  const dispatch = useDispatch();
+  
+  function setAuthenticated(authenticated: boolean) {    
+    dispatch(AuthStore.actions.setAuthenticated(authenticated));
+  }
+
+  return { isAuthenticated, setAuthenticated };
+}
