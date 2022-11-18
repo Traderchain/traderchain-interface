@@ -22,7 +22,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
-    "traderchain-ui": "github:Traderchain/traderchain-ui",
+    "traderchain-ui": "github:Traderchain/traderchain-ui#v1.0.2",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
