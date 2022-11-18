@@ -5,6 +5,7 @@ import { Context, VuiTheme, VuiBox } from 'traderchain-ui';
 
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import AlertDialog from 'components/AlertDialog';
 
 import Home from 'pages/Home';
 import Trade from 'pages/Trade';
@@ -39,7 +40,7 @@ export default function App() {
   );
 }
 
-function Layout() {
+function Layout() {  
   return (
     <VuiBox
       sx={({ breakpoints }: any) => ({        
@@ -55,6 +56,7 @@ function Layout() {
         <Outlet />
       </VuiBox>
       <Footer />
+      <AlertDialog />
     </VuiBox>
   );
 }

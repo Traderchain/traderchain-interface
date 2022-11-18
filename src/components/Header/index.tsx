@@ -1,12 +1,18 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 import { AppBar, Toolbar, IconButton, Icon } from '@mui/material';
-import { Context, HeaderStyles, VuiBox, VuiInput, VuiTypography } from 'traderchain-ui';
+import { Context, HeaderStyles, VuiBox, VuiInput, VuiTypography, VuiButton } from 'traderchain-ui';
+import * as Utils from 'utils';
 import { Page } from 'utils/constants';
 
 const { useVisionUIController } = Context;
 const { navbar, navbarContainer, navbarRow, navbarIconButton } = HeaderStyles;
 
 export default function Header() {  
+  const { isAuthenticated } = useSelector((state: any) => state.auth);
+  const dispatch = useDispatch();
+  const {showDialog, hideDialog} = Utils.useAlertDialog();
   const location = useLocation();
   const [controller] = useVisionUIController();
   const { transparentNavbar } = controller;
@@ -17,6 +23,10 @@ export default function Header() {
   let page: Page = Page.ANY;
   if (location.pathname.startsWith('/invest'))  page = Page.INVEST;
   if (location.pathname.startsWith('/trade'))  page = Page.TRADE;  
+        
+  async function connect() {
+    showDialog({ title: 'Title1', content: 'Content1' });
+  }
   
   return (
     <AppBar
@@ -52,23 +62,23 @@ export default function Header() {
           </VuiBox>
         </VuiBox>        
         <VuiBox sx={(theme: any) => navbarRow(theme, { isMini })}>
-          <VuiBox pr={1}>
+          <VuiBox pr={2}>
             <VuiInput
               placeholder="Type here..."
               icon={{ component: "search", direction: "left" }}
             />            
           </VuiBox>
-          <VuiBox color="inherit">
-            <IconButton
-              size="small"
-              color="inherit"
-              sx={navbarIconButton}
-            >
+          <VuiButton variant="contained" color="primary" size="medium" onClick={connect}>
+            Connect
+          </VuiButton>
+          <VuiBox color="inherit" sx={{ display: "none" }}>
+            <IconButton size="small" color="inherit" sx={navbarIconButton}>
               <Icon>settings</Icon>
             </IconButton>              
           </VuiBox>
         </VuiBox>        
       </Toolbar>
+      
     </AppBar>
   );
 }

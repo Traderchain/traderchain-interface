@@ -6,7 +6,7 @@ class Provider {
   provider: any;
   
   constructor() {        
-    if (this.isConnected()) {
+    if (this.hasWallet()) {
       this.provider = new Web3Provider(window.ethereum);
     }
     else {
@@ -14,8 +14,12 @@ class Provider {
     }
   }
   
-  isConnected() {
+  hasWallet() {
     return (typeof window.ethereum !== 'undefined');
+  }
+  
+  isConnected() {
+    return this.hasWallet();
   }
   
   getProvider() {
@@ -23,7 +27,7 @@ class Provider {
   }
   
   getSigner() {    
-    if (this.isConnected()) {
+    if (this.hasWallet()) {
       return this.provider.getSigner();  
     }
     else {
