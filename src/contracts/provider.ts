@@ -10,7 +10,7 @@ class Provider {
       this.provider = new Web3Provider(window.ethereum);
     }
     else {
-      this.provider = new AlchemyProvider("goerli");
+      this.provider = new AlchemyProvider("goerli", "Bcipbi3wYgtmrR-gkp6Fdc888i3N3ixG");
     }
   }
   
