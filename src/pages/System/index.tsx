@@ -39,7 +39,7 @@ export default function System() {
   }
   
   async function buySystemShares() {
-    const usdcAmount = ethers.utils.parseUnits('100', 6);
+    const usdcAmount = ethers.utils.parseUnits('10', 6);
     const tx = await buyShares(systemId!, usdcAmount);
     console.log(tx);
   }
@@ -53,13 +53,13 @@ export default function System() {
   }
 
   async function submitBuyOrder() {
-    const usdcAmount = ethers.utils.parseUnits('50', 6);
+    const usdcAmount = ethers.utils.parseUnits('10', 6);
     const tx = await placeBuyOrder(systemId!, usdcAmount);    
     console.log(tx);
   }
   
   async function submitSellOrder() {
-    const wethAmount = ethers.utils.parseUnits('0.01', 18);
+    const wethAmount = ethers.utils.parseUnits('0.00007', 18);
     const tx = await placeSellOrder(systemId!, wethAmount);
     console.log(tx);
   }
