@@ -4,7 +4,7 @@ import { AppBar, Toolbar, IconButton, Icon } from '@mui/material';
 import { Context, HeaderStyles, VuiBox, VuiInput, VuiTypography, VuiButton } from 'traderchain-ui';
 import * as Utils from 'utils';
 import { useTcContracts } from 'utils/tc';
-import { Page } from 'utils/constants';
+import { CHAIN_NAME, Page } from 'utils/constants';
 
 const { useVisionUIController } = Context;
 const { navbar, navbarContainer, navbarRow, navbarIconButton } = HeaderStyles;
@@ -78,9 +78,9 @@ export default function Header() {
           </VuiBox>
           
           {isAuthenticated ?
-          <VuiButton variant="text" color="info" size="medium">
-            Connected
-          </VuiButton>
+          <VuiTypography variant="button" color="info">
+            {CHAIN_NAME}
+          </VuiTypography>
           :  
           <VuiButton variant="contained" color="primary" size="medium" onClick={onConnect}>
             Connect
