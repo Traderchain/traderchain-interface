@@ -39,6 +39,14 @@ class Provider {
     return await this.provider.send("eth_requestAccounts", []);
   }
   
+  async getChainId() {
+    return await this.provider.send("eth_chainId", []);
+  }
+  
+  async switchChainId(chainId: string) {
+    return await this.provider.send("wallet_switchEthereumChain", [{ chainId }]);
+  }
+  
   async sendTransaction(to: string, amount: string) {
     const value: BigNumber = ethers.utils.parseEther(amount);
     return await this.getSigner().sendTransaction({to, value});    

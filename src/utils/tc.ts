@@ -6,7 +6,7 @@ import ERC20 from 'contracts/ERC20';
 import Traderchain from 'contracts/Traderchain';
 import TradingSystem from 'contracts/TradingSystem';
 import SystemVault from 'contracts/SystemVault';
-import { Address } from 'utils/constants';
+import { CHAIN_ID, Address } from 'utils/constants';
 import * as Utils from 'utils';
 
 const formatUnits = ethers.utils.formatUnits;
@@ -29,13 +29,28 @@ export function useTcContracts() {
     try {
       await Provider.connect();
       setAuthenticated(true);
-      return true;
+      
+      return await checkChainId();
     }
     catch(err: any) {
       setAuthenticated(false);      
       return false;
     }
   }
+      
+  async function checkChainId() {
+    try {
+      const chainId = await Provider.getChainId();
+      if (chainId == CHAIN_ID)  return true;
+      
+      await Provider.switchChainId(CHAIN_ID);
+      return false;
+    }
+    catch(err: any) {
+      console.log(err);
+      return false;
+    }
+  }    
       
   async function getAccounts() {
     return await Provider.getAccounts();
