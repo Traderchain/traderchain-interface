@@ -18,29 +18,25 @@ const system: Contract = new TradingSystem(Address.TRADING_SYSTEM).getContract()
 
 export function useTcContracts() {
   const { isAuthenticated, setAuthenticated } = Utils.useAuth();
+  const { showDialog, showError, hideDialog } = Utils.useAlertDialog();
   
-  async function connect() {
-    const accounts = await Provider.connect();
-    setAuthenticated(true);
-    return accounts;
-  }
-
   async function checkConnect() {
-    if (isAuthenticated)  return true;
-    
-    await connect();
-    return false;
+    try {
+      await Provider.connect();
+      setAuthenticated(true);
+      return true;
+    }
+    catch(err: any) {
+      setAuthenticated(false);      
+      return false;
+    }
   }
       
   async function getAccounts() {
-    if (!isAuthenticated)  return [];
-    
     return await Provider.getAccounts();
   }
 
   async function fetchAllSystems() {    
-    if (!isAuthenticated)  return [];
-    
     const systemCount = await system.currentSystemId() - 1;
     
     let systems = [];
@@ -53,8 +49,6 @@ export function useTcContracts() {
   }
   
   async function fetchSystems(trader: string) {    
-    if (!isAuthenticated)  return [];
-    
     const systemCount = await system.getTraderSystemsCount(trader);
 
     let systems = [];
@@ -68,8 +62,6 @@ export function useTcContracts() {
   }
 
   async function fetchSystem(systemId: string) {
-    if (!isAuthenticated)  return { systemId };
-    
     const nav = await tc.currentSystemNAV(systemId);
     const totalShares = await tc.totalSystemShares(systemId);
     const sharePrice = await tc.currentSystemSharePrice(systemId);
@@ -87,8 +79,6 @@ export function useTcContracts() {
   }
 
   async function fetchSystemInvestor(systemId: string, investor: string) {
-    if (!isAuthenticated)  return { systemId, investor };
-    
     const shares = await system.balanceOf(investor, systemId);
     // console.log({shares: shares.toString()});
     
@@ -98,34 +88,67 @@ export function useTcContracts() {
   async function createSystem() {
     if (!await checkConnect())  return;
 
-    const signer = Provider.getSigner();
-    return await tc.connect(signer).createTradingSystem();
+    try {
+      const signer = Provider.getSigner();
+      return await tc.connect(signer).createTradingSystem();  
+    }
+    catch(err: any) {
+      showError(err);
+    }
   }  
   
   async function buyShares(systemId: string, amount: BigNumber) {
-    const signer = Provider.getSigner();
-    await usdc.connect(signer).approve(tc.address, amount);
-    // TODO: listen to approve event
-    return await tc.connect(signer).buyShares(systemId, amount, {gasLimit: '1000000'});        
+    if (!await checkConnect())  return;
+    
+    try {
+      const signer = Provider.getSigner();
+      await usdc.connect(signer).approve(tc.address, amount);
+      // TODO: listen to approve event
+      return await tc.connect(signer).buyShares(systemId, amount, {gasLimit: '1000000'});        
+    }
+    catch(err: any) {
+      showError(err);
+    }
   }
   
   async function sellShares(systemId: string, shares: BigNumber) {    
-    const signer = Provider.getSigner();
-    return await tc.connect(signer).sellShares(systemId, shares);    
+    if (!await checkConnect())  return;
+  
+    try {
+      const signer = Provider.getSigner();
+      return await tc.connect(signer).sellShares(systemId, shares);    
+    }
+    catch(err: any) {
+      showError(err);
+    }
   }
   
   async function placeBuyOrder(systemId: string, amount: BigNumber) {    
-    const signer = Provider.getSigner();
-    return await tc.connect(signer).placeBuyOrder(systemId, amount);
+    if (!await checkConnect())  return;
+    
+    try {
+      const signer = Provider.getSigner();
+      return await tc.connect(signer).placeBuyOrder(systemId, amount);
+    }
+    catch(err: any) {
+      showError(err);
+    }
   }
   
   async function placeSellOrder(systemId: string, amount: BigNumber) {
-    const signer = Provider.getSigner();
-    return await tc.connect(signer).placeSellOrder(systemId, amount);
+    if (!await checkConnect())  return;
+    
+    try {
+      const signer = Provider.getSigner();
+      return await tc.connect(signer).placeSellOrder(systemId, amount);
+    }
+    catch(err: any) {
+      showError(err);
+    }
   }
   
   return {    
-    connect, getAccounts, fetchAllSystems, fetchSystems, fetchSystem, fetchSystemInvestor, 
+    checkConnect, getAccounts, fetchAllSystems, fetchSystems, fetchSystem, fetchSystemInvestor, 
     createSystem, buyShares, sellShares, placeBuyOrder, placeSellOrder, 
   };
 }

@@ -9,7 +9,7 @@ import { useTcContracts}  from 'utils/tc';
 export default function Trade() {
   const [systems, setSystems] = useState<any[]>([]);
   const { isAuthenticated } = useAuth();
-  const { getAccounts, fetchSystem, fetchSystems, createSystem } = useTcContracts();
+  const { checkConnect, getAccounts, fetchSystem, fetchSystems, createSystem } = useTcContracts();
     
   useEffect(() => {
     async function init() {
@@ -19,6 +19,8 @@ export default function Trade() {
   }, [isAuthenticated]);
   
   async function fetchTradingSystems() {
+    if (!await checkConnect())  return;
+    
     const accounts = await getAccounts();
     const trader = accounts[0];
     
@@ -34,11 +36,10 @@ export default function Trade() {
   }
   
   return (
-    <div id="trade">
-      {isAuthenticated &&
+    <div id="trade">      
       <VuiButton variant="contained" color="info" onClick={createTradingSystem}>
         START FUND
-      </VuiButton>}
+      </VuiButton>
       <Divider />
       
       <SystemList systems={systems} />

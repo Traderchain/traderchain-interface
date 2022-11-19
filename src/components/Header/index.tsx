@@ -12,7 +12,7 @@ const { navbar, navbarContainer, navbarRow, navbarIconButton } = HeaderStyles;
 export default function Header() {  
   const { isAuthenticated } = Utils.useAuth();
   const { showDialog, hideDialog } = Utils.useAlertDialog();
-  const { connect } = useTcContracts();
+  const { checkConnect } = useTcContracts();
   const location = useLocation();
   const [controller] = useVisionUIController();
   const { transparentNavbar } = controller;
@@ -33,12 +33,7 @@ export default function Header() {
   }, [isAuthenticated]);
         
   async function onConnect() {
-    try {
-      const accounts = await connect();
-    }
-    catch(err: any) {
-      showDialog({ title: 'Error', content: err.message });
-    }
+    await checkConnect();
   }
   
   return (

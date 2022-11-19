@@ -8,12 +8,18 @@ export function useAlertDialog() {
   function showDialog({ title, content }: any) {    
     dispatch(AlertDialogStore.actions.setOpen({ open: true, title, content }));
   }
+  
+  function showError(err: any) {
+    const title = "Error";
+    const content = (typeof err == 'object') ? err.message : `${err}`;
+    dispatch(AlertDialogStore.actions.setOpen({ open: true, title, content }));
+  }
 
   function hideDialog() {    
     dispatch(AlertDialogStore.actions.setOpen({ open: false }));
   }
   
-  return { showDialog, hideDialog };
+  return { showDialog, showError, hideDialog };
 }
 
 export function useAuth() {
