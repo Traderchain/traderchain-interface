@@ -24,18 +24,29 @@ export default function System() {
     init();
   }, [isAuthenticated]);
 
-  async function loadSystem() {
-    const accounts = await getAccounts();
-    const trader = accounts[0];    
+  async function loadSystem() {    
     const _system = await fetchSystem(systemId!);
     setSystem(_system);    
-    setIsTrader(_system.trader && trader && _system.trader.toLowerCase() == trader.toLowerCase());
+    
+    try {
+      const accounts = await getAccounts();
+      const trader = accounts[0];      
+      setIsTrader(_system.trader && trader && _system.trader.toLowerCase() == trader.toLowerCase());
+    }
+    catch(err) {
+      console.log(err);
+    }
   }
     
   async function loadSystemInvestor() {    
-    const accounts = await getAccounts();
-    const investor = accounts[0];    
-    setSystemInvestor(await fetchSystemInvestor(systemId!, investor));
+    try {
+      const accounts = await getAccounts();
+      const investor = accounts[0];
+      setSystemInvestor(await fetchSystemInvestor(systemId!, investor));
+    }
+    catch(err) {
+      console.log(err);
+    }
   }
   
   async function buySystemShares() {

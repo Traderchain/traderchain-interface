@@ -34,6 +34,8 @@ class Provider {
   }
   
   async getAccounts() {
+    if (!this.hasWallet())  throw Error('Please install a Web3 Wallet');
+    
     return await this.provider.send("eth_requestAccounts", []);
   }
   

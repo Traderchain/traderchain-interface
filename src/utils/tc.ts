@@ -21,6 +21,11 @@ export function useTcContracts() {
   const { showDialog, showError, hideDialog } = Utils.useAlertDialog();
   
   async function checkConnect() {
+    if (!Provider.hasWallet()) {
+      showError('Please install a Web3 Wallet');
+      return false;
+    } 
+    
     try {
       await Provider.connect();
       setAuthenticated(true);
