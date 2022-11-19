@@ -38,19 +38,33 @@ export function useTcContracts() {
     return await Provider.getAccounts();
   }
 
+  async function fetchAllSystems() {    
+    if (!isAuthenticated)  return [];
+    
+    const systemCount = await system.currentSystemId() - 1;
+    
+    let systems = [];
+    for (let i = 1; i <= systemCount; i++) {
+      const systemId = `${i}`;
+      systems.push({ systemId });
+    }    
+    
+    return systems;
+  }
+  
   async function fetchSystems(trader: string) {    
     if (!isAuthenticated)  return [];
     
     const systemCount = await system.getTraderSystemsCount(trader);
 
-    let newSystems = [];
+    let systems = [];
     for (let i = 0; i < systemCount; i++) {
       const sid = await system.getTraderSystemByIndex(trader, i);          
-      newSystems.push({systemId: sid.toString()});
+      systems.push({systemId: sid.toString()});
     }
-    // newSystems.sort((a,b) => { return b.systemId - a.systemId; });
+    // systems.sort((a,b) => { return b.systemId - a.systemId; });
 
-    return newSystems;
+    return systems;
   }
 
   async function fetchSystem(systemId: string) {
@@ -111,7 +125,7 @@ export function useTcContracts() {
   }
   
   return {    
-    connect, getAccounts, fetchSystem, fetchSystems, fetchSystemInvestor, 
+    connect, getAccounts, fetchAllSystems, fetchSystems, fetchSystem, fetchSystemInvestor, 
     createSystem, buyShares, sellShares, placeBuyOrder, placeSellOrder, 
   };
 }

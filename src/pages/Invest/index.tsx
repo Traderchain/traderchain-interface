@@ -10,7 +10,7 @@ import { useTcContracts } from 'utils/tc';
 export default function Invest() {
   const [systems, setSystems] = useState<any[]>([]);
   const { isAuthenticated } = useAuth();
-  const { getAccounts, fetchSystem, fetchSystems } = useTcContracts();
+  const { getAccounts, fetchAllSystems, fetchSystems, fetchSystem } = useTcContracts();
   
   useEffect(() => {
     async function init() {
@@ -19,11 +19,8 @@ export default function Invest() {
     init();
   }, [isAuthenticated]);
     
-  async function fetchTradingSystems() {
-    const accounts = await getAccounts();
-    const trader = accounts[0];
-    
-    const newSystems = await fetchSystems(trader);
+  async function fetchTradingSystems() {    
+    const newSystems = await fetchAllSystems();
     setSystems(systems => newSystems);
   }
     
