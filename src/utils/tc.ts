@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from '@ethersproject/contracts';
+import { BigNumber } from '@ethersproject/bignumber';
 import Provider from 'contracts/provider';
 import ERC20 from 'contracts/ERC20';
 import Traderchain from 'contracts/Traderchain';
@@ -10,10 +11,10 @@ import * as Utils from 'utils';
 
 const formatUnits = ethers.utils.formatUnits;
 
-let usdc: Contract = new ERC20(Address.USDC).getContract();
-let weth: Contract = new ERC20(Address.WETH).getContract();
-let tc: Contract = new Traderchain(Address.TRADERCHAIN).getContract();
-let system: Contract = new TradingSystem(Address.TRADING_SYSTEM).getContract();
+const usdc: Contract = new ERC20(Address.USDC).getContract();
+const weth: Contract = new ERC20(Address.WETH).getContract();
+const tc: Contract = new Traderchain(Address.TRADERCHAIN).getContract();
+const system: Contract = new TradingSystem(Address.TRADING_SYSTEM).getContract();
 
 export function useTcContracts() {
   const { isAuthenticated, setAuthenticated } = Utils.useAuth();
@@ -21,13 +22,6 @@ export function useTcContracts() {
   async function connect() {
     const accounts = await Provider.connect();
     setAuthenticated(true);
-    
-    const signer = Provider.getSigner();
-    usdc = usdc.connect(signer);
-    weth = weth.connect(signer);
-    tc = tc.connect(signer);
-    system = system.connect(signer);
-    
     return accounts;
   }
 
@@ -89,12 +83,35 @@ export function useTcContracts() {
   
   async function createSystem() {
     if (!await checkConnect())  return;
-        
-    return await tc.createTradingSystem();
+
+    const signer = Provider.getSigner();
+    return await tc.connect(signer).createTradingSystem();
   }  
   
-  return { 
-    usdc, weth, tc, system,
-    connect, getAccounts, fetchSystem, fetchSystems, fetchSystemInvestor, createSystem,
+  async function buyShares(systemId: string, amount: BigNumber) {
+    const signer = Provider.getSigner();
+    await usdc.connect(signer).approve(tc.address, amount);
+    // TODO: listen to approve event
+    return await tc.connect(signer).buyShares(systemId, amount, {gasLimit: '1000000'});        
+  }
+  
+  async function sellShares(systemId: string, shares: BigNumber) {    
+    const signer = Provider.getSigner();
+    return await tc.connect(signer).sellShares(systemId, shares);    
+  }
+  
+  async function placeBuyOrder(systemId: string, amount: BigNumber) {    
+    const signer = Provider.getSigner();
+    return await tc.connect(signer).placeBuyOrder(systemId, amount);
+  }
+  
+  async function placeSellOrder(systemId: string, amount: BigNumber) {
+    const signer = Provider.getSigner();
+    return await tc.connect(signer).placeSellOrder(systemId, amount);
+  }
+  
+  return {    
+    connect, getAccounts, fetchSystem, fetchSystems, fetchSystemInvestor, 
+    createSystem, buyShares, sellShares, placeBuyOrder, placeSellOrder, 
   };
 }

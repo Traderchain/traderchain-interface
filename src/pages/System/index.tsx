@@ -14,7 +14,7 @@ export default function System() {
   const [systemInvestor, setSystemInvestor] = useState<any>({ systemId });
   const [isTrader, setIsTrader] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
-  const { usdc, weth, tc, getAccounts, fetchSystem, fetchSystems, fetchSystemInvestor } = useTcContracts();
+  const { getAccounts, fetchSystem, fetchSystems, fetchSystemInvestor, buyShares, sellShares, placeBuyOrder, placeSellOrder } = useTcContracts();
   
   useEffect(() => {
     async function init() {      
@@ -38,39 +38,39 @@ export default function System() {
     setSystemInvestor(await fetchSystemInvestor(systemId!, investor));
   }
   
-  async function buyShares() {
+  async function buySystemShares() {
     const usdcAmount = ethers.utils.parseUnits('100', 6);
-    await usdc.approve(tc.address, usdcAmount);
-    // TODO: listen to approve event
-    const tx = await tc.buyShares(systemId, usdcAmount, {gasLimit: '1000000'});    
+    const tx = await buyShares(systemId!, usdcAmount);
     console.log(tx);
   }
   
-  async function sellShares() {
+  async function sellSystemShares() {
     if (!systemInvestor.shares)  return;
     
     const numberOfShares = systemInvestor.shares.div(ethers.BigNumber.from(2));
-    const tx = await tc.sellShares(systemId, numberOfShares);    
+    const tx = await sellShares(systemId!, numberOfShares);    
     console.log(tx);
   }
 
-  async function placeBuyOrder() {
+  async function submitBuyOrder() {
     const usdcAmount = ethers.utils.parseUnits('50', 6);
-    await tc.placeBuyOrder(systemId, usdcAmount);
+    const tx = await placeBuyOrder(systemId!, usdcAmount);    
+    console.log(tx);
   }
   
-  async function placeSellOrder() {
+  async function submitSellOrder() {
     const wethAmount = ethers.utils.parseUnits('0.01', 18);
-    await tc.placeSellOrder(systemId, wethAmount);
+    const tx = await placeSellOrder(systemId!, wethAmount);
+    console.log(tx);
   }
 
   return (
     <div id="system">
       <VuiBox>
-        <VuiButton variant="contained" color="info" onClick={buyShares} sx={{margin: "10px"}}>
+        <VuiButton variant="contained" color="info" onClick={buySystemShares} sx={{margin: "10px"}}>
           BUY SHARES
         </VuiButton>
-        <VuiButton variant="contained" color="error" onClick={sellShares} sx={{margin: "10px"}}>
+        <VuiButton variant="contained" color="error" onClick={sellSystemShares} sx={{margin: "10px"}}>
           SELL SHARES
         </VuiButton>
       </VuiBox>
@@ -78,10 +78,10 @@ export default function System() {
       
       {isTrader && 
       <VuiBox>
-        <VuiButton variant="contained" color="info" onClick={placeBuyOrder} sx={{margin: "10px"}}>
+        <VuiButton variant="contained" color="info" onClick={submitBuyOrder} sx={{margin: "10px"}}>
           PLACE BUY ORDER
         </VuiButton>
-        <VuiButton variant="contained" color="error" onClick={placeSellOrder} sx={{margin: "10px"}}>
+        <VuiButton variant="contained" color="error" onClick={submitSellOrder} sx={{margin: "10px"}}>
           PLACE SELL ORDER
         </VuiButton>
       </VuiBox>}
