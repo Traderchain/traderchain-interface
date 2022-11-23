@@ -3,10 +3,14 @@ import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { Grid, Card, Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
-import Section from 'components/Section';
 import { useAuth } from 'utils';
 import { useTcContracts } from 'utils/tc';
 import { Address } from 'utils/constants';
+import Section from 'components/Section';
+import NAV from './components/NAV';
+import Portfolio from './components/Portfolio';
+import FundStats from './components/FundStats';
+import InvestorStats from './components/InvestorStats';
 
 export default function System() {
   const { systemId } = useParams<{ systemId?: string }>();
@@ -80,77 +84,140 @@ export default function System() {
     console.log(tx);
   }
 
+  const fundStatsColumns = [
+    { name: "property" },
+    { name: "value" },
+  ];
+
+  const fundStatsRows = [
+    { property: "Net Asset Value", value: (system.nav && system.nav.toString()) },
+    { property: "Total Shares", value: (system.totalShares && system.totalShares.toString()) },
+    { property: "Share Price", value: (system.sharePrice && system.sharePrice.toString()) },
+    { property: "WETH Price", value: (system.assetPrice && system.assetPrice.toString()) },
+    { property: "Vault Balance", value: (system.vaultBalance && system.vaultBalance.toString()) },
+    { property: "Vault WETH Balance", value: (system.vaultAsset && system.vaultAsset.toString()) },
+    { property: "Trader Address", value: system.trader },
+  ];
+  
+  const investorStatsColumns = [
+    { name: "property" },
+    { name: "value" },
+  ];
+
+  const investorStatsRows = [
+    { property: "Shares Holding", value: (systemInvestor.shares && systemInvestor.shares.toString()) },
+    { property: "Equity Value", value: (systemInvestor.shares && system.sharePrice && (systemInvestor.shares.mul(system.sharePrice)).toString()) },    
+    { property: "Investor Address", value: systemInvestor.investor },
+  ];
+  
   return (
     <div id="system">      
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <Section        
-            title = "Invest"
+            type = "jelly"
+            title = {`Fund ${systemId}`}
             titleSize = "small"
             body = {
-              <VuiBox display="flex" alignItems="center" justifyContent="center">
-                <VuiButton variant="contained" color="info" onClick={buySystemShares} sx={{margin: "10px"}}>
-                  BUY SHARES
-                </VuiButton>
-                <VuiButton variant="contained" color="error" onClick={sellSystemShares} sx={{margin: "10px"}}>
-                  SELL SHARES
-                </VuiButton>
-              </VuiBox> 
-            }
-            minHeight = "130px"
-          />
-        </Grid>                
-        <Grid item xs={12} md={6}>
-          {isTrader && 
-          <Section        
-            title = "Trade"
-            titleSize = "small"
-            body = {
-              <VuiBox display="flex" alignItems="center" justifyContent="center">
-                <VuiButton variant="contained" color="info" onClick={submitBuyOrder} sx={{margin: "10px"}}>
-                  PLACE BUY ORDER
-                </VuiButton>
-                <VuiButton variant="contained" color="error" onClick={submitSellOrder} sx={{margin: "10px"}}>
-                  PLACE SELL ORDER
-                </VuiButton>
+              <VuiBox height="300px">
+                <VuiTypography color="text" height="180px">
+                  Fund description...
+                </VuiTypography>
+                <Divider />
+                
+                {isTrader && 
+                <VuiBox display="flex" alignItems="center" justifyContent="center">
+                  <VuiButton variant="contained" color="info" onClick={submitBuyOrder} sx={{margin: "10px"}}>
+                    BUY ASSET
+                  </VuiButton>
+                  <VuiButton variant="contained" color="error" onClick={submitSellOrder} sx={{margin: "10px"}}>
+                    SELL ASSET
+                  </VuiButton>
+                </VuiBox>
+                }
               </VuiBox>
             }
-            minHeight = "130px"
-          />}
+            minHeight = "300px"
+          />
         </Grid>                                
+        <Grid item xs={12} md={8}>
+          <Section        
+            title = "Net Asset Value"
+            titleSize = "small"
+            body = {
+              <VuiBox height="300px">
+                <NAV />
+              </VuiBox>
+            }
+            minHeight = "300px"
+          />
+        </Grid>
+        
+        <Grid item xs={12} md={7}>
+          <Section        
+            title = "Fund Stats"
+            titleSize = "small"
+            body = {
+              <VuiBox>       
+                <FundStats columns={fundStatsColumns} rows={fundStatsRows} />
+              </VuiBox>
+            }
+            minHeight = "340px"
+          />    
+        </Grid>                                                     
+        <Grid item xs={12} md={5}>
+          <Section        
+            title = "Portfolio Allocation"
+            titleSize = "small"
+            body = {
+              <VuiBox height="300px">
+                <Portfolio />
+              </VuiBox>
+            }
+            minHeight = "300px"
+          />
+        </Grid>                                
+        
+        {systemInvestor.investor && 
+        <Grid item xs={12} md={7}>
+          <Section        
+            title = "Your Equity Value"
+            titleSize = "small"
+            body = {
+              <VuiBox height="300px">
+                <NAV />
+              </VuiBox>
+            }
+            minHeight = "300px"
+          />
+        </Grid>}
+        {systemInvestor.investor && 
+        <Grid item xs={12} md={5}>
+          <Section        
+            title = "Your Investment Stats"
+            titleSize = "small"
+            body = {
+              <VuiBox>                                    
+                <InvestorStats columns={investorStatsColumns} rows={investorStatsRows} />
+                <Divider />
+                
+                <VuiBox display="flex" alignItems="center" justifyContent="center">
+                  <VuiButton variant="contained" color="info" onClick={buySystemShares} sx={{margin: "10px"}}>
+                    BUY SHARES
+                  </VuiButton>
+                  <VuiButton variant="contained" color="error" onClick={sellSystemShares} sx={{margin: "10px"}}>
+                    SELL SHARES
+                  </VuiButton>
+                </VuiBox> 
+              </VuiBox>
+            }
+            minHeight = "340px"
+          />    
+        </Grid>}           
+                
       </Grid>      
       <Divider />
-      
-      <Section        
-        title = {`Fund ${system.systemId}`}
-        body = {
-          <VuiBox>
-            <VuiTypography color="text">Fund description...</VuiTypography>
-            <Divider />
             
-            <VuiTypography color="text">
-              <b>Fund Stats</b><br/>
-              NAV: {system.nav && system.nav.toString()}<br/>
-              Total Shares: {system.totalShares && system.totalShares.toString()}<br/>
-              Share Price: {system.sharePrice && system.sharePrice.toString()}<br/>
-              Asset Price: {system.assetPrice && system.assetPrice.toString()}<br/>
-              Vault Balance: {system.vaultBalance && system.vaultBalance.toString()}<br/>
-              Vault Asset: {system.vaultAsset && system.vaultAsset.toString()}<br/>
-              Trader: {system.trader && system.trader}<br/>
-            </VuiTypography>
-            <Divider />
-            
-            {systemInvestor.investor && 
-            <VuiTypography color="text">
-              <b>Your Investment</b><br/>
-              Investor: {systemInvestor.investor && systemInvestor.investor}<br/>
-              Shares: {systemInvestor.shares && systemInvestor.shares.toString()}<br/>
-              Value: {systemInvestor.shares && system.sharePrice && (systemInvestor.shares.mul(system.sharePrice)).toString()}<br/>
-            </VuiTypography>}
-          </VuiBox>
-        }
-      />
-      
     </div>
   );
 }
