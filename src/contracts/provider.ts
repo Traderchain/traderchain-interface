@@ -18,13 +18,19 @@ class Provider {
       this.readProvider = new AlchemyProvider(this.network, "Bcipbi3wYgtmrR-gkp6Fdc888i3N3ixG");
     }
     
-    if (this.hasWallet())  this.writeProvider = new Web3Provider(window.ethereum);
+    this.initWriteProvider();
+  }
+  
+  initWriteProvider() {
+    if (!this.hasWallet() || this.writeProvider)  return;
+    
+    this.writeProvider = new Web3Provider(window.ethereum);
   }
   
   async connect() {
     if (!this.hasWallet())  throw Error('Please install a Web3 Wallet');
     
-    if (!this.writeProvider)  this.writeProvider = new Web3Provider(window.ethereum);
+    this.initWriteProvider();
     return await this.getAccounts();
   }
   
@@ -43,7 +49,7 @@ class Provider {
   getSigner() {    
     return this.writeProvider.getSigner();    
   }
-  
+    
   async getAccounts() {
     return await this.writeProvider.send("eth_requestAccounts", []);
   }
@@ -60,6 +66,7 @@ class Provider {
     const value: BigNumber = ethers.utils.parseEther(amount);
     return await this.getSigner().sendTransaction({to, value});    
   }
+    
 }
 
 const provider = new Provider();

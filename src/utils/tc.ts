@@ -16,6 +16,8 @@ const weth: Contract = new ERC20(Address.WETH);
 const tc: Contract = new Traderchain(Address.TRADERCHAIN);
 const system: Contract = new TradingSystem(Address.TRADING_SYSTEM);
 
+let isListening = false;
+
 export function useTcContracts() {
   const { isAuthenticated, setAuthenticated } = Utils.useAuth();
   const { showDialog, showError, hideDialog } = Utils.useAlertDialog();
@@ -29,7 +31,7 @@ export function useTcContracts() {
     try {
       await Provider.connect();
       setAuthenticated(true);
-      
+      registerListeners();
       return await checkChainId();
     }
     catch(err: any) {
@@ -37,7 +39,28 @@ export function useTcContracts() {
       return false;
     }
   }
+    
+  async function registerListeners() {
+    if (!Provider.hasWallet() || isListening)  return;
+
+    window.ethereum.removeListener('accountsChanged', accountsChanged);
+    window.ethereum.on('accountsChanged', accountsChanged);
+    
+    window.ethereum.removeListener('chainChanged', chainChanged);
+    window.ethereum.on('chainChanged', chainChanged);
+    
+    isListening = true;
+  }
+  
+  function accountsChanged(accounts: string[]) {
+    console.log('accountsChanged', accounts);    
+    setAuthenticated(accounts.length > 0);
+  }
       
+  function chainChanged(chainId: string) {
+    console.log('chainChanged', chainId);
+  }
+  
   async function checkChainId() {
     try {
       const chainId = await Provider.getChainId();
