@@ -67,7 +67,7 @@ export default function StatsTable({ columns, rows }: any) {
   });
   
   return (
-    <TableContainer>
+    <TableContainer sx={{ borderRadius: "0" }}>
       <Table>
         <VuiBox component="thead">
           <TableRow>{renderColumns}</TableRow>

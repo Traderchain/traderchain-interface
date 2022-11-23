@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { Grid, Card, Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
-import { useAuth } from 'utils';
+import { useAuth, amountBN, amountStr, amountFloat, amountCurrency, numberFormat } from 'utils';
 import { useTcContracts } from 'utils/tc';
 import { Address } from 'utils/constants';
 import Section from 'components/Section';
@@ -59,7 +59,7 @@ export default function System() {
   }
   
   async function buySystemShares() {
-    const usdcAmount = ethers.utils.parseUnits('10', 6);
+    const usdcAmount = amountBN('10', 6);
     const tx = await buyShares(systemId!, usdcAmount);
     console.log(tx);
   }
@@ -73,13 +73,13 @@ export default function System() {
   }
 
   async function submitBuyOrder() {
-    const usdcAmount = ethers.utils.parseUnits('10', 6);
+    const usdcAmount = amountBN('10', 6);
     const tx = await placeBuyOrder(systemId!, usdcAmount);    
     console.log(tx);
   }
   
   async function submitSellOrder() {
-    const wethAmount = ethers.utils.parseUnits('0.00007', 18);
+    const wethAmount = amountBN('0.00007', 18);
     const tx = await placeSellOrder(systemId!, wethAmount);
     console.log(tx);
   }
@@ -90,12 +90,12 @@ export default function System() {
   ];
 
   const fundStatsRows = [
-    { property: "Net Asset Value", value: (system.nav && system.nav.toString()) },
-    { property: "Total Shares", value: (system.totalShares && system.totalShares.toString()) },
-    { property: "Share Price", value: (system.sharePrice && system.sharePrice.toString()) },
-    { property: "WETH Price", value: (system.assetPrice && system.assetPrice.toString()) },
-    { property: "Vault Balance", value: (system.vaultBalance && system.vaultBalance.toString()) },
-    { property: "Vault WETH Balance", value: (system.vaultAsset && system.vaultAsset.toString()) },
+    { property: "Net Asset Value", value: system.nav && amountCurrency(system.nav) },
+    { property: "Total Shares", value: system.totalShares && numberFormat(system.totalShares.toNumber()) },
+    { property: "Share Price", value: system.sharePrice && amountCurrency(system.sharePrice, 6, 4) },
+    { property: "WETH Price", value: system.assetPrice && amountCurrency(system.assetPrice, 6, 5) },
+    { property: "Vault Total Balance", value: system.vaultBalance && amountCurrency(system.vaultBalance) },
+    { property: "Vault WETH Balance", value: system.vaultAsset && amountFloat(system.vaultAsset, 18) },
     { property: "Trader Address", value: system.trader },
   ];
   
@@ -105,8 +105,8 @@ export default function System() {
   ];
 
   const investorStatsRows = [
-    { property: "Shares Holding", value: (systemInvestor.shares && systemInvestor.shares.toString()) },
-    { property: "Equity Value", value: (systemInvestor.shares && system.sharePrice && (systemInvestor.shares.mul(system.sharePrice)).toString()) },    
+    { property: "Shares Holding", value: systemInvestor.shares && numberFormat(systemInvestor.shares.toNumber()) },
+    { property: "Equity Value", value: systemInvestor.shares && system.sharePrice && amountCurrency(systemInvestor.shares.mul(system.sharePrice)) },    
     { property: "Investor Address", value: systemInvestor.investor },
   ];
   
