@@ -177,8 +177,7 @@ export default function System() {
             minHeight = "300px"
           />
         </Grid>                                
-        
-        {systemInvestor.investor && 
+                
         <Grid item xs={12} md={7}>
           <Section        
             title = "Your Equity Value"
@@ -190,8 +189,7 @@ export default function System() {
             }
             minHeight = "300px"
           />
-        </Grid>}
-        {systemInvestor.investor && 
+        </Grid>
         <Grid item xs={12} md={5}>
           <Section        
             title = "Your Investment Stats"
@@ -213,7 +211,7 @@ export default function System() {
             }
             minHeight = "340px"
           />    
-        </Grid>}           
+        </Grid>           
                 
       </Grid>      
       <Divider />
