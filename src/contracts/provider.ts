@@ -1,50 +1,59 @@
 import { ethers } from 'ethers';
-import { Web3Provider, AlchemyProvider } from '@ethersproject/providers';
-import { BigNumber } from '@ethersproject/bignumber'
+import { JsonRpcProvider, Web3Provider, AlchemyProvider } from '@ethersproject/providers';
+import { BigNumber } from '@ethersproject/bignumber';
+import { isDevelopmentEnv } from 'utils/env';
 
 class Provider {
-  provider: any;
+  network: string;  
+  readProvider: any;
+  writeProvider: any;
   
-  constructor() {        
-    if (this.hasWallet()) {
-      this.provider = new Web3Provider(window.ethereum);
+  constructor() { 
+    if (isDevelopmentEnv()) {
+      this.network = "hardhat";
+      this.readProvider = new JsonRpcProvider("http://127.0.0.1:8545");
     }
     else {
-      this.provider = new AlchemyProvider("goerli", "Bcipbi3wYgtmrR-gkp6Fdc888i3N3ixG");
+      this.network = "goerli";
+      this.readProvider = new AlchemyProvider(this.network, "Bcipbi3wYgtmrR-gkp6Fdc888i3N3ixG");
     }
+    
+    if (this.hasWallet())  this.writeProvider = new Web3Provider(window.ethereum);
   }
   
   async connect() {
     if (!this.hasWallet())  throw Error('Please install a Web3 Wallet');
     
-    this.provider = new Web3Provider(window.ethereum);
+    if (!this.writeProvider)  this.writeProvider = new Web3Provider(window.ethereum);
     return await this.getAccounts();
   }
   
   hasWallet() {
     return (typeof window.ethereum !== 'undefined');
   }
-    
-  getProvider() {
-    return this.provider;
+  
+  getReadProvider() {
+    return this.readProvider;
+  }  
+  
+  getWriteProvider() {
+    return this.writeProvider;
   }
   
   getSigner() {    
-    return this.provider.getSigner();    
+    return this.writeProvider.getSigner();    
   }
   
   async getAccounts() {
-    if (!this.hasWallet())  throw Error('Please install a Web3 Wallet');
-    
-    return await this.provider.send("eth_requestAccounts", []);
+    return await this.writeProvider.send("eth_requestAccounts", []);
   }
   
   async getChainId() {
-    return await this.provider.send("eth_chainId", []);
+    return await this.writeProvider.send("eth_chainId", []);
   }
   
   async switchChainId(chainId: string) {
-    return await this.provider.send("wallet_switchEthereumChain", [{ chainId }]);
+    return await this.writeProvider.send("wallet_switchEthereumChain", [{ chainId }]);
   }
   
   async sendTransaction(to: string, amount: string) {

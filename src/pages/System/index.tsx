@@ -10,6 +10,7 @@ import { Address } from 'utils/constants';
 
 export default function System() {
   const { systemId } = useParams<{ systemId?: string }>();
+  const [account, setAccount] = useState<string>('');
   const [system, setSystem] = useState<any>({ systemId });
   const [systemInvestor, setSystemInvestor] = useState<any>({ systemId });
   const [isTrader, setIsTrader] = useState<boolean>(false);
@@ -17,36 +18,40 @@ export default function System() {
   const { getAccounts, fetchSystem, fetchSystems, fetchSystemInvestor, buyShares, sellShares, placeBuyOrder, placeSellOrder } = useTcContracts();
   
   useEffect(() => {
-    async function init() {      
+    async function init() {
       await loadSystem();
-      await loadSystemInvestor();
+      await loadAccount();      
     }
     init();
   }, [isAuthenticated]);
+  
+  useEffect(() => {
+    if (account)  loadSystemInvestor();
+  }, [account]);
+  
+  useEffect(() => {
+    if (account && system.trader)  setIsTrader(system.trader && system.trader.toLowerCase() == account.toLowerCase());
+  }, [account, system]);
 
-  async function loadSystem() {    
-    const _system = await fetchSystem(systemId!);
-    setSystem(_system);    
-    
+  async function loadAccount() {
     try {
       const accounts = await getAccounts();
-      const trader = accounts[0];      
-      setIsTrader(_system.trader && trader && _system.trader.toLowerCase() == trader.toLowerCase());
+      setAccount(accounts[0]);
     }
     catch(err) {
       console.log(err);
     }
   }
+  
+  async function loadSystem() {    
+    const _system = await fetchSystem(systemId!);
+    setSystem(_system);        
+  }
     
   async function loadSystemInvestor() {    
-    try {
-      const accounts = await getAccounts();
-      const investor = accounts[0];
-      setSystemInvestor(await fetchSystemInvestor(systemId!, investor));
-    }
-    catch(err) {
-      console.log(err);
-    }
+    if (!account)  return;
+    
+    setSystemInvestor(await fetchSystemInvestor(systemId!, account));    
   }
   
   async function buySystemShares() {
@@ -117,12 +122,13 @@ export default function System() {
             </VuiTypography>
             <Divider />
             
+            {systemInvestor.investor && 
             <VuiTypography color="text">
               <b>Your Investment</b><br/>
               Investor: {systemInvestor.investor && systemInvestor.investor}<br/>
               Shares: {systemInvestor.shares && systemInvestor.shares.toString()}<br/>
               Value: {systemInvestor.shares && system.sharePrice && (systemInvestor.shares.mul(system.sharePrice)).toString()}<br/>
-            </VuiTypography>
+            </VuiTypography>}
           </VuiBox>
         }
       />

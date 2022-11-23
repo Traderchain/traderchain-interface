@@ -2,14 +2,24 @@ import { ethers } from 'ethers';
 import Provider from 'contracts/provider';
 
 export default class Contract {    
-  contract: any
+  address: string;
+  abi: any;  
+  readContract: any;
+  writeContract: any;
     
-  constructor(address: string, abi: any) {    
-    this.contract = new ethers.Contract(address, abi, Provider.getProvider());
+  constructor(_address: string, _abi: any) {
+    this.address = _address;
+    this.abi = _abi;    
+    this.readContract = new ethers.Contract(this.address, this.abi, Provider.getReadProvider());
   }
   
-  getContract() {    
-    return this.contract;
+  getReadContract() {
+    return this.readContract;
+  }
+  
+  getWriteContract() {    
+    if (!this.writeContract)  this.writeContract = new ethers.Contract(this.address, this.abi, Provider.getWriteProvider());
+    return this.writeContract;
   }
   
 }

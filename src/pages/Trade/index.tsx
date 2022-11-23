@@ -7,24 +7,36 @@ import { useAuth } from 'utils';
 import { useTcContracts}  from 'utils/tc';
 
 export default function Trade() {
+  const [account, setAccount] = useState<string>('');
   const [systems, setSystems] = useState<any[]>([]);
   const { isAuthenticated } = useAuth();
   const { checkConnect, getAccounts, fetchSystem, fetchSystems, createSystem } = useTcContracts();
     
   useEffect(() => {
     async function init() {
-      await fetchTradingSystems();
+      await loadAccount();
     }
     init();
   }, [isAuthenticated]);
   
-  async function fetchTradingSystems() {
-    if (!await checkConnect())  return;
-    
-    const accounts = await getAccounts();
-    const trader = accounts[0];
-    
-    const newSystems = await fetchSystems(trader);
+  useEffect(() => {
+    if (account)  loadTradingSystems();
+  }, [account]);
+  
+  async function loadAccount() {    
+    try {
+      const accounts = await getAccounts();
+      setAccount(accounts[0]);
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+  
+  async function loadTradingSystems() {
+    if (!account)  return;
+
+    const newSystems = await fetchSystems(account);
     setSystems(systems => newSystems);
   }
 
