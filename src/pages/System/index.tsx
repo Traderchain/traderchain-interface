@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { Divider } from '@mui/material';
+import { Grid, Card, Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
 import { useAuth } from 'utils';
@@ -81,26 +81,44 @@ export default function System() {
   }
 
   return (
-    <div id="system">
-      <VuiBox>
-        <VuiButton variant="contained" color="info" onClick={buySystemShares} sx={{margin: "10px"}}>
-          BUY SHARES
-        </VuiButton>
-        <VuiButton variant="contained" color="error" onClick={sellSystemShares} sx={{margin: "10px"}}>
-          SELL SHARES
-        </VuiButton>
-      </VuiBox>
-      <Divider />
-      
-      {isTrader && 
-      <VuiBox>
-        <VuiButton variant="contained" color="info" onClick={submitBuyOrder} sx={{margin: "10px"}}>
-          PLACE BUY ORDER
-        </VuiButton>
-        <VuiButton variant="contained" color="error" onClick={submitSellOrder} sx={{margin: "10px"}}>
-          PLACE SELL ORDER
-        </VuiButton>
-      </VuiBox>}
+    <div id="system">      
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <Section        
+            title = "Invest"
+            titleSize = "small"
+            body = {
+              <VuiBox display="flex" alignItems="center" justifyContent="center">
+                <VuiButton variant="contained" color="info" onClick={buySystemShares} sx={{margin: "10px"}}>
+                  BUY SHARES
+                </VuiButton>
+                <VuiButton variant="contained" color="error" onClick={sellSystemShares} sx={{margin: "10px"}}>
+                  SELL SHARES
+                </VuiButton>
+              </VuiBox> 
+            }
+            minHeight = "130px"
+          />
+        </Grid>                
+        <Grid item xs={12} md={6}>
+          {isTrader && 
+          <Section        
+            title = "Trade"
+            titleSize = "small"
+            body = {
+              <VuiBox display="flex" alignItems="center" justifyContent="center">
+                <VuiButton variant="contained" color="info" onClick={submitBuyOrder} sx={{margin: "10px"}}>
+                  PLACE BUY ORDER
+                </VuiButton>
+                <VuiButton variant="contained" color="error" onClick={submitSellOrder} sx={{margin: "10px"}}>
+                  PLACE SELL ORDER
+                </VuiButton>
+              </VuiBox>
+            }
+            minHeight = "130px"
+          />}
+        </Grid>                                
+      </Grid>      
       <Divider />
       
       <Section        

@@ -5,7 +5,7 @@ import { VuiBox, VuiTypography } from 'traderchain-ui';
 import cardBg from "assets/images/card-bg.png";
 import cardBgJelly from "assets/images/card-bg-jellyfish.png";
 
-export default function Section({ type, title, body, more, minHeight }: any) {
+export default function Section({ type, title, titleSize, body, more, minHeight }: any) {
   let sx: any = {};
   if (type == "blue") {
     sx.backgroundImage = `url(${cardBg})`;              
@@ -22,7 +22,7 @@ export default function Section({ type, title, body, more, minHeight }: any) {
       <VuiBox display="flex" flexDirection="column" sx={{ minHeight: minHeight || "210px" }}>
         <VuiBox display="flex" flexDirection="column" mb="auto">     
           <Link to={(more && more.to) || "#"}>
-            <VuiTypography color="white" variant="h3" fontWeight="bold" mb="3px">
+            <VuiTypography color="white" variant={titleSize == "small" ? "h4" : "h3"} fontWeight="bold" mb="3px">
               {title}
             </VuiTypography>
           </Link>
