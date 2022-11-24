@@ -6,7 +6,7 @@ import * as Utils from 'utils';
 import { useTcContracts } from 'utils/tc';
 import { CHAIN_NAME, Page } from 'utils/constants';
 
-const { useVisionUIController } = Context;
+const { useVisionUIController, setTransparentNavbar } = Context;
 const { navbar, navbarContainer, navbarRow, navbarIconButton } = HeaderStyles;
 
 export default function Header() {  
@@ -14,7 +14,7 @@ export default function Header() {
   const { showDialog, hideDialog } = Utils.useAlertDialog();
   const { checkConnect } = useTcContracts();
   const location = useLocation();
-  const [controller] = useVisionUIController();
+  const [controller, dispatch] = useVisionUIController();
   const { transparentNavbar } = controller;
   const absolute = false;
   const light = false;
@@ -25,11 +25,16 @@ export default function Header() {
   if (location.pathname.startsWith('/trade'))  page = Page.TRADE;  
   
   useEffect(() => {
-    async function init() {
-      // TODO: save authenticated to localStorage
-      // onConnect();
+    function handleTransparentNavbar() {
+      setTransparentNavbar(dispatch, window.scrollY === 0);
     }
-    init();
+    
+    handleTransparentNavbar();
+    window.addEventListener("scroll", handleTransparentNavbar);
+        
+    return () => {
+      window.removeEventListener("scroll", handleTransparentNavbar);
+    };
   }, [isAuthenticated]);
         
   async function onConnect() {
