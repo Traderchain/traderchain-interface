@@ -12,7 +12,7 @@ export default function StatsTable({ columns, rows }: any) {
         pb={1.25}
         pl={1}
         textAlign="left"
-        fontSize="70%"
+        fontSize="55%"
         color="text"
         opacity={0.7}
         borderBottom="1px solid rgb(45, 55, 72)"

@@ -20,8 +20,8 @@ export function amountFloat(amount: BigNumber, decimals = 6) {
 }
 
 export function amountCurrency(amount: BigNumber, decimals = 6, fixed = 2) {
-  const amount_float = amountFloat(amount, decimals).toFixed(fixed);
-  return `${amount_float} USDC`;
+  const number = numberFormat(parseFloat(amountFloat(amount, decimals).toFixed(fixed)));
+  return `${number} USDC`;
 }
 
 export function numberFormat(number: number) {
