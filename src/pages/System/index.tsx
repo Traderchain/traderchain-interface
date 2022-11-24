@@ -2,8 +2,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { Grid, Card, Divider } from '@mui/material';
-import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
-import { useAuth, amountBN, amountStr, amountFloat, amountCurrency, numberFormat } from 'utils';
+import { VuiBox, VuiButton, VuiTypography, VuiInput } from 'traderchain-ui';
+import { useAuth, usdcAmountBN, amountBN, amountStr, amountFloat, amountCurrency, numberFormat, parseAmount, parseShares } from 'utils';
 import { hasWallet, useTcContracts } from 'utils/tc';
 import { Address } from 'utils/constants';
 import Section from 'components/Section';
@@ -21,6 +21,10 @@ export default function System() {
   const [isTrader, setIsTrader] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
   const { getAccounts, fetchSystem, fetchSystems, fetchSystemInvestor, buyShares, sellShares, placeBuyOrder, placeSellOrder } = useTcContracts();
+  const [investAmount, setInvestAmount] = useState<any>('');
+  const [investShares, setInvestShares] = useState<number>(0);
+  const [redeemShares, setRedeemShares] = useState<number>(0);
+  const [redeemAmount, setRedeemAmount] = useState<number>(0);
   
   useEffect(() => {
     async function init() {
@@ -61,18 +65,48 @@ export default function System() {
     setSystemInvestor(await fetchSystemInvestor(systemId!, account));    
   }
   
+  function onChangeInvestAmount(e: any) {    
+    const amount = parseAmount(e.target.value);
+    if (amount === false)  return;
+    setInvestAmount(amount);
+    
+    if (amount && system.sharePrice) {      
+      const shares = usdcAmountBN(amount).div(system.sharePrice).toNumber();
+      setInvestShares(shares);
+    }
+  }
+  
   async function buySystemShares() {
-    const usdcAmount = amountBN('10', 6);
+    if (!investAmount)  return;
+    
+    const usdcAmount = usdcAmountBN(investAmount);
     const tx = await buyShares(systemId!, usdcAmount);
     console.log(tx);
+    
+    setInvestAmount('');
+    setInvestShares(0);
+  }
+  
+  function onChangeRedeemShares(e: any) {    
+    const shares = parseShares(e.target.value);
+    if (shares === false)  return;
+    setRedeemShares(shares);
+    
+    if (shares && system.sharePrice) {      
+      const amount = amountFloat(system.sharePrice,6) * shares;
+      setRedeemAmount(amount);
+    }
   }
   
   async function sellSystemShares() {
-    if (!systemInvestor.shares)  return;
+    if (!redeemShares)  return;
     
-    const numberOfShares = systemInvestor.shares.div(ethers.BigNumber.from(2));
-    const tx = await sellShares(systemId!, numberOfShares);    
+    const shares = amountBN(redeemShares,0);
+    const tx = await sellShares(systemId!, shares);    
     console.log(tx);
+    
+    setRedeemShares(0);
+    setRedeemAmount(0);
   }
 
   async function submitBuyOrder() {
@@ -110,7 +144,8 @@ export default function System() {
   const investorStatsRows = [
     { property: "Shares Holding", value: systemInvestor.shares && numberFormat(systemInvestor.shares.toNumber()) },
     { property: "Equity Value", value: systemInvestor.shares && system.sharePrice && amountCurrency(systemInvestor.shares.mul(system.sharePrice)) },    
-    { property: "Investor Address", value: <ExplorerLink hash={systemInvestor.investor} /> },
+    { property: "USDC Balance", value: systemInvestor.usdcBalance && amountCurrency(systemInvestor.usdcBalance) },
+    { property: "Your Address", value: <ExplorerLink hash={systemInvestor.investor} /> },
   ];
   
   return (
@@ -198,18 +233,61 @@ export default function System() {
             title = "Your Investment Stats"
             titleSize = "small"
             body = {
-              <VuiBox>                                    
-                <InvestorStats columns={investorStatsColumns} rows={investorStatsRows} />
+              <VuiBox>
+                <VuiBox sx={{ borderBottom: "1px solid rgb(45, 55, 72)" }}>
+                  <InvestorStats columns={investorStatsColumns} rows={investorStatsRows} />
+                </VuiBox>
                 <Divider />
                 
-                <VuiBox display="flex" alignItems="center" justifyContent="center">
-                  <VuiButton variant="contained" color="info" onClick={buySystemShares} sx={{margin: "10px"}}>
-                    BUY SHARES
-                  </VuiButton>
-                  <VuiButton variant="contained" color="error" onClick={sellSystemShares} sx={{margin: "10px"}}>
-                    SELL SHARES
-                  </VuiButton>
-                </VuiBox> 
+                <VuiBox mb={2}>
+                  <VuiBox mb={1} ml={0.5}>
+                    <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
+                      Invest USDC Amount
+                    </VuiTypography>
+                  </VuiBox>                  
+                  <Grid container spacing={0}>
+                    <Grid item xs={4}>
+                      <VuiInput type="text" placeholder="USDC amount..." fontWeight="500" value={investAmount} onChange={onChangeInvestAmount} />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <VuiBox ml={1} pt={0.4}>
+                        <VuiTypography component="label" variant="button" color="white" fontWeight="medium" sx={{ fontSize: "75%" }}>
+                          ≈ {numberFormat(investShares)} Shares
+                        </VuiTypography>
+                      </VuiBox>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <VuiButton variant="contained" color="info" onClick={buySystemShares} size="small" sx={{ padding: "10px" }}>
+                        BUY SHARES
+                      </VuiButton>
+                    </Grid>
+                  </Grid>                  
+                </VuiBox>
+                
+                <VuiBox mb={2}>
+                  <VuiBox mb={1} ml={0.5}>
+                    <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
+                      Redeem Shares
+                    </VuiTypography>
+                  </VuiBox>                  
+                  <Grid container spacing={0}>
+                    <Grid item xs={4}>
+                      <VuiInput type="text" placeholder="Shares to sell..." fontWeight="500" value={redeemShares || ''} onChange={onChangeRedeemShares} />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <VuiBox ml={1} pt={0.4}>
+                        <VuiTypography component="label" variant="button" color="white" fontWeight="medium" sx={{ fontSize: "75%" }}>
+                          ≈ {numberFormat(redeemAmount)} USDC
+                        </VuiTypography>
+                      </VuiBox>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <VuiButton variant="contained" color="error" onClick={sellSystemShares} size="small" sx={{ padding: "10px" }}>
+                        SELL SHARES
+                      </VuiButton>
+                    </Grid>
+                  </Grid>                  
+                </VuiBox>
               </VuiBox>
             }
             minHeight = "340px"

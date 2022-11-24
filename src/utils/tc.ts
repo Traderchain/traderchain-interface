@@ -128,10 +128,11 @@ export function useTcContracts() {
   }
 
   async function fetchSystemInvestor(systemId: string, investor: string) {
+    const usdcBalance = await usdc.getReadContract().balanceOf(investor);
     const shares = await system.getReadContract().balanceOf(investor, systemId);
     // console.log({shares: shares.toString()});
     
-    return { systemId, investor, shares };
+    return { systemId, investor, usdcBalance, shares };
   }
   
   async function createSystem() {
@@ -153,7 +154,7 @@ export function useTcContracts() {
       const signer = Provider.getSigner();
       await usdc.getWriteContract().connect(signer).approve(tc.getReadContract().address, amount);
       // TODO: listen to approve event
-      return await tc.getWriteContract().connect(signer).buyShares(systemId, amount, {gasLimit: '1000000'});        
+      return await tc.getWriteContract().connect(signer).buyShares(systemId, amount, {gasLimit: '1000000'});
     }
     catch(err: any) {
       showError(err);

@@ -7,6 +7,10 @@ import AlertDialogStore from 'stores/alertDialog';
 export const formatUnits = ethers.utils.formatUnits;
 export const formatEther = ethers.utils.formatEther;
 
+export function usdcAmountBN(amount: any) {
+  return BigNumber.from(Math.floor(parseFloat(amount) * 1000000));
+}
+
 export function amountBN(amount: any, decimals = 18) {    
   return BigNumber.from(amount).mul(BigNumber.from(10).pow(decimals));
 }
@@ -26,6 +30,31 @@ export function amountCurrency(amount: BigNumber, decimals = 6, fixed = 2) {
 
 export function numberFormat(number: number) {
   return new Intl.NumberFormat('en-US').format(number);
+}
+
+export function parseAmount(value: any) {
+  if (!value || isNaN(value))  return '';
+  
+  const validChars = value.match(/[\d|.]/g);
+  if (!validChars)  return '';
+
+  value = validChars.join('');
+  const amount = parseFloat(value);
+  if (!isNaN(amount))  return value;
+  
+  return false;
+}
+
+export function parseShares(value: any) {
+  if (!value)  return 0;
+
+  let onlyDigits = value.match(/\d/g);
+  if (!onlyDigits)  return 0;
+  
+  value = parseInt(onlyDigits.join(''));
+  if (!isNaN(value))  return value;
+
+  return false;
 }
 
 export function useAlertDialog() {
