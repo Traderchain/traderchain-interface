@@ -8,7 +8,7 @@ export default function Footer() {
       justifyContent="space-between"
       direction="row"
       component="footer"
-      padding="30px 0"
+      padding="30px 15px"
     >
       <VuiBox item="true" xs={12} sx={{ textAlign: "center" }}>
         <VuiTypography

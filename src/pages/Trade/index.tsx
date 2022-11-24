@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Divider } from '@mui/material';
+import { Grid, Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
 import SystemList from 'components/SystemList';
@@ -50,10 +50,21 @@ export default function Trade() {
   }
   
   return (
-    <div id="trade">      
-      <VuiButton variant="contained" color="info" onClick={createTradingSystem}>
-        START FUND
-      </VuiButton>
+    <div id="trade">   
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={12}>
+          <Section                    
+            body = {
+              <VuiBox display="flex" alignItems="center" justifyContent="center">                
+                <VuiButton variant="contained" color="info" onClick={createTradingSystem}>
+                  START FUND
+                </VuiButton>
+              </VuiBox>
+            }
+            minHeight = "50px"
+          />
+        </Grid>
+      </Grid>                                
       <Divider />
       
       <SystemList systems={systems} />

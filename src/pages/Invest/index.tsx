@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Divider } from '@mui/material';
+import { Grid, Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
 import SystemList from 'components/SystemList';
@@ -26,6 +26,22 @@ export default function Invest() {
     
   return (
     <div id="invest">      
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={12}>
+          <Section                    
+            body = {
+              <VuiBox display="flex" alignItems="center" justifyContent="center">
+                <VuiTypography variant="h3" color="white" fontWeight="bold">
+                  Start Investing
+                </VuiTypography>
+              </VuiBox>
+            }
+            minHeight = "50px"
+          />
+        </Grid>
+      </Grid>                                
+      <Divider />
+    
       <SystemList systems={systems} />
     </div>
   );

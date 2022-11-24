@@ -23,7 +23,7 @@ export default function Section({ type, title, titleSize, body, more, minHeight 
         <VuiBox display="flex" flexDirection="column" mb="auto">     
           <Link to={(more && more.to) || "#"}>
             <VuiTypography color="white" variant={titleSize == "small" ? "h4" : "h3"} fontWeight="bold" mb="3px">
-              {title}
+              {title || ''}
             </VuiTypography>
           </Link>
           
