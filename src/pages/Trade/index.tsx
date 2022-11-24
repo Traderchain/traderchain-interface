@@ -4,7 +4,7 @@ import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
 import SystemList from 'components/SystemList';
 import { useAuth } from 'utils';
-import { useTcContracts}  from 'utils/tc';
+import { hasWallet, useTcContracts}  from 'utils/tc';
 
 export default function Trade() {
   const [account, setAccount] = useState<string>('');
@@ -24,6 +24,8 @@ export default function Trade() {
   }, [account]);
   
   async function loadAccount() {    
+    if (!hasWallet())  return;
+    
     try {
       const accounts = await getAccounts();
       setAccount(accounts[0]);

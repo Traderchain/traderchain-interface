@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import { Grid, Card, Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
 import { useAuth, amountBN, amountStr, amountFloat, amountCurrency, numberFormat } from 'utils';
-import { useTcContracts } from 'utils/tc';
+import { hasWallet, useTcContracts } from 'utils/tc';
 import { Address } from 'utils/constants';
 import Section from 'components/Section';
 import ExplorerLink from 'components/ExplorerLink';
@@ -39,6 +39,8 @@ export default function System() {
   }, [account, system]);
 
   async function loadAccount() {
+    if (!hasWallet())  return;
+    
     try {
       const accounts = await getAccounts();
       setAccount(accounts[0]);

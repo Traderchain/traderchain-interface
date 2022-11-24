@@ -18,6 +18,10 @@ const system: Contract = new TradingSystem(Address.TRADING_SYSTEM);
 
 let isListening = false;
 
+export function hasWallet() {
+  return Provider.hasWallet();
+}
+
 export function useTcContracts() {
   const { isAuthenticated, setAuthenticated } = Utils.useAuth();
   const { showDialog, showError, hideDialog } = Utils.useAlertDialog();

@@ -28,8 +28,6 @@ class Provider {
   }
   
   async connect() {
-    if (!this.hasWallet())  throw Error('Please install a Web3 Wallet');
-    
     this.initWriteProvider();
     return await this.getAccounts();
   }
