@@ -7,6 +7,7 @@ import { useAuth, amountBN, amountStr, amountFloat, amountCurrency, numberFormat
 import { useTcContracts } from 'utils/tc';
 import { Address } from 'utils/constants';
 import Section from 'components/Section';
+import ExplorerLink from 'components/ExplorerLink';
 import NAV from './components/NAV';
 import Portfolio from './components/Portfolio';
 import FundStats from './components/FundStats';
@@ -96,7 +97,7 @@ export default function System() {
     { property: "WETH Price", value: system.assetPrice && amountCurrency(system.assetPrice, 6, 5) },
     { property: "Vault Total Balance", value: system.vaultBalance && amountCurrency(system.vaultBalance) },
     { property: "Vault WETH Balance", value: system.vaultAsset && amountFloat(system.vaultAsset, 18) },
-    { property: "Trader Address", value: system.trader },
+    { property: "Trader Address", value: <ExplorerLink hash={system.trader} /> },
   ];
   
   const investorStatsColumns = [
@@ -107,7 +108,7 @@ export default function System() {
   const investorStatsRows = [
     { property: "Shares Holding", value: systemInvestor.shares && numberFormat(systemInvestor.shares.toNumber()) },
     { property: "Equity Value", value: systemInvestor.shares && system.sharePrice && amountCurrency(systemInvestor.shares.mul(system.sharePrice)) },    
-    { property: "Investor Address", value: systemInvestor.investor },
+    { property: "Investor Address", value: <ExplorerLink hash={systemInvestor.investor} /> },
   ];
   
   return (
