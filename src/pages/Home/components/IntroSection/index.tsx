@@ -20,6 +20,10 @@ const IntroSection = () => {
           </VuiTypography>
         </VuiBox>
       )}      
+      more = {{
+        label: "Learn More",
+        to: "https://traderchain.org/traderchain_v1.4.pdf",
+      }}
       minHeight = "250px"
     />
   );

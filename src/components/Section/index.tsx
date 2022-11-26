@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
 import { Card, Icon } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
+import Link from 'components/Link';
 
 import cardBg from "assets/images/card-bg.png";
 import cardBgJelly from "assets/images/card-bg-jellyfish.png";

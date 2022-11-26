@@ -7,6 +7,10 @@ import AlertDialogStore from 'stores/alertDialog';
 export const formatUnits = ethers.utils.formatUnits;
 export const formatEther = ethers.utils.formatEther;
 
+export function clone(obj: object) {
+  return Object.assign({}, obj);
+}
+
 export function usdcAmountBN(amount: any) {
   return BigNumber.from(Math.floor(parseFloat(amount) * 1000000));
 }
