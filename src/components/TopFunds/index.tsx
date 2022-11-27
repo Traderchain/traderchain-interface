@@ -5,43 +5,38 @@ import Section from 'components/Section';
 import SystemList from 'components/SystemList';
 import { useTcContracts } from 'utils/tc';
 
-const TopFunds = () => {
-  const [systems, setSystems] = useState<any[]>([]);  
+export default function TopFunds() {
+  const [systems, setSystems] = useState<any[]>([]);
   const { fetchAllSystems } = useTcContracts();
-  
+
   useEffect(() => {
     async function init() {
       await fetchTradingSystems();
     }
     init();
   }, []);
-    
-  async function fetchTradingSystems() {    
+
+  async function fetchTradingSystems() {
     const newSystems = await fetchAllSystems();
     setSystems(systems => newSystems);
   }
-    
+
   return (
-    <div id="invest">      
+    <div id="invest">
       <Grid container spacing={2}>
         <Grid item xs={12} md={12}>
-          <Section                    
-            body = {
-              <VuiBox display="flex" alignItems="center" justifyContent="center">
-                <VuiTypography variant="h4" color="white" fontWeight="bold">
-                  Top Performing Funds
-                </VuiTypography>
-              </VuiBox>
-            }
-            minHeight = "30px"
-          />
+          <Section
+            body={<VuiBox display="flex" alignItems="center" justifyContent="center">
+              <VuiTypography variant="h4" color="white" fontWeight="bold">
+                Top Performing Funds
+              </VuiTypography>
+            </VuiBox>}
+            minHeight="30px" />
         </Grid>
-      </Grid>                                
+      </Grid>
       <Divider />
-    
+
       <SystemList systems={systems} />
     </div>
-  );  
-};
-
-export default TopFunds;
+  );
+}
