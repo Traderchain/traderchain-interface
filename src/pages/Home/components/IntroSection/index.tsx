@@ -1,5 +1,6 @@
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
+import { Outlink } from 'utils/constants';
 
 const IntroSection = () => {
   return (
@@ -20,10 +21,7 @@ const IntroSection = () => {
           </VuiTypography>
         </VuiBox>
       )}      
-      more = {{
-        label: "Learn More",
-        to: "https://traderchain.org/traderchain_v1.4.pdf",
-      }}
+      more = {{ label: "Learn More", to: Outlink.TRADERCHAIN_WHITEPAPER }}
       minHeight = "250px"
     />
   );
