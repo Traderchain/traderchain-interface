@@ -2,9 +2,9 @@ import { Grid, Divider } from "@mui/material";
 import IntroSection from './components/IntroSection';
 import TraderSection from './components/TraderSection';
 import InvestorSection from './components/InvestorSection';
+import TopFunds from 'components/TopFunds';
 
 export default function Home() {
-
   return (
     <div id="home">
       <Grid container spacing={3}>
@@ -18,7 +18,10 @@ export default function Home() {
           <TraderSection />
         </Grid>
       </Grid>
-      <Divider />            
+      <Divider />
+      <Divider />
+
+      <TopFunds />
     </div>
   );
 }
