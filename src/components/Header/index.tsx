@@ -74,28 +74,30 @@ export default function Header() {
             </Link>
           </VuiBox>
         </VuiBox>        
-        <VuiBox sx={(theme: any) => navbarRow(theme, { isMini })}>
-          <VuiBox pr={2}>
-            <VuiInput
-              placeholder="Type here..."
-              icon={{ component: "search", direction: "left" }}
-            />            
-          </VuiBox>
-          
-          {isAuthenticated ?
-          <VuiTypography variant="button" color="info">
-            {CHAIN_NAME}
-          </VuiTypography>
-          :  
-          <VuiButton variant="contained" color="primary" size="medium" onClick={onConnect}>
-            Connect
-          </VuiButton>}
-          
-          <VuiBox color="inherit" sx={{ display: "none" }}>
-            <IconButton size="small" color="inherit" sx={navbarIconButton}>
-              <Icon>settings</Icon>
-            </IconButton>              
-          </VuiBox>
+        <VuiBox sx={{ display: {xs: "none", sm: "block"} }}>
+          <VuiBox sx={(theme: any) => navbarRow(theme, { isMini })}>
+            <VuiBox pr={2}>
+              <VuiInput
+                placeholder="Type here..."
+                icon={{ component: "search", direction: "left" }}
+              />            
+            </VuiBox>
+            
+            {isAuthenticated ?
+            <VuiTypography variant="button" color="info">
+              {CHAIN_NAME}
+            </VuiTypography>
+            :  
+            <VuiButton variant="contained" color="primary" size="medium" onClick={onConnect}>
+              Connect
+            </VuiButton>}
+            
+            <VuiBox color="inherit" sx={{ display: "none" }}>
+              <IconButton size="small" color="inherit" sx={navbarIconButton}>
+                <Icon>settings</Icon>
+              </IconButton>              
+            </VuiBox>        
+          </VuiBox>        
         </VuiBox>        
       </Toolbar>
       

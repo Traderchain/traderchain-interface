@@ -5,14 +5,11 @@ const TraderSection = () => {
   return (
     <Section       
       type = "blue"
-      title = "Traders"
+      title = "Manage a Decentralized Fund"
       body = {(
-        <VuiBox>
-          <VuiTypography color="white" variant="h6" fontWeight="regular">
-            <b>Place Orders Directly on Uniswap</b>
-          </VuiTypography>
-          <VuiTypography color="text" variant="h6" fontWeight="regular">
-            Manage Portfolio and Get Commission like a Hedge Fund Manager<br/>
+        <VuiBox>          
+          <VuiTypography color="text" variant="h6" fontWeight="regular" sx={{ width: {md: "40%"} }}>
+            The protocol’s liquidity layer is built on top of Decentralized Exchanges which provide a safe way for fund managers to exchange their fund assets.<br/>
           </VuiTypography>
         </VuiBox>
       )}
