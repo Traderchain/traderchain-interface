@@ -26,11 +26,13 @@ export default function TopFunds() {
       <Grid container spacing={2}>
         <Grid item xs={12} md={12}>
           <Section
-            body={<VuiBox display="flex" alignItems="center" justifyContent="center">
-              <VuiTypography variant="h4" color="white" fontWeight="bold">
-                Top Performing Funds
-              </VuiTypography>
-            </VuiBox>}
+            body={(
+              <VuiBox display="flex" alignItems="center" justifyContent="center">
+                <VuiTypography variant="h4" color="white" fontWeight="bold">
+                  Top Performing Funds
+                </VuiTypography>
+              </VuiBox>
+            )}
             minHeight="30px" />
         </Grid>
       </Grid>

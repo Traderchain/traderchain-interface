@@ -40,5 +40,5 @@ export enum Page {
 
 export enum Outlink {
   TRADERCHAIN_GITHUB = 'https://github.com/Traderchain',
-  TRADERCHAIN_WHITEPAPER = 'https://traderchain.org/traderchain_v1.4.pdf',
+  TRADERCHAIN_WHITEPAPER = 'https://traderchain.org/traderchain.pdf',
 }
