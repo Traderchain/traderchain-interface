@@ -51,12 +51,9 @@ export default function Header() {
         <VuiBox color="inherit" sx={(theme: any) => navbarRow(theme, { isMini })}>          
           <VuiBox mr="30px">
             <Link to="/">
-              <IconButton                              
-                color="inherit"
-                sx={navbarIconButton}
-              >
-                <Icon>home</Icon>
-              </IconButton>              
+              <IconButton color="inherit" sx={navbarIconButton}>
+                <img src="/logo64.png" width="32px" />
+              </IconButton>
             </Link>
           </VuiBox>                    
           <VuiBox mr="30px">
