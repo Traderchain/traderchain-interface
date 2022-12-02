@@ -7,15 +7,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     let result: any;
 
-    let item = { name: 'item1' };
-    result = await collection1.insertOne(item);    
-    console.log(result);    
-    let _id = result.insertedId;    
+    // let item = { name: 'item1' };
+    // result = await collection1.insertOne(item);    
+    // console.log(result);    
+    // let _id = result.insertedId;    
     
-    item = { name: 'item1.2' };
-    const query = { _id };  
-    result = await collection1.updateOne(query, { $set: item });
-    console.log(result);
+    // item = { name: 'item1.2' };
+    // const query = { _id };  
+    // result = await collection1.updateOne(query, { $set: item });
+    // console.log(result);
 
     // const query = { _id };
     // result = await collection1.deleteOne(query);
