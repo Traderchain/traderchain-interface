@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = { open: false, title: '', content: '' };
 
 const slice = createSlice({
-  name: "alertDialog",
+  name: "commonDialog",
   initialState,
   reducers: {    
     setOpen(state, action) {

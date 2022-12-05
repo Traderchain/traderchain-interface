@@ -11,7 +11,7 @@ const { navbar, navbarContainer, navbarRow, navbarIconButton } = HeaderStyles;
 
 export default function Header() {  
   const { isAuthenticated } = Utils.useAuth();
-  const { showDialog, hideDialog } = Utils.useAlertDialog();
+  const { showDialog, hideDialog } = Utils.useCommonDialog();
   const { checkConnect } = useTcContracts();
   const location = useLocation();
   const [controller, dispatch] = useVisionUIController();

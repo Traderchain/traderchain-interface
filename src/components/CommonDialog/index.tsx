@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { VuiButton } from 'traderchain-ui';
-import AlertDialogStore from 'stores/alertDialog';
+import CommonDialogStore from 'stores/commonDialog';
 
-export default function AlertDialog() {
-  let { open, title, content } = useSelector((state: any) => state.alertDialog );
+export default function CommonDialog() {
+  let { open, title, content } = useSelector((state: any) => state.commonDialog );
   const dispatch = useDispatch();
   
   function onClose() {
-    dispatch(AlertDialogStore.actions.setOpen({ open: false }));
+    dispatch(CommonDialogStore.actions.setOpen({ open: false }));
   }
   
   if (!title || !content)  open = false;
@@ -17,14 +17,14 @@ export default function AlertDialog() {
     <Dialog
       open={open}
       onClose={onClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      aria-labelledby="common-dialog-title"
+      aria-describedby="common-dialog-description"
     >      
-      <DialogTitle id="alert-dialog-title">
+      <DialogTitle id="common-dialog-title">
         {title}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description" fontSize="sm">
+        <DialogContentText id="common-dialog-description" fontSize="sm">
           {content}
         </DialogContentText>
       </DialogContent>

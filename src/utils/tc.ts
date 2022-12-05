@@ -24,7 +24,7 @@ export function hasWallet() {
 
 export function useTcContracts() {
   const { isAuthenticated, setAuthenticated } = Utils.useAuth();
-  const { showDialog, showError, hideDialog } = Utils.useAlertDialog();
+  const { showDialog, showError, hideDialog } = Utils.useCommonDialog();
   
   async function checkConnect() {
     if (!Provider.hasWallet()) {

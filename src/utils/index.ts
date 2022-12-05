@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useDispatch, useSelector } from "react-redux";
 import AuthStore from 'stores/auth';
-import AlertDialogStore from 'stores/alertDialog';
+import CommonDialogStore from 'stores/commonDialog';
 
 export const formatUnits = ethers.utils.formatUnits;
 export const formatEther = ethers.utils.formatEther;
@@ -61,21 +61,21 @@ export function parseShares(value: any) {
   return false;
 }
 
-export function useAlertDialog() {
+export function useCommonDialog() {
   const dispatch = useDispatch();
   
   function showDialog({ title, content }: any) {    
-    dispatch(AlertDialogStore.actions.setOpen({ open: true, title, content }));
+    dispatch(CommonDialogStore.actions.setOpen({ open: true, title, content }));
   }
   
   function showError(err: any) {
     const title = "Error";
     const content = (typeof err == 'object') ? err.message : `${err}`;
-    dispatch(AlertDialogStore.actions.setOpen({ open: true, title, content }));
+    dispatch(CommonDialogStore.actions.setOpen({ open: true, title, content }));
   }
 
   function hideDialog() {    
-    dispatch(AlertDialogStore.actions.setOpen({ open: false }));
+    dispatch(CommonDialogStore.actions.setOpen({ open: false }));
   }
   
   return { showDialog, showError, hideDialog };

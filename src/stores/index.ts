@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { load, save } from 'redux-localstorage-simple'
 import AuthStore from './auth';
-import AlertDialogStore from './alertDialog';
+import CommonDialogStore from './commonDialog';
 
 const PERSISTED_KEYS: string[] = ['auth'];
 
 const store = configureStore({ 
   reducer: { 
     auth: AuthStore.reducer,
-    alertDialog: AlertDialogStore.reducer,
+    commonDialog: CommonDialogStore.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

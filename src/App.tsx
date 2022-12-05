@@ -5,7 +5,7 @@ import { Context, VuiTheme, VuiBox } from 'traderchain-ui';
 
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import AlertDialog from 'components/AlertDialog';
+import CommonDialog from 'components/CommonDialog';
 
 import Home from 'pages/Home';
 import Trade from 'pages/Trade';
@@ -56,7 +56,7 @@ function Layout() {
         <Outlet />
       </VuiBox>
       <Footer />
-      <AlertDialog />
+      <CommonDialog />
     </VuiBox>
   );
 }
