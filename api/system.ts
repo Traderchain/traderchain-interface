@@ -2,6 +2,16 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import { Collection, ObjectId } from 'mongodb';
 import * as MongoDB from '../lib/mongodb';
 
+interface System {
+  systemId?: number,
+  name?: string,
+  description?: string,
+}
+
+interface SystemCondition extends System {
+
+}
+
 let systemCollection: Collection;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -44,32 +54,39 @@ async function getData(query: any) {
   const { systemId } = query;  
 
   if (systemId) {
-    const condition = { systemId };
+    const condition: SystemCondition = { systemId: parseInt(systemId) };
     return await systemCollection.findOne(condition);
   }
   else {
-    const condition = {};
+    const condition: SystemCondition = {};
     return await systemCollection.find(condition).toArray();
-  }  
+  }
 }
 
 async function postData(query: any, body: any) {
   console.log('postData:', query, body);
-  const item = body;
+  const item: System = {
+    systemId: parseInt(body.systemId),
+    name: body.name || '',
+    description: body.description || '',
+  };
   return await systemCollection.insertOne(item);
 }
 
 async function putData(query: any, body: any) {
   console.log('putData:', query, body);
   const { systemId } = query;
-  const condition = { systemId };
-  const item = body;  
+  const condition: SystemCondition = { systemId: parseInt(systemId) };
+  const item: System = {    
+    name: body.name || '',
+    description: body.description || '',
+  };
   return await systemCollection.updateOne(condition, { $set: item });    
 }
 
 async function deleteData(query: any) {
   console.log('deleteData:', query);
-  const { systemId } = query;
-  const condition = { systemId };
+  const { systemId } = query;  
+  const condition: SystemCondition = { systemId: parseInt(systemId) };
   return await systemCollection.deleteOne(condition);
 }

@@ -87,6 +87,10 @@ export function useTcContracts() {
     return await Provider.getAccounts();
   }
 
+  async function currentSystemId() {
+    return await system.getReadContract().currentSystemId();
+  }
+
   async function fetchAllSystems() {
     const systemCount = await system.getReadContract().currentSystemId() - 1;
 
@@ -202,7 +206,7 @@ export function useTcContracts() {
   }
   
   return {    
-    checkConnect, getAccounts, fetchAllSystems, fetchSystems, fetchSystem, fetchSystemInvestor, 
+    checkConnect, getAccounts, currentSystemId, fetchAllSystems, fetchSystems, fetchSystem, fetchSystemInvestor, 
     createSystem, buyShares, sellShares, placeBuyOrder, placeSellOrder, 
   };
 }

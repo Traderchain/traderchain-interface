@@ -3,14 +3,19 @@ import { Grid, Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
 import SystemList from 'components/SystemList';
+import * as Utils from 'utils';
 import { useAuth } from 'utils';
 import { hasWallet, useTcContracts}  from 'utils/tc';
+import { useFetch } from 'utils/fetch';
+import ExplorerLink from 'components/ExplorerLink';
 
 export default function Trade() {
   const [account, setAccount] = useState<string>('');
   const [systems, setSystems] = useState<any[]>([]);
   const { isAuthenticated } = useAuth();
-  const { checkConnect, getAccounts, fetchSystem, fetchSystems, createSystem } = useTcContracts();
+  const { checkConnect, getAccounts, currentSystemId, fetchSystem, fetchSystems, createSystem } = useTcContracts();
+  const { showDialog, showError, hideDialog } = Utils.useCommonDialog();  
+  const { postData } = useFetch();
     
   useEffect(() => {
     async function init() {
@@ -43,10 +48,14 @@ export default function Trade() {
   }
 
   async function createTradingSystem() {
+    const systemId = (await currentSystemId()).toNumber();
+
     const tx = await createSystem();
-    console.log(tx);
-    
-    // setSystems(systems => [...systems, system]);
+    showDialog({ title: 'Transaction Detail', content: <ExplorerLink type="txn" hash={tx.hash} /> });
+        
+    const url = `/api/system?systemId=${systemId}`;
+    const data = { systemId };
+    await postData(url, data);
   }
   
   return (
