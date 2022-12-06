@@ -17,6 +17,7 @@ export default function CommonDialog() {
     <Dialog
       open={open}
       onClose={onClose}
+      maxWidth="lg"
       aria-labelledby="common-dialog-title"
       aria-describedby="common-dialog-description"
     >      

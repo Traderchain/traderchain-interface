@@ -12,6 +12,8 @@ import Portfolio from './components/Portfolio';
 import FundStats from './components/FundStats';
 import InvestorStats from './components/InvestorStats';
 import AssetReallocation from './components/AssetReallocation';
+import EditableText from 'components/EditableText';
+import { useFetch } from 'utils/fetch';
 
 export default function System() {
   const { systemId } = useParams<{ systemId?: string }>();
@@ -26,10 +28,11 @@ export default function System() {
   const [investShares, setInvestShares] = useState<number>(0);
   const [redeemShares, setRedeemShares] = useState<number>(0);
   const [redeemAmount, setRedeemAmount] = useState<number>(0);
+  const { putData } = useFetch();
   
   useEffect(() => {
     async function init() {
-      await loadSystem();
+      await loadSystem();      
       await loadAccount();      
     }
     init();
@@ -56,7 +59,7 @@ export default function System() {
   }
   
   async function loadSystem() {    
-    const _system = await fetchSystem(systemId!);
+    const _system = await fetchSystem(systemId!);    
     setSystem(_system);        
   }
     
@@ -66,6 +69,14 @@ export default function System() {
     setSystemInvestor(await fetchSystemInvestor(systemId!, account));    
   }
   
+  async function changeSystemName(name: string) {
+    const url = `/api/system?systemId=${systemId}`;
+    const data = { name };
+    const result = await putData(url, data);
+    system.name = result.name;
+    setSystem(system);
+  }
+
   function onChangeInvestAmount(e: any) {    
     const amount = parseAmount(e.target.value);
     if (amount === false)  return;
@@ -143,7 +154,9 @@ export default function System() {
         <Grid item xs={12} md={4}>
           <Section        
             type = "jelly"
-            title = {`Fund ${systemId}`}
+            title = {
+              <EditableText name="system-name" value={system.name || `Fund ${systemId}`} changeText={changeSystemName} />
+            }
             titleSize = "small"
             body = {
               <VuiBox height="300px">

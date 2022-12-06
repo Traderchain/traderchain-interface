@@ -42,3 +42,10 @@ export enum Outlink {
   TRADERCHAIN_GITHUB = 'https://github.com/Traderchain',
   TRADERCHAIN_WHITEPAPER = 'https://traderchain.org/traderchain.pdf',
 }
+
+export enum Method {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE',
+}

@@ -8,6 +8,7 @@ import TradingSystem from 'contracts/TradingSystem';
 import SystemVault from 'contracts/SystemVault';
 import { CHAIN_ID, Address } from 'utils/constants';
 import * as Utils from 'utils';
+import  { useFetch } from 'utils/fetch';
 
 const formatUnits = ethers.utils.formatUnits;
 
@@ -25,6 +26,7 @@ export function hasWallet() {
 export function useTcContracts() {
   const { isAuthenticated, setAuthenticated } = Utils.useAuth();
   const { showDialog, showError, hideDialog } = Utils.useCommonDialog();
+  const { getData, postData, putData, deleteData } = useFetch();
   
   async function checkConnect() {
     if (!Provider.hasWallet()) {
@@ -124,7 +126,9 @@ export function useTcContracts() {
     
     const trader = await system.getReadContract().getSystemTrader(systemId);
     
-    return { systemId, nav, totalShares, sharePrice, assetPrice, vault, vaultBalance, vaultAsset, trader };
+    const detail = await getData(`/api/system?systemId=${systemId}`) || {};    
+
+    return Utils.merge({ systemId, nav, totalShares, sharePrice, assetPrice, vault, vaultBalance, vaultAsset, trader }, detail);
   }
 
   async function fetchSystemInvestor(systemId: string, investor: string) {

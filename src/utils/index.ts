@@ -12,6 +12,10 @@ export function clone(obj: object) {
   return Object.assign({}, obj);
 }
 
+export function merge(obj1: object, obj2: object) {
+  return Object.assign(obj1, obj2);
+}
+
 export function amountBN(amount: any, decimals = 18) {   
   if (typeof amount == 'number')  amount = amount.toString();  
   return parseUnits(amount, decimals);  
