@@ -4,6 +4,7 @@ import { Grid, Card, Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography, VuiInput } from 'traderchain-ui';
 import { useAuth, usdcAmountBN, amountBN, amountStr, amountFloat, amountCurrency, formatUsdc, formatWeth, numberFormat, parseAmount, parseShares } from 'utils';
 import { hasWallet, useTcContracts } from 'utils/tc';
+import * as Utils from 'utils';
 import Section from 'components/Section';
 import ExplorerLink from 'components/ExplorerLink';
 import NAV from './components/NAV';
@@ -20,6 +21,7 @@ export default function System() {
   const [isTrader, setIsTrader] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
   const { getAccounts, fetchSystem, fetchSystemInvestor, buyShares, sellShares } = useTcContracts();
+  const { showDialog, showError, hideDialog } = Utils.useCommonDialog();  
   const [investAmount, setInvestAmount] = useState<any>('');
   const [investShares, setInvestShares] = useState<number>(0);
   const [redeemShares, setRedeemShares] = useState<number>(0);
@@ -80,7 +82,7 @@ export default function System() {
     
     const usdcAmount = usdcAmountBN(investAmount);
     const tx = await buyShares(systemId!, usdcAmount);
-    console.log(tx);
+    showDialog({ title: 'Transaction Detail', content: <ExplorerLink type="txn" hash={tx.hash} /> });
     
     setInvestAmount('');
     setInvestShares(0);
@@ -100,9 +102,9 @@ export default function System() {
   async function sellSystemShares() {
     if (!redeemShares)  return;
     
-    const shares = amountBN(redeemShares,0);
+    const shares = amountBN(redeemShares, 0);
     const tx = await sellShares(systemId!, shares);    
-    console.log(tx);
+    showDialog({ title: 'Transaction Detail', content: <ExplorerLink type="txn" hash={tx.hash} /> });
     
     setRedeemShares(0);
     setRedeemAmount(0);
@@ -116,7 +118,7 @@ export default function System() {
   const fundStatsRows = [
     { property: "Net Asset Value", value: system.nav && formatUsdc(system.nav) },
     { property: "Total Shares", value: system.totalShares && numberFormat(system.totalShares.toNumber()) },
-    { property: "Share Price", value: system.sharePrice && amountCurrency(system.sharePrice, 6, 4) },    
+    { property: "Share Price", value: system.sharePrice && amountCurrency(system.sharePrice, 6, 6) },    
     { property: "USDC Balance", value: system.vaultBalance && formatUsdc(system.vaultBalance) },
     { property: "WETH Balance", value: system.vaultAsset && formatWeth(system.vaultAsset) },
     { property: "WETH Price", value: system.assetPrice && formatUsdc(system.assetPrice) },

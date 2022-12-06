@@ -12,7 +12,8 @@ export function clone(obj: object) {
   return Object.assign({}, obj);
 }
 
-export function amountBN(amount: any, decimals = 18) {    
+export function amountBN(amount: any, decimals = 18) {   
+  if (typeof amount == 'number')  amount = amount.toString();  
   return parseUnits(amount, decimals);  
 }
 
