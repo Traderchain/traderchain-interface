@@ -25,22 +25,21 @@ export default function StatsTable({ columns, rows }: any) {
   const renderRows = rows.map((row: any, key: number) => {
     const tableRow = columns.map(({ name }: { name: string }) => {      
       let rowContent: any;
-      
-      if (name == "property") {
-        rowContent = (
-          <VuiBox display="flex" alignItems="center">
-            <VuiTypography color="white" variant="button" fontWeight="medium">
-              {row[name]}
-            </VuiTypography>
-          </VuiBox>  
-        );
-        
-      }
-      else if (name == "value") {
+            
+      if (name == "value") {
         rowContent = (
           <VuiTypography variant="button" color="white" fontWeight="bold">
             {row[name] || ''}
           </VuiTypography>
+        );
+      }
+      else {
+        rowContent = (
+          <VuiBox display="flex" alignItems="center">
+            <VuiTypography variant="button" color="white" fontWeight="medium">
+              {row[name]}
+            </VuiTypography>
+          </VuiBox>
         );
       }
       

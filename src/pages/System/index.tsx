@@ -1,17 +1,16 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
-import { ethers } from 'ethers';
 import { Grid, Card, Divider } from '@mui/material';
 import { VuiBox, VuiButton, VuiTypography, VuiInput } from 'traderchain-ui';
-import { useAuth, usdcAmountBN, amountBN, amountStr, amountFloat, amountCurrency, numberFormat, parseAmount, parseShares } from 'utils';
+import { useAuth, usdcAmountBN, amountBN, amountStr, amountFloat, amountCurrency, formatUsdc, formatWeth, numberFormat, parseAmount, parseShares } from 'utils';
 import { hasWallet, useTcContracts } from 'utils/tc';
-import { Address } from 'utils/constants';
 import Section from 'components/Section';
 import ExplorerLink from 'components/ExplorerLink';
 import NAV from './components/NAV';
 import Portfolio from './components/Portfolio';
 import FundStats from './components/FundStats';
 import InvestorStats from './components/InvestorStats';
+import AssetReallocation from './components/AssetReallocation';
 
 export default function System() {
   const { systemId } = useParams<{ systemId?: string }>();
@@ -20,7 +19,7 @@ export default function System() {
   const [systemInvestor, setSystemInvestor] = useState<any>({ systemId });
   const [isTrader, setIsTrader] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
-  const { getAccounts, fetchSystem, fetchSystems, fetchSystemInvestor, buyShares, sellShares, placeBuyOrder, placeSellOrder } = useTcContracts();
+  const { getAccounts, fetchSystem, fetchSystemInvestor, buyShares, sellShares } = useTcContracts();
   const [investAmount, setInvestAmount] = useState<any>('');
   const [investShares, setInvestShares] = useState<number>(0);
   const [redeemShares, setRedeemShares] = useState<number>(0);
@@ -109,30 +108,18 @@ export default function System() {
     setRedeemAmount(0);
   }
 
-  async function submitBuyOrder() {
-    const usdcAmount = amountBN('10', 6);
-    const tx = await placeBuyOrder(systemId!, usdcAmount);    
-    console.log(tx);
-  }
-  
-  async function submitSellOrder() {
-    const wethAmount = amountBN('0.00007', 18);
-    const tx = await placeSellOrder(systemId!, wethAmount);
-    console.log(tx);
-  }
-
   const fundStatsColumns = [
     { name: "property" },
     { name: "value" },
   ];
 
   const fundStatsRows = [
-    { property: "Net Asset Value", value: system.nav && amountCurrency(system.nav) },
+    { property: "Net Asset Value", value: system.nav && formatUsdc(system.nav) },
     { property: "Total Shares", value: system.totalShares && numberFormat(system.totalShares.toNumber()) },
-    { property: "Share Price", value: system.sharePrice && amountCurrency(system.sharePrice, 6, 4) },
-    { property: "WETH Price", value: system.assetPrice && amountCurrency(system.assetPrice, 6, 5) },
-    { property: "Vault Total Balance", value: system.vaultBalance && amountCurrency(system.vaultBalance) },
-    { property: "Vault WETH Balance", value: system.vaultAsset && amountFloat(system.vaultAsset, 18) },
+    { property: "Share Price", value: system.sharePrice && amountCurrency(system.sharePrice, 6, 4) },    
+    { property: "USDC Balance", value: system.vaultBalance && formatUsdc(system.vaultBalance) },
+    { property: "WETH Balance", value: system.vaultAsset && formatWeth(system.vaultAsset) },
+    { property: "WETH Price", value: system.assetPrice && formatUsdc(system.assetPrice) },
     { property: "Trader Address", value: <ExplorerLink hash={system.trader} /> },
   ];
   
@@ -143,8 +130,8 @@ export default function System() {
 
   const investorStatsRows = [
     { property: "Shares Holding", value: systemInvestor.shares && numberFormat(systemInvestor.shares.toNumber()) },
-    { property: "Equity Value", value: systemInvestor.shares && system.sharePrice && amountCurrency(systemInvestor.shares.mul(system.sharePrice)) },    
-    { property: "USDC Balance", value: systemInvestor.usdcBalance && amountCurrency(systemInvestor.usdcBalance) },
+    { property: "Equity Value", value: systemInvestor.shares && system.sharePrice && formatUsdc(systemInvestor.shares.mul(system.sharePrice)) },    
+    { property: "USDC Balance", value: systemInvestor.usdcBalance && formatUsdc(systemInvestor.usdcBalance) },
     { property: "Your Address", value: <ExplorerLink hash={systemInvestor.investor} /> },
   ];
   
@@ -165,12 +152,7 @@ export default function System() {
                 
                 {isTrader && 
                 <VuiBox display="flex" alignItems="center" justifyContent="center">
-                  <VuiButton variant="contained" color="info" onClick={submitBuyOrder} sx={{margin: "10px"}}>
-                    BUY ASSET
-                  </VuiButton>
-                  <VuiButton variant="contained" color="error" onClick={submitSellOrder} sx={{margin: "10px"}}>
-                    SELL ASSET
-                  </VuiButton>
+                  <AssetReallocation system={system} />
                 </VuiBox>
                 }
               </VuiBox>
@@ -247,7 +229,7 @@ export default function System() {
                   </VuiBox>                  
                   <Grid container spacing={0}>
                     <Grid item xs={4}>
-                      <VuiInput type="text" placeholder="USDC amount..." fontWeight="500" value={investAmount} onChange={onChangeInvestAmount} />
+                      <VuiInput type="text" placeholder="USDC Amount..." fontWeight="500" value={investAmount} onChange={onChangeInvestAmount} />
                     </Grid>
                     <Grid item xs={4}>
                       <VuiBox ml={1} pt={0.4}>
@@ -272,7 +254,7 @@ export default function System() {
                   </VuiBox>                  
                   <Grid container spacing={0}>
                     <Grid item xs={4}>
-                      <VuiInput type="text" placeholder="Shares to sell..." fontWeight="500" value={redeemShares || ''} onChange={onChangeRedeemShares} />
+                      <VuiInput type="text" placeholder="Shares to Sell..." fontWeight="500" value={redeemShares || ''} onChange={onChangeRedeemShares} />
                     </Grid>
                     <Grid item xs={4}>
                       <VuiBox ml={1} pt={0.4}>

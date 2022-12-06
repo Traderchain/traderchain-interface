@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AuthStore from 'stores/auth';
 import CommonDialogStore from 'stores/commonDialog';
 
+export const parseUnits = ethers.utils.parseUnits;
 export const formatUnits = ethers.utils.formatUnits;
 export const formatEther = ethers.utils.formatEther;
 
@@ -11,12 +12,12 @@ export function clone(obj: object) {
   return Object.assign({}, obj);
 }
 
-export function usdcAmountBN(amount: any) {
-  return BigNumber.from(Math.floor(parseFloat(amount) * 1000000));
+export function amountBN(amount: any, decimals = 18) {    
+  return parseUnits(amount, decimals);  
 }
 
-export function amountBN(amount: any, decimals = 18) {    
-  return BigNumber.from(amount).mul(BigNumber.from(10).pow(decimals));
+export function usdcAmountBN(amount: any) {
+  return amountBN(amount, 6);
 }
 
 export function amountStr(amount: BigNumber, decimals = 6) {    
@@ -27,13 +28,21 @@ export function amountFloat(amount: BigNumber, decimals = 6) {
   return parseFloat(formatUnits(amount, decimals));
 }
 
-export function amountCurrency(amount: BigNumber, decimals = 6, fixed = 2) {
+export function amountCurrency(amount: BigNumber, decimals = 6, fixed = 2, currency = 'USDC') {
   const number = numberFormat(parseFloat(amountFloat(amount, decimals).toFixed(fixed)));
-  return `${number} USDC`;
+  return `${number} ${currency}`;
+}
+
+export function formatUsdc(amount: BigNumber) {
+  return amountCurrency(amount);
+}
+
+export function formatWeth(amount: BigNumber) {
+  return amountCurrency(amount, 18, 6, 'WETH');
 }
 
 export function numberFormat(number: number) {
-  return new Intl.NumberFormat('en-US').format(number);
+  return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(number);
 }
 
 export function parseAmount(value: any) {
