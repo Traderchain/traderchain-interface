@@ -13,6 +13,7 @@ import FundStats from './components/FundStats';
 import InvestorStats from './components/InvestorStats';
 import AssetReallocation from './components/AssetReallocation';
 import EditableText from 'components/EditableText';
+import EditableTextarea from 'components/EditableTextarea';
 import { useFetch } from 'utils/fetch';
 
 export default function System() {
@@ -69,12 +70,12 @@ export default function System() {
     setSystemInvestor(await fetchSystemInvestor(systemId!, account));    
   }
   
-  async function changeSystemName(name: string) {
+  async function changeSystemProp(data: object) {    
     const url = `/api/system?systemId=${systemId}`;
-    const data = { name };
     const result = await putData(url, data);
-    system.name = result.name;
-    setSystem(system);
+
+    const newSystem = Utils.merge(system, data);    
+    setSystem(newSystem);
   }
 
   function onChangeInvestAmount(e: any) {    
@@ -155,14 +156,12 @@ export default function System() {
           <Section        
             type = "jelly"
             title = {
-              <EditableText name="system-name" value={system.name || `Fund ${systemId}`} changeText={changeSystemName} />
+              <EditableText name="system-name" value={system.name || `Fund ${systemId}`} changeText={(name: string) => changeSystemProp({ name })} />
             }
             titleSize = "small"
             body = {
               <VuiBox height="300px">
-                <VuiTypography color="text" height="180px">
-                  Fund description...
-                </VuiTypography>
+                <EditableTextarea name="system-description" value={system.description || `Fund description...`} changeText={(description: string) => changeSystemProp({ description })} />                
                 <Divider />
                 
                 {isTrader && 

@@ -69,18 +69,20 @@ async function postData(query: any, body: any) {
     systemId: parseInt(body.systemId),
     name: body.name || '',
     description: body.description || '',
-  };
+  };  
   return await systemCollection.insertOne(item);
 }
 
 async function putData(query: any, body: any) {
   console.log('putData:', query, body);
   const { systemId } = query;
+  
   const condition: SystemCondition = { systemId: parseInt(systemId) };
-  const item: System = {    
-    name: body.name || '',
-    description: body.description || '',
-  };
+
+  const item: System = {};
+  if (body.name)  item.name = body.name;
+  if (body.description)  item.description = body.description;
+
   return await systemCollection.updateOne(condition, { $set: item });    
 }
 
