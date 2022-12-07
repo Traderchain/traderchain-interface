@@ -156,12 +156,12 @@ export default function System() {
           <Section        
             type = "jelly"
             title = {
-              <EditableText name="system-name" value={system.name || `Fund ${systemId}`} changeText={(name: string) => changeSystemProp({ name })} />
+              <EditableText name="system-name" value={system.name || `Fund ${systemId}`} changeText={(name: string) => changeSystemProp({ name })} editable={isTrader} />
             }
             titleSize = "small"
             body = {
               <VuiBox height="300px">
-                <EditableTextarea name="system-description" value={system.description || `Fund description...`} changeText={(description: string) => changeSystemProp({ description })} />                
+                <EditableTextarea name="system-description" value={system.description || `Fund description...`} changeText={(description: string) => changeSystemProp({ description })} editable={isTrader} />
                 <Divider />
                 
                 {isTrader && 

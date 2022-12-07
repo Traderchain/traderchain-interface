@@ -3,7 +3,7 @@ import { TextField, Button } from '@mui/material';
 import { Check as CheckIcon } from '@mui/icons-material';
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 
-export default function EditableTextarea({ name, value, changeText }: any) {
+export default function EditableTextarea({ name, value, changeText, editable }: any) {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(value || '');
 
@@ -11,8 +11,8 @@ export default function EditableTextarea({ name, value, changeText }: any) {
     setText(value);
   }, [value]);
 
-  const handleEdit = () => {
-    setIsEditing(true);
+  function handleEdit() {
+    if (editable)  setIsEditing(true);
   };
 
   function handleChange(e: any) {
