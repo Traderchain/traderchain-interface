@@ -19,8 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { method, query, body, cookies } = req;
     console.log({ method, query, body });
 
-    systemCollection = MongoDB.getCollection("system");
-    // systemCollection.createIndex({ "systemId": 1 }, { unique: true });
+    systemCollection = MongoDB.getCollection("system");    
 
     let result: any;
 

@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@vercel/node": "^2.6.3",
+    "dotenv-cli": "^6.0.0",
     "loader-utils": "^3.2.1"
   },
   "scripts": {
@@ -40,7 +41,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "mongodb:start": "brew services start mongodb-community@6.0",
-    "mongodb:stop": "brew services stop mongodb-community@6.0"
+    "mongodb:stop": "brew services stop mongodb-community@6.0",
+    "setup:db": "dotenv -e .env ts-node scripts/db.ts"
   },
   "eslintConfig": {
     "extends": [
