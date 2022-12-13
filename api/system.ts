@@ -60,7 +60,7 @@ async function getData(query: any) {
   }
   else {
     const condition: SystemCondition = {};
-    if (trader)  condition.trader = trader;
+    if (trader)  condition.trader = trader.toLowerCase();
     return await systemCollection.find(condition).toArray();
   }
 }

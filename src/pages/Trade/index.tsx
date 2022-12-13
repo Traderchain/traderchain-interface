@@ -54,7 +54,7 @@ export default function Trade() {
     showDialog({ title: 'Transaction Detail', content: <ExplorerLink type="txn" hash={tx.hash} /> });
         
     const url = `/api/system?systemId=${systemId}`;
-    const data = { systemId, trader: account };
+    const data = { systemId, trader: account.toLowerCase() };
     await postData(url, data);
   }
   
