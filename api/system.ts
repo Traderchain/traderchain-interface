@@ -28,7 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         result = await getData(query);
         break;
       case 'POST':
-        result = await postData(query, body);        
+        result = await postData(query, body);
         result = await getData(query);
         break;
       case 'PUT':
@@ -39,8 +39,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         result = await deleteData(query);        
         break;
     }
-        
-    res.status(200).json(result);
+            
+    // res.status(200).json(result);
+    res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(result, null, 2));
   }
   catch(err) {
     console.log(err);

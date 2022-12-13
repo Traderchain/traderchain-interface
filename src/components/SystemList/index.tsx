@@ -8,15 +8,15 @@ interface SystemListProps {
 
 export default function SystemList({ systems }: SystemListProps) {
   const systemList = systems.map((system,k) => {
-    const {systemId} = system;
+    const {systemId, name, description} = system;
     const type = ["jelly", "", "blue"][(systemId-1) % 3];
     
     return (
       <Grid key={k} item xs={12} md={4}>
         <Section
           type = {type}
-          title = {"Fund " + systemId}
-          body = {<VuiTypography color="text">Fund description...</VuiTypography>}
+          title = {name || `Fund ${systemId}`}
+          body = {<VuiTypography color="text">{description}</VuiTypography>}
           more = {{label: "See Details", to: `/system/${systemId}`}}
         />
         <Divider />
