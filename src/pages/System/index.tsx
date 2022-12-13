@@ -23,7 +23,7 @@ export default function System() {
   const [systemInvestor, setSystemInvestor] = useState<any>({ systemId });
   const [isTrader, setIsTrader] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
-  const { getAccounts, fetchSystem, fetchSystemInvestor, buyShares, sellShares } = useTcContracts();
+  const { getAccounts, fetchSystem, fetchSystemMetadata, fetchSystemInvestor, buyShares, sellShares } = useTcContracts();
   const { showDialog, showError, hideDialog } = Utils.useCommonDialog();  
   const [investAmount, setInvestAmount] = useState<any>('');
   const [investShares, setInvestShares] = useState<number>(0);
@@ -59,9 +59,12 @@ export default function System() {
     }
   }
   
-  async function loadSystem() {    
-    const _system = await fetchSystem(systemId!);    
-    setSystem(_system);        
+  async function loadSystem() {
+    const _systemMetadata = await fetchSystemMetadata(systemId!);
+    setSystem(_systemMetadata);
+
+    const _system = await fetchSystem(systemId!);
+    setSystem(Utils.merge(_system, _systemMetadata));
   }
     
   async function loadSystemInvestor() {    
@@ -161,7 +164,7 @@ export default function System() {
             titleSize = "small"
             body = {
               <VuiBox height="300px">
-                <EditableTextarea name="system-description" value={system.description || `Fund description...`} changeText={(description: string) => changeSystemProp({ description })} editable={isTrader} />
+                <EditableTextarea name="system-description" value={system.description || ''} changeText={(description: string) => changeSystemProp({ description })} editable={isTrader} />
                 <Divider />
                 
                 {isTrader && 

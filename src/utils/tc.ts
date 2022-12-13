@@ -122,10 +122,13 @@ export function useTcContracts() {
     // console.log({vaultBalance: vaultBalance.toString(), vaultAsset: vaultAsset.toString()});  
     
     const trader = await system.getReadContract().getSystemTrader(systemId);
-    
-    const detail = await getData(`/api/system?systemId=${systemId}`) || {};    
 
-    return Utils.merge({ systemId, nav, totalShares, sharePrice, assetPrice, vault, vaultBalance, vaultAsset, trader }, detail);
+    return { systemId, nav, totalShares, sharePrice, assetPrice, vault, vaultBalance, vaultAsset, trader };
+  }
+
+  async function fetchSystemMetadata(systemId: string) {
+    const data = await getData(`/api/system?systemId=${systemId}`) || {};
+    return data;
   }
 
   async function fetchSystemInvestor(systemId: string, investor: string) {
@@ -199,7 +202,7 @@ export function useTcContracts() {
   }
   
   return {    
-    checkConnect, getAccounts, currentSystemId, fetchAllSystems, fetchSystems, fetchSystem, fetchSystemInvestor, 
+    checkConnect, getAccounts, currentSystemId, fetchAllSystems, fetchSystems, fetchSystem, fetchSystemMetadata, fetchSystemInvestor, 
     createSystem, buyShares, sellShares, placeBuyOrder, placeSellOrder, 
   };
 }
