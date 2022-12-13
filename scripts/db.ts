@@ -4,6 +4,7 @@ async function main() {
   try {    
     const systemCollection = MongoDB.getCollection("system");
     await systemCollection.createIndex({ "systemId": 1 }, { unique: true });
+    await systemCollection.createIndex({ "trader": 1 });
     console.log('Complete.');
   }
   catch(err) {

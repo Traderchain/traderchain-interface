@@ -16,7 +16,7 @@ export default function SystemList({ systems }: SystemListProps) {
         <Section
           type = {type}
           title = {name || `Fund ${systemId}`}
-          body = {<VuiTypography color="text">{description}</VuiTypography>}
+          body = {<VuiTypography color="text">{description || ''}</VuiTypography>}
           more = {{label: "See Details", to: `/system/${systemId}`}}
         />
         <Divider />

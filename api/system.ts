@@ -4,6 +4,7 @@ import * as MongoDB from '../lib/mongodb';
 
 interface System {
   systemId?: number,
+  trader?: string,
   name?: string,
   description?: string,
 }
@@ -51,7 +52,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
 async function getData(query: any) {
   console.log('getData:', query);
-  const { systemId } = query;  
+  const { systemId, trader } = query;  
 
   if (systemId) {
     const condition: SystemCondition = { systemId: parseInt(systemId) };
@@ -59,6 +60,7 @@ async function getData(query: any) {
   }
   else {
     const condition: SystemCondition = {};
+    if (trader)  condition.trader = trader;
     return await systemCollection.find(condition).toArray();
   }
 }
@@ -67,6 +69,7 @@ async function postData(query: any, body: any) {
   console.log('postData:', query, body);
   const item: System = {
     systemId: parseInt(body.systemId),
+    trader: body.trader || '',
     name: body.name || '',
     description: body.description || '',
   };  
@@ -80,6 +83,7 @@ async function putData(query: any, body: any) {
   const condition: SystemCondition = { systemId: parseInt(systemId) };
 
   const item: System = {};
+  if (body.trader)  item.trader = body.trader;
   if (body.name)  item.name = body.name;
   if (body.description)  item.description = body.description;
 

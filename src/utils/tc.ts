@@ -97,15 +97,18 @@ export function useTcContracts() {
   }
   
   async function fetchSystems(trader: string) {    
-    const systemCount = await system.getReadContract().getTraderSystemsCount(trader);
+    const systems = await getData(`/api/system?trader=${trader}`) || [];
+    return systems.sort((a: any, b: any) => { return a.systemId - b.systemId; });
+  }
 
+  async function fetchSystemsFromContract(trader: string) {    
     let systems = [];
+    const systemCount = await system.getReadContract().getTraderSystemsCount(trader);
     for (let i = 0; i < systemCount; i++) {
       const sid = await system.getReadContract().getTraderSystemByIndex(trader, i);          
       systems.push({systemId: sid.toString()});
     }
     // systems.sort((a,b) => { return b.systemId - a.systemId; });
-
     return systems;
   }
 

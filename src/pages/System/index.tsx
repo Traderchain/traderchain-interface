@@ -164,7 +164,7 @@ export default function System() {
             titleSize = "small"
             body = {
               <VuiBox height="300px">
-                <EditableTextarea name="system-description" value={system.description || ''} changeText={(description: string) => changeSystemProp({ description })} editable={isTrader} />
+                <EditableTextarea name="system-description" value={system.description || (isTrader ? 'Click to edit the fund description' : '')} changeText={(description: string) => changeSystemProp({ description })} editable={isTrader} />
                 <Divider />
                 
                 {isTrader && 
