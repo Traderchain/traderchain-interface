@@ -136,10 +136,11 @@ export function useTcContracts() {
 
   async function fetchSystemInvestor(systemId: string, investor: string) {
     const usdcBalance = await usdc.getReadContract().balanceOf(investor);
+    const usdcAllowance = await usdc.getReadContract().allowance(investor, tc.getReadContract().address);
     const shares = await system.getReadContract().balanceOf(investor, systemId);
     // console.log({shares: shares.toString()});
     
-    return { systemId, investor, usdcBalance, shares };
+    return { systemId, investor, usdcBalance, usdcAllowance, shares };
   }
   
   async function createSystem() {
@@ -153,14 +154,24 @@ export function useTcContracts() {
       showError(err);
     }
   }  
-  
-  async function buyShares(systemId: string, amount: BigNumber) {
+
+  async function approveUsdc(amount: BigNumber) {
     if (!await checkConnect())  return;
     
     try {
       const signer = Provider.getSigner();
-      await usdc.getWriteContract().connect(signer).approve(tc.getReadContract().address, amount);
-      // TODO: listen to approve event
+      return await usdc.getWriteContract().connect(signer).approve(tc.getReadContract().address, amount);
+    }
+    catch(err: any) {
+      showError(err);
+    }
+  }
+
+  async function buyShares(systemId: string, amount: BigNumber) {
+    if (!await checkConnect())  return;
+    
+    try {
+      const signer = Provider.getSigner();      
       return await tc.getWriteContract().connect(signer).buyShares(systemId, amount, {gasLimit: '1000000'});
     }
     catch(err: any) {
@@ -206,6 +217,6 @@ export function useTcContracts() {
   
   return {    
     checkConnect, getAccounts, currentSystemId, fetchAllSystems, fetchSystems, fetchSystem, fetchSystemMetadata, fetchSystemInvestor, 
-    createSystem, buyShares, sellShares, placeBuyOrder, placeSellOrder, 
+    createSystem, approveUsdc, buyShares, sellShares, placeBuyOrder, placeSellOrder, 
   };
 }

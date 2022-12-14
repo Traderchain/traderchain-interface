@@ -23,14 +23,17 @@ export default function System() {
   const [systemInvestor, setSystemInvestor] = useState<any>({ systemId });
   const [isTrader, setIsTrader] = useState<boolean>(false);
   const { isAuthenticated } = useAuth();
-  const { getAccounts, fetchSystem, fetchSystemMetadata, fetchSystemInvestor, buyShares, sellShares } = useTcContracts();
+  const { getAccounts, fetchSystem, fetchSystemMetadata, fetchSystemInvestor, approveUsdc, buyShares, sellShares } = useTcContracts();
   const { showDialog, showError, hideDialog } = Utils.useCommonDialog();  
   const [investAmount, setInvestAmount] = useState<any>('');
   const [investShares, setInvestShares] = useState<number>(0);
   const [redeemShares, setRedeemShares] = useState<number>(0);
   const [redeemAmount, setRedeemAmount] = useState<number>(0);
   const { putData } = useFetch();
-  
+    
+  const usdcAllowance = investAmount && systemInvestor.usdcAllowance ? usdcAmountBN(investAmount).sub(systemInvestor.usdcAllowance) : usdcAmountBN('0');
+  const needAllowance = usdcAllowance.gt(usdcAmountBN('0'));  
+
   useEffect(() => {
     async function init() {
       await loadSystem();      
@@ -92,10 +95,22 @@ export default function System() {
     }
   }
   
+  async function approveSystemUsdc() {
+    if (!needAllowance || !investAmount)  return;
+    
+    const usdcAmount = usdcAmountBN(investAmount);
+    if (!usdcAmount.gt(usdcAmountBN('0')))  return;
+
+    const tx = await approveUsdc(usdcAmount);
+    showDialog({ title: 'Transaction Detail', content: <ExplorerLink type="txn" hash={tx.hash} /> });
+  }
+
   async function buySystemShares() {
     if (!investAmount)  return;
     
     const usdcAmount = usdcAmountBN(investAmount);
+    if (!usdcAmount.gt(usdcAmountBN('0')))  return;
+
     const tx = await buyShares(systemId!, usdcAmount);
     showDialog({ title: 'Transaction Detail', content: <ExplorerLink type="txn" hash={tx.hash} /> });
     
@@ -149,9 +164,10 @@ export default function System() {
     { property: "Shares Holding", value: systemInvestor.shares && numberFormat(systemInvestor.shares.toNumber()) },
     { property: "Equity Value", value: systemInvestor.shares && system.sharePrice && formatUsdc(systemInvestor.shares.mul(system.sharePrice)) },    
     { property: "USDC Balance", value: systemInvestor.usdcBalance && formatUsdc(systemInvestor.usdcBalance) },
+    { property: "USDC Allowance", value: systemInvestor.usdcAllowance && formatUsdc(systemInvestor.usdcAllowance) },
     { property: "Your Address", value: <ExplorerLink hash={systemInvestor.investor} /> },
   ];
-  
+
   return (
     <div id="system">      
       <Grid container spacing={2}>
@@ -256,8 +272,8 @@ export default function System() {
                       </VuiBox>
                     </Grid>
                     <Grid item xs={4}>
-                      <VuiButton variant="contained" color="info" onClick={buySystemShares} size="small" sx={{ padding: "10px" }}>
-                        BUY SHARES
+                      <VuiButton variant="contained" color="info" onClick={needAllowance ? approveSystemUsdc : buySystemShares} size="small" sx={{ padding: "10px" }}>
+                        {needAllowance ? 'APPROVE' : 'BUY SHARES'}
                       </VuiButton>
                     </Grid>
                   </Grid>                  
