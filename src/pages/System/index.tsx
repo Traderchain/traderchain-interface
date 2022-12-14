@@ -152,7 +152,7 @@ export default function System() {
     { property: "USDC Balance", value: system.vaultBalance && formatUsdc(system.vaultBalance) },
     { property: "WETH Balance", value: system.vaultAsset && formatWeth(system.vaultAsset) },
     { property: "WETH Price", value: system.assetPrice && formatUsdc(system.assetPrice) },
-    { property: "Trader Address", value: <ExplorerLink hash={system.trader} /> },
+    { property: "Fund Manager", value: <ExplorerLink hash={system.trader} /> },
   ];
   
   const investorStatsColumns = [
