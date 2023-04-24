@@ -11,11 +11,11 @@ class Provider {
   constructor() { 
     if (isDevelopmentEnv()) {
       this.network = "hardhat";
-      this.readProvider = new JsonRpcProvider("http://127.0.0.1:8545");
+      // this.readProvider = new JsonRpcProvider("http://127.0.0.1:8545");
     }
     else {
       this.network = "goerli";
-      this.readProvider = new AlchemyProvider(this.network, "Bcipbi3wYgtmrR-gkp6Fdc888i3N3ixG");
+      // this.readProvider = new AlchemyProvider(this.network, "Bcipbi3wYgtmrR-gkp6Fdc888i3N3ixG");
     }
     
     this.initWriteProvider();

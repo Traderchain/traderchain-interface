@@ -8,6 +8,7 @@ import Footer from 'components/Footer';
 import CommonDialog from 'components/CommonDialog';
 
 import Home from 'pages/Home';
+import SystemT from 'pages/SystemT';
 import Trade from 'pages/Trade';
 import Invest from 'pages/Invest';
 import System from 'pages/System';
@@ -25,6 +26,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="/" element={<Home />} index />
+              <Route path="SystemT/*" element={<SystemT />} />
               <Route path="trade" element={<Trade />} />
               <Route path="invest" element={<Invest />} />
               <Route path="system/:systemId" element={<System />} />
@@ -61,7 +63,7 @@ function Layout() {
   );
 }
 
-function NotFound() {
+export function NotFound() {
   return (
     <div>
       <h2>Nothing to see here!</h2>

@@ -10,7 +10,7 @@ export default class Contract {
   constructor(_address: string, _abi: any) {
     this.address = _address;
     this.abi = _abi;    
-    this.readContract = new ethers.Contract(this.address, this.abi, Provider.getReadProvider());
+    // this.readContract = new ethers.Contract(this.address, this.abi, Provider.getReadProvider());
   }
   
   getReadContract() {
@@ -18,7 +18,7 @@ export default class Contract {
   }
   
   getWriteContract() {    
-    if (!this.writeContract)  this.writeContract = new ethers.Contract(this.address, this.abi, Provider.getWriteProvider());
+    // if (!this.writeContract)  this.writeContract = new ethers.Contract(this.address, this.abi, Provider.getWriteProvider());
     return this.writeContract;
   }
   
