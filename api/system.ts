@@ -1,6 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { Collection, ObjectId } from 'mongodb';
 import * as MongoDB from '../lib/mongodb';
+import { Method } from '../lib/constants';
 
 interface System {
   systemId?: number,
@@ -17,26 +18,26 @@ let systemCollection: Collection;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {    
-    const { method, query, body, cookies } = req;
-    console.log({ method, query, body });
+    const { url, method, query, body, cookies } = req;
+    console.log({ url, method, query, body });
 
     systemCollection = MongoDB.getCollection("system");    
 
     let result: any;
 
     switch(method) {
-      case 'GET':
+      case Method.GET:
         result = await getData(query);
         break;
-      case 'POST':
+      case Method.POST:
         result = await postData(query, body);
         result = await getData(query);
         break;
-      case 'PUT':
+      case Method.PUT:
         result = await putData(query, body);
         result = await getData(query);
         break;
-      case 'DELETE':
+      case Method.DELETE:
         result = await deleteData(query);        
         break;
     }
