@@ -1,6 +1,4 @@
-export function toQueryString(params: any) {
-  return Object.keys(params).map(key => key + '=' + params[key]).join('&');
-}
+export * from '../src/utils/lib';
 
 export async function request(options: any) {
   const {url, headers} = options;
