@@ -21,15 +21,18 @@ export default function Home() {
   }
 
   const watchList = watches.map((watch,k) => {
-    const {id, symbol, start_date} = watch;    
+    const {id, symbol, pid, start_date, bt, market} = watch;    
     
+    let desc = [`Start Date: ${start_date}`, `Strategy: ${bt}`, `Market: ${market}`];
+    let description = desc.map((d, k) => <span key={k}>{d}<br/></span>);
+
     return (
       <Grid key={k} item xs={12} md={4}>
         <Section
           type = "blue"
           title = {symbol.toUpperCase()}
-          body = {<VuiTypography color="text">{start_date || ""}</VuiTypography>}
-          more = {{label: "See Trades", to: `/trade/${id}`}}
+          body = {<VuiTypography color="text">{description}</VuiTypography>}
+          more = {{label: "See Trades", to: `/SystemT/trade/${symbol}?pid=${pid}`}}
         />
         <Divider />
       </Grid>                

@@ -12,8 +12,13 @@ export function useSystemT() {
     const result = await getData(url);
     return result.data;    
   }
+
+  async function fetchPrices(symbol: string) {
+    const params = { symbol };
+    const url = `/api/system_t/price?` + Utils.toQueryString(params);
+    const result = await getData(url);
+    return result.data;
+  }
   
-  return {    
-    fetchWatchlist
-  };
+  return { fetchWatchlist, fetchPrices };
 }

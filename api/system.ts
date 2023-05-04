@@ -1,7 +1,7 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { Collection, ObjectId } from 'mongodb';
 import * as MongoDB from '../lib/mongodb';
-import { Method } from '../lib/constants';
+import { Method } from '../src/utils/constants';
 
 interface System {
   systemId?: number,

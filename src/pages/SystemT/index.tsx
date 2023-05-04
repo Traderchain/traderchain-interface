@@ -8,7 +8,7 @@ export default function SystemT() {
   return (
     <Routes>
       <Route path="/" element={<Home />} index />
-      <Route path="trade" element={<Trade />} />
+      <Route path="trade/:symbol" element={<Trade />} />
       <Route path="*" element={<NotFound />} />
     </Routes>              
   );
