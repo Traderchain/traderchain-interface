@@ -19,6 +19,20 @@ export function useSystemT() {
     const result = await getData(url);
     return result.data;
   }
-  
-  return { fetchWatchlist, fetchPrices };
+
+  async function fetchParam(pid: string) {
+    const params = { pid };
+    const url = `/api/system_t/param?` + Utils.toQueryString(params);
+    const result = await getData(url);
+    return result.data;
+  }
+
+  async function fetchTrades(pid: string) {
+    const params = { pid };
+    const url = `/api/system_t/trade?` + Utils.toQueryString(params);
+    const result = await getData(url);
+    return result.data;
+  }
+
+  return { fetchWatchlist, fetchPrices, fetchParam, fetchTrades };
 }

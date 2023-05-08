@@ -3,5 +3,6 @@
 declare module 'traderchain-ui';
 
 interface Window {
-  ethereum: any
+  ethereum: any,
+  Highcharts: any,
 }

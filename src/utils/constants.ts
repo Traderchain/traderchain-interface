@@ -49,3 +49,5 @@ export enum Method {
   PUT = 'PUT',
   DELETE = 'DELETE',
 }
+
+export const CC_FSYMS: any = {'eosusd': 'EOS', 'ltcusd': 'LTC', 'xrpusd': 'XRP', 'ethusd': 'ETH', 'etcusd': 'ETC', 'xlmusd': 'XLM', 'dashusd': 'DASH', 'batusd': 'BAT', 'trxusd': 'TRX', 'neousd': 'NEO', 'adausd': 'ADA', 'zecusd': 'ZEC', 'xmrusd': 'XMR', 'iotusd': 'MIOTA', 'omgusd': 'OMG', 'icxusd': 'ICX', 'xtzusd': 'XTZ', 'linkusd': 'LINK', 'zrxusd': 'ZRX', 'atomusd': 'ATOM', 'mkrusd': 'MKR', 'manausd': 'MANA', 'uniusd': 'UNI', 'aaveusd': 'AAVE', 'compusd': 'COMP', 'filusd': 'FIL', 'bnbusd': 'BNB', 'solusd': 'SOL', 'maticusd': 'MATIC', 'dogeusd': 'DOGE', 'sandusd': 'SAND'};
