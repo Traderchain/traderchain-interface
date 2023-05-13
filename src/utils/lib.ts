@@ -71,8 +71,8 @@ export function formatWeth(amount: BigNumber) {
   return amountCurrency(amount, 18, 6, 'WETH');
 }
 
-export function numberFormat(number: number) {
-  return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 }).format(number);
+export function numberFormat(number: number, minimumFractionDigits = 2, maximumFractionDigits = 6) {
+  return new Intl.NumberFormat('en-US', { minimumFractionDigits, maximumFractionDigits }).format(number);
 }
 
 export function parseAmount(value: any) {

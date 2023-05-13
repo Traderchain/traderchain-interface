@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Grid, Divider } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
+import StatsTable from 'components/StatsTable';
 import * as Utils from 'utils';
 import { isEmpty, notEmpty } from 'utils';
 import { useSystemT } from 'utils/system_t';
@@ -466,8 +467,79 @@ export default function Trade() {
     });
   }
 
+  const systemStatsColumns = [
+    { name: "label" },
+    { name: "value" },
+  ];
+  let systemStatsRows = [];
+  const PARAM_FORMATS: any = {    
+    profit: {label: "Profit", format: "percent"},
+    max_down: {label: "Max Down", format: "percent"},
+    sharpe_ratio: {label: "Risk Reward", format: "number"},    
+    start_date: {label: "Start Date", format: "date"},    
+    win_rate: {label: "Win Rate", format: "percent"},        
+    buy_count: {label: "Trade Count", format: "integer"},    
+    stop_sell: {label: "Stop Loss", format: "percent"},    
+  };
+  for (const prop in PARAM_FORMATS) {    
+    const {label, format} = PARAM_FORMATS[prop];
+    let value = param[prop];    
+    if (format == 'percent')  value = Utils.numberFormat(value) + '%';
+    else if (format == 'number')  value = Utils.numberFormat(value);
+    else if (format == 'integer')  value = Utils.numberFormat(value, 0, 0);
+    systemStatsRows.push({ label, value });
+  }
+  
+  const performanceColumns = [
+    { name: "label" },
+    { name: "value" },
+  ];
+  let performanceRows = [];  
+  const PERFORMANCE_FORMATS: any = {    
+    profit: {label: "Compound Profit", format: "percent"},    
+    max_down: {label: "Max Down", format: "percent"},    
+    sharpe_ratio: {label: "Risk Reward", format: "number"},        
+    updated: {label: "Number of Years", format: "number"},
+  };
+  for (const prop in PERFORMANCE_FORMATS) {    
+    const {label, format} = PERFORMANCE_FORMATS[prop];
+    let value = balanceStats[prop];    
+    if (format == 'percent')  value = Utils.numberFormat(value) + '%';
+    else if (format == 'number')  value = Utils.numberFormat(value);
+    else if (format == 'integer')  value = Utils.numberFormat(value, 0, 0);
+    performanceRows.push({ label, value });
+  }
+
   return (
     <div id="trade">
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <Section        
+            title = "System Stats"
+            titleSize = "small"
+            body = {
+              <VuiBox>                       
+                <StatsTable columns={systemStatsColumns} rows={systemStatsRows} />                
+              </VuiBox>
+            }
+            minHeight = "340px"
+          />    
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Section        
+            title = "Performance"
+            titleSize = "small"
+            body = {
+              <VuiBox>                       
+                <StatsTable columns={performanceColumns} rows={performanceRows} />                
+              </VuiBox>
+            }
+            minHeight = "340px"
+          />    
+        </Grid>
+      </Grid>      
+      <Divider />
+
       <div id="stock-chart" style={{height: "700px", margin: '5px 15px'}}></div>
     </div>
   );
