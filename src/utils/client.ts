@@ -32,3 +32,11 @@ export function useAuth() {
 
   return { isAuthenticated, setAuthenticated };
 }
+
+export function isBrowser() { 
+  return (typeof window !== 'undefined'); 
+}
+
+export function scrollTop() {
+  if (isBrowser())  $('html,body').animate({ scrollTop: 0 }, 'fast');
+}

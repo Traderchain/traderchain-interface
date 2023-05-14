@@ -4,6 +4,7 @@ import { Grid, Divider } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
 import StatsTable from 'components/StatsTable';
+import Chart from 'components/Chart';
 import * as Utils from 'utils';
 import { isEmpty, notEmpty } from 'utils';
 import { useSystemT } from 'utils/system_t';
@@ -28,6 +29,7 @@ export default function Trade() {
   const [extend_data, setExtendData] = useState<any[]>([]);
   const [extend_stats, setExtendStats] = useState<any>({});
   const [extend_prices, setExtendPrices] = useState<any[]>([]);  
+  const [stockChart, setStockChart] = useState<any>(null);
   const { fetchPrices, fetchParam, fetchTrades } = useSystemT();
 
   useEffect(() => {
@@ -464,7 +466,26 @@ export default function Trade() {
           zIndex: 1,
         },
       ]
-    });
+    });    
+    setStockChart(stockChart);
+  }
+
+  function clickChartTrade(point: any) {    
+    let date: string = point.x;
+    scrollChart(date);  
+  }
+
+  function scrollChart(date: string) {
+    let delta = date ? 90 : 180;
+    
+    let start_date = date ? new Date(date) : new Date();
+    start_date.setDate(start_date.getDate() - delta);
+    
+    let end_date = date ? new Date(date) : new Date();
+    end_date.setDate(end_date.getDate() + delta);
+    
+    stockChart.xAxis[0].setExtremes(start_date.getTime(), end_date.getTime());
+    Utils.scrollTop();
   }
 
   const systemStatsColumns = [
@@ -541,6 +562,11 @@ export default function Trade() {
       <Divider />
 
       <div id="stock-chart" style={{height: "700px", margin: '5px 15px'}}></div>
+      <Divider />
+
+      <Chart chart_id="chart-extends" type="stock" title="Over Bought, Over Sold" data={extend_data} chart_type="area" marker={{enabled: false}} onClick={clickChartTrade} style={{height:'400px', margin: '5px 15px'}} />
+      <Divider />
+
     </div>
   );
 }
