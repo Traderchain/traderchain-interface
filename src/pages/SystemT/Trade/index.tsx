@@ -33,6 +33,8 @@ export default function Trade() {
   const [extend_prices, setExtendPrices] = useState<any[]>([]);    
   const { fetchPrices, fetchParam, fetchTrades } = useSystemT();
 
+  const cc_fsym = CC_FSYMS[symbol];
+
   useEffect(() => {
     async function init() {
       if (!symbol || !pid)  return;
@@ -105,7 +107,6 @@ export default function Trade() {
     if (typeof Highcharts.stockChart == 'undefined')  return;    
     if (isEmpty(prices) || isEmpty(param) || isEmpty(trades))  return;
     
-    let cc_fsym = CC_FSYMS[symbol];
     let intraday = PriceUtils.isIntraday(symbol);  
     let title = symbol.toUpperCase();    
     let fast_mv = param.fast_mv || 4;
@@ -538,6 +539,40 @@ export default function Trade() {
     date = new Date(date).getTime();    
     return [date, trade_profit];
   }).filter(t => { return t; });
+  
+  const tradeListHeader = (
+    <tr>
+      <th>Date</th>
+      <th>Action</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Cost</th>
+      <th>Balance</th>
+      <th>Profit & Loss</th>
+      <th>Inception-to-Date P&L</th>                  
+    </tr>
+  );
+
+  const tradeList = Utils.sortArrayBy(trades, 'date', -1).map((trade,k) => {
+    let {date, buy, sell, price, share, cost, balance, profit, trade_profit, top, bottom} = trade;
+    
+    const cl = buy ? 'buy' : sell ? 'sell' : '';
+    if (cc_fsym)  price = PriceUtils.decimal(price / 1000, 4);    
+    const action = (!date ? 'Stop ' : '') + Utils.firstCap(cl);
+
+    return (
+      <tr className={"trade "+cl} onClick={() => { scrollChart(date); }} key={k}>        
+        <td>{date}</td>
+        <td>{action}</td>
+        <td>{Utils.formatMoney(price)}</td>
+        <td>{share && Utils.numberFormat(share)}</td>
+        <td>{cost && Utils.formatMoney(cost,0,0)}</td>
+        <td>{balance && Utils.formatMoney(balance,0,0)}</td>        
+        <td>{trade_profit && <span>{Utils.numberFormat(trade_profit)}%</span>}</td>
+        <td>{profit !== null && <span>{Utils.numberFormat(profit)}%</span>}</td>
+      </tr>
+    );
+  });
 
   return (
     <div id="trade">
@@ -572,10 +607,27 @@ export default function Trade() {
       <div id="stock-chart" style={{height: "700px", margin: '5px 15px'}}></div>
       <Divider />
 
-      <Chart chart_id="chart-extends" type="stock" title="Over Bought, Over Sold" data={extend_data} chart_type="area" marker={{enabled: false}} onClick={clickChartTrade} style={{height:'400px', margin: '5px 15px'}} />
+      <Chart chart_id="chart-extends" type="stock" title="Extend Percent (Over Bought & Over Sold)" data={extend_data} chart_type="area" marker={{enabled: false}} onClick={clickChartTrade} style={{height:'400px', margin: '5px 15px'}} />
       <Divider />
 
       <Chart chart_id="chart-trades" type="stock" title="Trade Results" data={tradeData} chart_type="area" onClick={clickChartTrade} style={{height:'400px', margin:'5px 15px'}} tooltip={{ pointFormatter: function() { return `${this.y}%`; } }} />
+      <Divider />
+
+      <Section        
+        title = "Trade Details"
+        titleSize = "small"
+        minHeight = "340px"
+        body = {
+          <VuiBox>              
+            <div className="trade-list">              
+              <table cellSpacing="0" cellPadding="0">                
+                <thead>{tradeListHeader}</thead>                
+                <tbody>{tradeList}</tbody>
+              </table>
+            </div>                     
+          </VuiBox>
+        }        
+      />      
       <Divider />
     </div>
   );

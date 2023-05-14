@@ -1,0 +1,8 @@
+.trade-list { overflow: auto; height: 300px; position: relative; }
+.trade-list table { width: 100%; border: none; }
+.trade-list thead { margin-right: 0; margin-left: 0; }
+.trade-list tr { background-color: white; font-size: 11px; border-bottom: solid 1px gray; } 
+.trade-list td { padding: 5px; cursor: pointer; }
+.trade-list th { padding: 5px; position: sticky; top: 0; background-color: white; }
+.trade-list .trade.buy { background-color: #cafbca; } 
+.trade-list .trade.sell { background-color: #f7d3d3; }

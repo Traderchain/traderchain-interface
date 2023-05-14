@@ -75,6 +75,10 @@ export function numberFormat(number: number, minimumFractionDigits = 2, maximumF
   return new Intl.NumberFormat('en-US', { minimumFractionDigits, maximumFractionDigits }).format(number);
 }
 
+export function formatMoney(number: number, minimumFractionDigits = 2, maximumFractionDigits = 6) {
+  return '$' + numberFormat(number, minimumFractionDigits, maximumFractionDigits);
+}
+
 export function parseAmount(value: any) {
   if (!value || isNaN(value))  return '';
   
@@ -129,4 +133,9 @@ export function sortArrayBy(array: any[], order: any, asc = 1) {
     return a_order < b_order ? -asc : (a_order > b_order ? asc : 0);
   };
   return sorted_array.sort(sortByOrder);
+}
+
+export function firstCap(str: string) {
+  if (!str)  return '';  
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
