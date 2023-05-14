@@ -12,6 +12,8 @@ import PriceUtils from 'utils/price_utils';
 
 import { CC_FSYMS } from 'utils/constants';
 
+let stockChart: any;
+
 export default function Trade() {
   let { symbol = '' } = useParams<{ symbol: string }>();
   const [searchParams] = useSearchParams();
@@ -28,8 +30,7 @@ export default function Trade() {
   const [balanceStats, setBalanceStats] = useState<any>({});
   const [extend_data, setExtendData] = useState<any[]>([]);
   const [extend_stats, setExtendStats] = useState<any>({});
-  const [extend_prices, setExtendPrices] = useState<any[]>([]);  
-  const [stockChart, setStockChart] = useState<any>(null);
+  const [extend_prices, setExtendPrices] = useState<any[]>([]);    
   const { fetchPrices, fetchParam, fetchTrades } = useSystemT();
 
   useEffect(() => {
@@ -213,14 +214,14 @@ export default function Trade() {
       let {date, buy, price, trade_profit} = t;
       if (!date || !buy)  return null;
       
-      return { x: new Date(date).getTime(), title: ' ', text: 'ST: Buy' };
+      return { x: new Date(date).getTime(), title: ' ', text: 'Buy' };
     }).filter(t => { return t; });
     
     let sell_data = trades.map(t => {
       let {date, sell, price, trade_profit} = t;
       if (!date || !sell)  return null;
       
-      return { x: new Date(date).getTime(), title: ' ', text: 'ST: Sell: ' + trade_profit + '%' };
+      return { x: new Date(date).getTime(), title: ' ', text: 'Sell: ' + trade_profit + '%' };
     }).filter(t => { return t; });
 
   //   let extend_buy_data = [];
@@ -300,7 +301,7 @@ export default function Trade() {
     //   });
     // }
 
-    const stockChart = Highcharts.stockChart('stock-chart', {      
+    stockChart = Highcharts.stockChart('stock-chart', {      
       rangeSelector: {buttons: range_buttons, selected: range_selected},
       credits: {enabled: false},
       title: {text: title},
@@ -467,7 +468,6 @@ export default function Trade() {
         },
       ]
     });    
-    setStockChart(stockChart);
   }
 
   function clickChartTrade(point: any) {    
@@ -531,6 +531,14 @@ export default function Trade() {
     performanceRows.push({ label, value });
   }
 
+  const tradeData = trades.map(trade => {
+    let {date, sell, trade_profit} = trade;
+    if (!date || !sell)  return null;
+    
+    date = new Date(date).getTime();    
+    return [date, trade_profit];
+  }).filter(t => { return t; });
+
   return (
     <div id="trade">
       <Grid container spacing={2}>
@@ -567,6 +575,8 @@ export default function Trade() {
       <Chart chart_id="chart-extends" type="stock" title="Over Bought, Over Sold" data={extend_data} chart_type="area" marker={{enabled: false}} onClick={clickChartTrade} style={{height:'400px', margin: '5px 15px'}} />
       <Divider />
 
+      <Chart chart_id="chart-trades" type="stock" title="Trade Results" data={tradeData} chart_type="area" onClick={clickChartTrade} style={{height:'400px', margin:'5px 15px'}} tooltip={{ pointFormatter: function() { return `${this.y}%`; } }} />
+      <Divider />
     </div>
   );
 }
