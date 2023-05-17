@@ -150,7 +150,7 @@ class PriceUtils {
     }); 
   }
   
-  balanceStats(balances: any[], correct_name = false, extra_stats = []) {
+  balanceStats(balances: any[], correct_name = false, extra_stats: any[] = []) {
     balances = sortArrayBy(balances, 'date');
     
     let max_down = 0;
@@ -246,10 +246,10 @@ class PriceUtils {
     let max_loss = max_down_time;
     let max_up = this.percent(balances.length + up_time, balances.length);
     let updated = years;
-    let extra_data = {downs, daily_returns, monthly_returns, quarterly_returns, yearly_returns};
+    let extra_data: any = {downs, daily_returns, monthly_returns, quarterly_returns, yearly_returns};
     
     // TODO: refactor naming
-    let result = correct_name ? {risk_reward: sharpe_ratio, compound_profit: profit, max_down, max_down_time: max_loss, up_time: max_up, time_diff: updated, start_date, end_date}
+    let result: any = correct_name ? {risk_reward: sharpe_ratio, compound_profit: profit, max_down, max_down_time: max_loss, up_time: max_up, time_diff: updated, start_date, end_date}
                               : {max_down, profit, sharpe_ratio, max_loss, max_up, start_date, end_date, updated};
     
     extra_stats.map(s => { result[s] = extra_data[s]; });
@@ -258,9 +258,9 @@ class PriceUtils {
   }
   
   dataDistribution(raw_data: any, sort_order = 1, dist_unit = 1, prop = 'percent') {
-    let data = [];
+    let data: any[] = [];
     let distMap: any = {};
-    let dist = [];
+    let dist: any[] = [];
     let count = 0;
     
     for (let date in raw_data) {
@@ -277,9 +277,9 @@ class PriceUtils {
     
     for (let k in distMap) {      
       let v = this.decimal(100.0 * distMap[k] / count);
-      dist.push([k, v]);
+      dist.push([parseInt(k), v]);
     }
-    dist = sortArrayBy(dist, 0, sort_order).map(d => { return [`${d[0]}`, d[1]]; });
+    dist = sortArrayBy(dist, 0, sort_order).map(d => { return [`${d[0]}%`, d[1]]; });
     
     return {data, dist};
   }

@@ -62,6 +62,7 @@ export default class Chart extends React.Component <any> {
     }).filter((d: any) => { return d; });
     
     const highChart = window.Highcharts.chart(chart_id, {
+      credits: {enabled: false},
       chart: {
         type: 'scatter',
       },
@@ -115,6 +116,7 @@ export default class Chart extends React.Component <any> {
     if (chart_type == 'area') {
       const highChart = window.Highcharts.stockChart(chart_id, {
         title: title ? {text: title} : null,
+        credits: {enabled: false},
         rangeSelector: {selected: 5},
         series: [
           {
@@ -149,8 +151,9 @@ export default class Chart extends React.Component <any> {
         });
       }
       
-      let options: any = {
+      let options: any = {        
         rangeSelector: {selected: 5},
+        credits: {enabled: false},
         xAxis: {
           crosshair: {snap: false},
         },
@@ -169,10 +172,11 @@ export default class Chart extends React.Component <any> {
   chartColumn() {
     if (!this.available)  return;
     
-    let {chart_id, data, column_color} = (this.state as any);
+    let {chart_id, data, column_color, tooltip} = (this.state as any);
     if (Utils.isEmpty(data))  return;
     
     const highChart = window.Highcharts.chart(chart_id, {
+      credits: {enabled: false},
       chart: {type: 'column'},
       legend: {enabled: false},
       title: {text: null},
@@ -181,7 +185,8 @@ export default class Chart extends React.Component <any> {
       plotOptions: {series: {color: column_color}},
       series: [{
         data: data,
-        dataLabels: {enabled: true}
+        dataLabels: {enabled: true},
+        tooltip: tooltip || {valueDecimals: 2},
       }]
     });
   }

@@ -114,6 +114,10 @@ export function last(arr: any[]) {
   return arr[arr.length-1];
 }
 
+export function count(obj: object) {
+  return Object.keys(obj).length;
+}
+
 export function timeDiff(start_date: string, end_date: string) {
   const ms = new Date(end_date).getTime() - new Date(start_date).getTime();  
   const seconds = Math.round(ms / 1000);

@@ -495,10 +495,11 @@ export default function Trade() {
   ];
   let systemStatsRows = [];
   const PARAM_FORMATS: any = {    
+    symbol: {label: "Symbol", format: "string"},
+    start_date: {label: "Start Date", format: "date"},    
     profit: {label: "Profit", format: "percent"},
     max_down: {label: "Max Down", format: "percent"},
     sharpe_ratio: {label: "Risk Reward", format: "number"},    
-    start_date: {label: "Start Date", format: "date"},    
     win_rate: {label: "Win Rate", format: "percent"},        
     buy_count: {label: "Trade Count", format: "integer"},    
     stop_sell: {label: "Stop Loss", format: "percent"},    
@@ -506,9 +507,12 @@ export default function Trade() {
   for (const prop in PARAM_FORMATS) {    
     const {label, format} = PARAM_FORMATS[prop];
     let value = param[prop];    
+    if (!value)  continue;
+    
     if (format == 'percent')  value = Utils.numberFormat(value) + '%';
     else if (format == 'number')  value = Utils.numberFormat(value);
     else if (format == 'integer')  value = Utils.numberFormat(value, 0, 0);
+    else if (prop == 'symbol')  value = `${value}`.toUpperCase();
     systemStatsRows.push({ label, value });
   }
   
@@ -521,14 +525,19 @@ export default function Trade() {
     profit: {label: "Compound Profit", format: "percent"},    
     max_down: {label: "Max Down", format: "percent"},    
     sharpe_ratio: {label: "Risk Reward", format: "number"},        
-    updated: {label: "Number of Years", format: "number"},
+    max_loss: {label: "Max Down Time", format: "integer", suffix: "days"},
+    updated: {label: "Trading Period", format: "number", suffix: "years"},
   };
   for (const prop in PERFORMANCE_FORMATS) {    
-    const {label, format} = PERFORMANCE_FORMATS[prop];
+    const {label, format, suffix} = PERFORMANCE_FORMATS[prop];
     let value = balanceStats[prop];    
+    if (!value)  continue;
+
     if (format == 'percent')  value = Utils.numberFormat(value) + '%';
     else if (format == 'number')  value = Utils.numberFormat(value);
     else if (format == 'integer')  value = Utils.numberFormat(value, 0, 0);
+    if (suffix)  value += ' ' + suffix;
+
     performanceRows.push({ label, value });
   }
 
@@ -595,7 +604,7 @@ export default function Trade() {
             titleSize = "small"
             body = {
               <VuiBox>                       
-                <StatsTable columns={performanceColumns} rows={performanceRows} />                
+                <StatsTable columns={performanceColumns} rows={performanceRows} more={{label: "See Performance Details", to: `/SystemT/performance?pids=${pid}`}} />                
               </VuiBox>
             }
             minHeight = "340px"
