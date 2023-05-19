@@ -3,6 +3,7 @@ import { Grid, Divider } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
 import { useSystemT } from 'utils/system_t';
+import * as Utils from 'utils';
 
 export default function Home() {
   const [watches, setWatches] = useState<any[]>([]);
@@ -23,7 +24,7 @@ export default function Home() {
   const watchList = watches.map((watch,k) => {
     const {id, symbol, pid, start_date, bt, market} = watch;    
     
-    let desc = [`Start Date: ${start_date}`, `Strategy: ${bt}`, `Market: ${market}`];
+    let desc = [`Start Date: ${start_date}`, `Market: ${Utils.firstCap(market)}`];
     let description = desc.map((d, k) => <span key={k}>{d}<br/></span>);
 
     return (

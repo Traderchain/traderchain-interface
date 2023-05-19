@@ -6,6 +6,7 @@ import { Context, VuiTheme, VuiBox } from 'traderchain-ui';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 import CommonDialog from 'components/CommonDialog';
+import Spinner from 'components/Spinner';
 
 import Home from 'pages/Home';
 import SystemT from 'pages/SystemT';
@@ -59,6 +60,7 @@ function Layout() {
       </VuiBox>
       <Footer />
       <CommonDialog />
+      <Spinner />
     </VuiBox>
   );
 }

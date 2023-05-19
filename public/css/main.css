@@ -6,3 +6,5 @@
 .trade-list th { padding: 5px; position: sticky; top: 0; background-color: white; }
 .trade-list .trade.buy { background-color: #cafbca; } 
 .trade-list .trade.sell { background-color: #f7d3d3; }
+
+#loading-spinner { position: fixed; top: 20%; left: 50%; transform: translate(-50%, -50%); }
