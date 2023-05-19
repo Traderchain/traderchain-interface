@@ -22,6 +22,7 @@ export default function Footer() {
           @ 2022 Traderchain
         </VuiTypography>
       </VuiBox>
+      {/*
       <VuiBox item="true">
         <Link to={Outlink.TRADERCHAIN_GITHUB}>
           <IconButton>
@@ -34,6 +35,7 @@ export default function Footer() {
           </IconButton>
         </Link>
       </VuiBox>
+      */}
     </VuiBox>
   );
 }

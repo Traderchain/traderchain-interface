@@ -56,6 +56,7 @@ export default function Header() {
               </IconButton>
             </Link>
           </VuiBox>                    
+          {/*
           <VuiBox mr="30px">
             <Link to="/invest">
               <VuiTypography variant="button" color={page == Page.INVEST ? "white" : "text"}>
@@ -70,24 +71,25 @@ export default function Header() {
               </VuiTypography>
             </Link>
           </VuiBox>
+          */}
         </VuiBox>        
         <VuiBox sx={{ display: {xs: "none", sm: "block"} }}>
           <VuiBox sx={(theme: any) => navbarRow(theme, { isMini })}>
             <VuiBox pr={2}>
               <VuiInput
-                placeholder="Type here..."
+                placeholder="Enter symbol..."
                 icon={{ component: "search", direction: "left" }}
               />            
             </VuiBox>
             
-            {isAuthenticated ?
+            {/* isAuthenticated ?
             <VuiTypography variant="button" color="info">
               {CHAIN_NAME}
             </VuiTypography>
             :  
             <VuiButton variant="contained" color="primary" size="medium" onClick={onConnect}>
               Connect
-            </VuiButton>}
+            </VuiButton> */}
             
             <VuiBox color="inherit" sx={{ display: "none" }}>
               <IconButton size="small" color="inherit" sx={navbarIconButton}>
