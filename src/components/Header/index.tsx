@@ -75,12 +75,14 @@ export default function Header() {
         </VuiBox>        
         <VuiBox sx={{ display: {xs: "none", sm: "block"} }}>
           <VuiBox sx={(theme: any) => navbarRow(theme, { isMini })}>
+            {/*
             <VuiBox pr={2}>
               <VuiInput
                 placeholder="Enter symbol..."
                 icon={{ component: "search", direction: "left" }}
               />            
             </VuiBox>
+            */}
             
             {/* isAuthenticated ?
             <VuiTypography variant="button" color="info">
