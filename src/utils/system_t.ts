@@ -7,7 +7,7 @@ export function useSystemT() {
   const { getData, postData, putData, deleteData } = useFetch();
   
   async function fetchWatchlist() {
-    const params = { trading: 1 };
+    const params = { published: 1, trading: 1 };
     const url = `/api/system_t/watchlist?` + Utils.toQueryString(params);
     const result = await getData(url);
     return result.data;    
