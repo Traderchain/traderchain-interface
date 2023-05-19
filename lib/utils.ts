@@ -1,4 +1,4 @@
-export * from '../src/utils/lib';
+// export * from '../src/utils/lib';
 
 export async function request(options: any) {
   const {url, headers} = options;
@@ -16,4 +16,8 @@ export async function requestSystemT(options: any) {
     'user-agent': 'Traderchain'
   };
   return await request(options);
+}
+
+export function toQueryString(params: any) {
+  return Object.keys(params).map(key => key + '=' + params[key]).join('&');
 }
