@@ -6,7 +6,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { url, method, query, body, cookies } = req;
     console.log({ url, method, query, body });
 
-    const api = 'stock/watchlist?' + toQueryString(query);
+    const params = { published: 1, trading: 1 };
+    const api = 'stock/watchlist?' + toQueryString(params);
     const result = await requestSystemT({api});
     res.status(200).json(result);
   }
