@@ -1,6 +1,7 @@
 {
   "name": "traderchain-interface",
   "version": "1.0.0",
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -33,7 +34,7 @@
   },
   "devDependencies": {
     "@types/jquery": "^3.5.16",
-    "@vercel/node": "^2.6.3",
+    "@vercel/node": "^2.14.3",
     "dotenv-cli": "^6.0.0",
     "loader-utils": "^3.2.1"
   },

@@ -45,7 +45,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // res.status(200).json(result);
     res.writeHead(200, { 'Content-Type': 'application/json' }).end(JSON.stringify(result, null, 2));
   }
-  catch(err) {
+  catch(err: any) {
     console.log(err);
     res.status(400).json({ error: err.message });
   }  

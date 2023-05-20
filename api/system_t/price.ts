@@ -1,17 +1,17 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { toQueryString, requestSystemT } from '../../lib/utils';
+import { toQueryString, requestSystemT } from '../../lib/utils.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    const { url, method, query, body, cookies } = req;
-    console.log({ url, method, query, body });
+    const { url, method, query, cookies } = req;
+    console.log({ url, method, query });
 
     const {symbol} = query;
     const api = `stock/price/${symbol}?` + toQueryString(query);
     const result = await requestSystemT({api});
     res.status(200).json(result);
   }
-  catch(err) {
+  catch(err: any) {
     console.log(err);
     res.status(400).json({ error: err.message });
   }  

@@ -5,7 +5,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const result = {};
     res.status(200).json(result);
   }
-  catch(err) {
+  catch(err: any) {
     console.log(err);
     res.status(400).json({ error: err.message });
   }  
