@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 // export * from '../src/utils/lib';
 
 export async function request(options: any) {
