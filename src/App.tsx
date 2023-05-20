@@ -48,7 +48,7 @@ function Layout() {
     <VuiBox
       sx={({ breakpoints }: any) => ({        
         [breakpoints.up("xl")]: {
-          margin: "0 15%"          
+          margin: "0"
         },
       })}
     >

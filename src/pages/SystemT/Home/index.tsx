@@ -28,7 +28,7 @@ export default function Home() {
     let description = desc.map((d, k) => <span key={k}>{d}<br/></span>);
 
     return (
-      <Grid key={k} item xs={12} md={4}>
+      <Grid key={k} item xs={12} md={3}>
         <Section
           type = "blue"
           title = {symbol.toUpperCase()}

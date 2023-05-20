@@ -613,13 +613,13 @@ export default function Trade() {
       </Grid>      
       <Divider />
 
-      <div id="stock-chart" style={{height: "700px", margin: '5px 15px'}}></div>
+      <div id="stock-chart" style={{height: "700px"}}></div>
       <Divider />
 
-      <Chart chart_id="chart-extends" type="stock" title="Extend Percent (Over Bought & Over Sold)" data={extend_data} chart_type="area" marker={{enabled: false}} onClick={clickChartTrade} style={{height:'400px', margin: '5px 15px'}} />
+      <Chart chart_id="chart-extends" type="stock" title="Extend Percent (Over Bought & Over Sold)" data={extend_data} chart_type="area" marker={{enabled: false}} onClick={clickChartTrade} style={{height:'400px'}} />
       <Divider />
 
-      <Chart chart_id="chart-trades" type="stock" title="Trade Results" data={tradeData} chart_type="area" onClick={clickChartTrade} style={{height:'400px', margin:'5px 15px'}} tooltip={{ pointFormatter: function() { return `${this.y}%`; } }} />
+      <Chart chart_id="chart-trades" type="stock" title="Trade Results" data={tradeData} chart_type="area" onClick={clickChartTrade} style={{height:'400px'}} tooltip={{ pointFormatter: function() { return `${this.y}%`; } }} />
       <Divider />
 
       <Section        

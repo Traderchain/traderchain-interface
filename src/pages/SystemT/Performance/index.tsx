@@ -242,7 +242,7 @@ export default function Trade() {
       </Grid>      
       <Divider />
       
-      <Chart chart_id="chart-balances" type="stock" title="Balance" data={balancesData} chart_type="line" style={{height:'600px', margin:'0 20px'}} />
+      <Chart chart_id="chart-balances" type="stock" title="Balance" data={balancesData} chart_type="line" style={{height:'600px'}} />
       <Divider />
 
       <Section        
