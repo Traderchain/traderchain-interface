@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { Grid, Divider } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
-import StatsTable from 'components/StatsTable';
 import Chart from 'components/Chart';
+import SystemStats from '../components/SystemStats';
 import * as Utils from 'utils';
 import { isEmpty, notEmpty } from 'utils';
 import PriceUtils from 'utils/price_utils';
@@ -151,56 +151,8 @@ export default function Trade() {
     setQuarterlyReturns(quarterly_returns);
     setYearlyReturns(yearly_returns);
   }
-  
-  const systemStatsColumns = [
-    { name: "label" },
-    { name: "value" },
-  ];
-  let systemStatsRows = [];
-  const PARAM_FORMATS: any = {    
-    symbol: {label: "Symbol", format: "string"},
-    start_date: {label: "Start Date", format: "date"},          
-    profit: {label: "Profit", format: "percent"},
-    max_down: {label: "Max Down", format: "percent"},
-    sharpe_ratio: {label: "Risk Reward", format: "number"},        
-  };
+
   const param: any = notEmpty(params) ? params[Object.keys(params)[0]] : {};
-  for (const prop in PARAM_FORMATS) {    
-    const {label, format} = PARAM_FORMATS[prop];    
-    let value = param[prop];
-    if (!value)  continue;
-    
-    if (format == 'percent')  value = Utils.numberFormat(value) + '%';
-    else if (format == 'number')  value = Utils.numberFormat(value);
-    else if (format == 'integer')  value = Utils.numberFormat(value, 0, 0);
-    else if (prop == 'symbol')  value = `${value}`.toUpperCase();
-    systemStatsRows.push({ label, value });
-  }
-
-  const performanceColumns = [
-    { name: "label" },
-    { name: "value" },
-  ];
-  let performanceRows: any[] = [];  
-  const PERFORMANCE_FORMATS: any = {    
-    profit: {label: "Compound Profit", format: "percent"},    
-    max_down: {label: "Max Down", format: "percent"},    
-    sharpe_ratio: {label: "Risk Reward", format: "number"},        
-    max_loss: {label: "Max Down Time", format: "integer", suffix: "days"},
-    updated: {label: "Trading Period", format: "number", suffix: "years"},
-  };
-  for (const prop in PERFORMANCE_FORMATS) {    
-    const {label, format, suffix} = PERFORMANCE_FORMATS[prop];
-    let value = balanceStats[prop];    
-    if (!value)  continue;
-
-    if (format == 'percent')  value = Utils.numberFormat(value) + '%';
-    else if (format == 'number')  value = Utils.numberFormat(value);
-    else if (format == 'integer')  value = Utils.numberFormat(value, 0, 0);
-    if (suffix)  value += ' ' + suffix;
-
-    performanceRows.push({ label, value });
-  }
 
   const percent_tooltip: any = { pointFormatter: function() { return `${Utils.numberFormat(this.y)}%`; } };
 
@@ -215,31 +167,7 @@ export default function Trade() {
 
   return (
     <div id="performance">
-      <Grid container spacing={2}>        
-        <Grid item xs={12} md={6}>
-          <Section        
-            title = "System Stats"
-            titleSize = "small"
-            body = {
-              <VuiBox>                       
-                <StatsTable columns={systemStatsColumns} rows={systemStatsRows} more={{label: "See System Details", to: `/SystemT/trade/${param.symbol}?pid=${param.id}`}} />
-              </VuiBox>
-            }
-            minHeight = "340px"
-          />    
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Section        
-            title = "Performance"
-            titleSize = "small"
-            body = {
-              <VuiBox>                       
-                <StatsTable columns={performanceColumns} rows={performanceRows} />
-              </VuiBox>
-            }            
-          />    
-        </Grid>
-      </Grid>      
+      <SystemStats param={param} balanceStats={balanceStats} more={'trade'} />
       <Divider />
       
       <Chart chart_id="chart-balances" type="stock" title="Balance" data={balancesData} chart_type="line" style={{height:'600px'}} />
