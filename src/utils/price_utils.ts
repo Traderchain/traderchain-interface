@@ -257,11 +257,12 @@ class PriceUtils {
     return result;
   }
   
-  dataDistribution(raw_data: any, sort_order = 1, dist_unit = 1, prop = 'percent') {
+  dataDistribution(raw_data: any, sort_order = 1, dist_unit = 1, prop = 'percent', x_suffix = '%') {
     let data: any[] = [];
     let distMap: any = {};
     let dist: any[] = [];
     let count = 0;
+    const abs = (prop == 'time');
     
     for (let date in raw_data) {
       let d = raw_data[date];
@@ -279,7 +280,7 @@ class PriceUtils {
       let v = this.decimal(100.0 * distMap[k] / count);
       dist.push([parseInt(k), v]);
     }
-    dist = sortArrayBy(dist, 0, sort_order).map(d => { return [`${d[0]}%`, d[1]]; });
+    dist = sortArrayBy(dist, 0, sort_order).map(d => { return [`${abs ? Math.abs(d[0]) : d[0]}${x_suffix}`, d[1]]; });
     
     return {data, dist};
   }

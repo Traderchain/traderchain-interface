@@ -17,16 +17,13 @@ export default function Section({ type, title, titleSize, body, more, minHeight 
     sx.backgroundPosition = "50%";
   }
     
+  const sectionTitle = <VuiTypography color="white" variant={titleSize == "small" ? "h4" : "h3"} fontWeight="bold" mb="3px">{title || ''}</VuiTypography>;
+
   return (
     <Card sx={({ breakpoints }: any) => (sx)}>
       <VuiBox display="flex" flexDirection="column" sx={{ minHeight: minHeight || "210px" }}>
-        <VuiBox display="flex" flexDirection="column" mb="auto">     
-          <Link to={(more && more.to) || "#"}>
-            <VuiTypography color="white" variant={titleSize == "small" ? "h4" : "h3"} fontWeight="bold" mb="3px">
-              {title || ''}
-            </VuiTypography>
-          </Link>
-          
+        <VuiBox display="flex" flexDirection="column" mb="auto">          
+          {more && more.to ? <Link to={more.to}>{sectionTitle}</Link> : sectionTitle}
           {body}
         </VuiBox>
         

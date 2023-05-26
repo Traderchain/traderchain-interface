@@ -172,7 +172,7 @@ export default class Chart extends React.Component <any> {
   chartColumn() {
     if (!this.available)  return;
     
-    let {chart_id, data, column_color, tooltip} = (this.state as any);
+    let {chart_id, data, column_color, tooltip, data_suffix} = (this.state as any);
     if (Utils.isEmpty(data))  return;
     
     const highChart = window.Highcharts.chart(chart_id, {
@@ -185,7 +185,7 @@ export default class Chart extends React.Component <any> {
       plotOptions: {series: {color: column_color}},
       series: [{
         data: data,
-        dataLabels: {enabled: true},
+        dataLabels: { enabled: true, format: '{y}' + (data_suffix || '') },
         tooltip: tooltip || {valueDecimals: 2},
       }]
     });

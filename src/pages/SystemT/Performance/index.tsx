@@ -118,8 +118,8 @@ export default function Trade() {
     const downs_percents: any = PriceUtils.dataDistribution(balanceStats.downs, -1, 1);
     downs_percents.dist5 = PriceUtils.dataDistribution(balanceStats.downs, -1, 5).dist;    
     
-    const downs_times: any = PriceUtils.dataDistribution(balanceStats.downs, -1, 5, 'time');
-    const down_times20: any = PriceUtils.dataDistribution(balanceStats.downs, -1, 20, 'time');
+    const downs_times: any = PriceUtils.dataDistribution(balanceStats.downs, -1, 5, 'time', 'w');
+    const down_times20: any = PriceUtils.dataDistribution(balanceStats.downs, -1, 20, 'time', 'm');
     downs_times.dist20 = down_times20.dist;
 
     // Return distributions
@@ -183,8 +183,8 @@ export default function Trade() {
         body = {
           <VuiBox>                       
             <Chart chart_id="chart-downs-percent" type="stock" title="Drawdown Percents & Distributions" data={downs_percents.data} chart_type="area" style={{height:'300px'}} tooltip={percent_tooltip} />
-            <Chart chart_id="chart-downs-percent-dist5" type="column" data={downs_percents.dist5} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} />
-            <Chart chart_id="chart-downs-percent-dist" type="column" data={downs_percents.dist} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} />
+            <Chart chart_id="chart-downs-percent-dist5" type="column" data={downs_percents.dist5} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} data_suffix='%' />
+            <Chart chart_id="chart-downs-percent-dist" type="column" data={downs_percents.dist} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} data_suffix='%' />
           </VuiBox>
         }        
       />
@@ -196,8 +196,8 @@ export default function Trade() {
         body = {
           <VuiBox>                       
             <Chart chart_id="chart-downs-time" type="stock" title="Drawdown Periods & Distributions" data={downs_times.data} chart_type="area" tooltip={down_time_tooltip} style={{height:'300px'}} />
-            <Chart chart_id="chart-downs-time-dist20" type="column" data={downs_times.dist20} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} />
-            <Chart chart_id="chart-downs-time-dist" type="column" data={downs_times.dist} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} />
+            <Chart chart_id="chart-downs-time-dist20" type="column" data={downs_times.dist20} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} data_suffix='%' />
+            <Chart chart_id="chart-downs-time-dist" type="column" data={downs_times.dist} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} data_suffix='%' />
           </VuiBox>
         }        
       />      
@@ -209,8 +209,8 @@ export default function Trade() {
         body = {
           <VuiBox>                       
             <Chart chart_id="chart-month-return" type="stock" title="Monthly Returns & Distributions" data={monthly_returns.data} chart_type="area" style={{height:'300px'}} tooltip={percent_tooltip} />
-            <Chart chart_id="chart-month-return-dist5" type="column" data={monthly_returns.dist5} style={{height:'200px'}} tooltip={percent_tooltip} />
-            <Chart chart_id="chart-month-return-dist" type="column" data={monthly_returns.dist} style={{height:'200px'}} tooltip={percent_tooltip} />
+            <Chart chart_id="chart-month-return-dist5" type="column" data={monthly_returns.dist5} style={{height:'200px'}} tooltip={percent_tooltip} data_suffix='%' />
+            <Chart chart_id="chart-month-return-dist" type="column" data={monthly_returns.dist} style={{height:'200px'}} tooltip={percent_tooltip} data_suffix='%' />
           </VuiBox>
         }        
       />      
@@ -222,7 +222,7 @@ export default function Trade() {
         body = {
           <VuiBox>                       
             <Chart chart_id="chart-quarter-return" type="stock" title="Quarterly Returns & Distributions" data={quarterly_returns.data} chart_type="area" style={{height:'300px'}} tooltip={percent_tooltip} />
-            <Chart chart_id="chart-quarter-return-dist" type="column" data={quarterly_returns.dist} style={{height:'200px'}} tooltip={percent_tooltip} />
+            <Chart chart_id="chart-quarter-return-dist" type="column" data={quarterly_returns.dist} style={{height:'200px'}} tooltip={percent_tooltip} data_suffix='%' />
           </VuiBox>
         }        
       />      
@@ -234,7 +234,7 @@ export default function Trade() {
         body = {
           <VuiBox>                       
             <Chart chart_id="chart-year-return" type="stock" title="Yearly Returns & Distributions" data={yearly_returns.data} chart_type="area" style={{height:'300px'}} tooltip={percent_tooltip} />
-            <Chart chart_id="chart-year-return-dist" type="column" data={yearly_returns.dist} style={{height:'200px'}} tooltip={percent_tooltip} />
+            <Chart chart_id="chart-year-return-dist" type="column" data={yearly_returns.dist} style={{height:'200px'}} tooltip={percent_tooltip} data_suffix='%' />
           </VuiBox>
         }        
       />      
