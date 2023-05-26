@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Grid, Divider } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 import Section from 'components/Section';
+import Heading from 'components/Heading';
 import { useSystemT } from 'utils/system_t';
 import * as Utils from 'utils';
 
@@ -41,7 +42,44 @@ export default function Home() {
   });
 
   return (
-    <div id="home">
+    <div id="home" style={{ padding: "0 10px" }}>      
+      <Heading title="INTRODUCING SYSTEM T" />      
+      <VuiBox>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={5}>
+            <Section                            
+              type = "jelly"
+              title = "A Trend Following System"
+              titleSize = "small"
+              body = {
+                <VuiTypography color="white" sx={{ fontSize: "16px", fontWeight: "400", lineHeight: "1.6em", margin: "10px 0" }}>
+                  Introducing System T, our cutting-edge trading system designed to maximize profits, increase the win rate, and revolutionize your trading success. 
+                  One of the standout features of System T is its remarkable capability to run a million backtests for each optimal moving average tailored to a specific asset. 
+                  This rigorous analysis ensures that System T identifies the most effective moving average, providing you with precise buy and sell signals. 
+                </VuiTypography>
+              }
+              minHeight = "150px"              
+            />            
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Section              
+              title = "Empowering Profitable Traders"
+              titleSize = "small"
+              body = {
+                <VuiTypography color="light" sx={{ fontSize: "16px", fontWeight: "400", lineHeight: "1.6em", margin: "10px 0" }}>
+                  Alongside this impressive functionality, System T incorporates carefully calibrated parameters such as the average true range, overbought/oversold indicators, volatility levels, and a robust stop loss mechanism. 
+                  By seamlessly integrating these advanced features, System T empowers traders to capitalize on lucrative opportunities, boost profitability, and achieve a higher success rate in their trades. 
+                  Experience the future of trading with System T and unlock your full potential in the market.
+                </VuiTypography>
+              }              
+              minHeight = "150px"              
+            />            
+          </Grid>
+        </Grid>
+      </VuiBox>      
+      <Divider />
+      
+      <Heading title="FEATURED TRADING SYSTEMS" />            
       <VuiBox>
         <Grid container spacing={2}>
           {watchList}  

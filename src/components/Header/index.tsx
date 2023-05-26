@@ -20,7 +20,8 @@ export default function Header() {
   const light = false;
   const isMini = false;  
   
-  let page: Page = Page.ANY;
+  let page: Page = Page.ANY;  
+  if (['/','/SystemT'].includes(location.pathname))  page = Page.HOME;
   if (location.pathname.startsWith('/invest'))  page = Page.INVEST;
   if (location.pathname.startsWith('/trade'))  page = Page.TRADE;  
   
@@ -55,15 +56,15 @@ export default function Header() {
                 <img src="/logo64.png" width="32px" />
               </IconButton>
             </Link>
-          </VuiBox>                    
-          {/*
+          </VuiBox>                              
           <VuiBox mr="30px">
-            <Link to="/invest">
-              <VuiTypography variant="button" color={page == Page.INVEST ? "white" : "text"}>
-                Invest
+            <Link to="/">
+              <VuiTypography variant="button" color="white">
+                Home
               </VuiTypography>
             </Link>
           </VuiBox>
+          {/*
           <VuiBox mr="30px">
             <Link to="/trade">
               <VuiTypography variant="button" color={page == Page.TRADE ? "white" : "text"}>

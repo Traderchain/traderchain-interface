@@ -56,6 +56,6 @@ export function isBrowser() {
   return (typeof window !== 'undefined'); 
 }
 
-export function scrollTop() {
-  if (isBrowser())  $('html,body').animate({ scrollTop: 0 }, 'fast');
+export function scrollTop(top: number = 0) {
+  if (isBrowser())  $('html,body').animate({ scrollTop: top }, 'fast');
 }

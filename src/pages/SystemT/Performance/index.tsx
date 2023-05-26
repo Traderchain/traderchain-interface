@@ -2,6 +2,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { Grid, Divider } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
+import Heading from 'components/Heading';
 import Section from 'components/Section';
 import Chart from 'components/Chart';
 import SystemStats from '../components/SystemStats';
@@ -153,6 +154,7 @@ export default function Trade() {
   }
 
   const param: any = notEmpty(params) ? params[Object.keys(params)[0]] : {};
+  const {symbol} = param;
 
   const percent_tooltip: any = { pointFormatter: function() { return `${Utils.numberFormat(this.y)}%`; } };
 
@@ -166,7 +168,8 @@ export default function Trade() {
   const balancesData: any = portfolio_only && balanceData.portfolio ? {portfolio: balanceData.portfolio} : balanceData;
 
   return (
-    <div id="performance">
+    <div id="performance">      
+      <Heading title={`${symbol ? symbol.toUpperCase() + ' - ' : ''}SYSTEM PERFORMANCE`} />      
       <SystemStats param={param} balanceStats={balanceStats} more={'trade'} />
       <Divider />
       

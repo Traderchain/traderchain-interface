@@ -34,6 +34,7 @@ export const Address = isProductionEnv() ? AddressGoerli : AddressDev;
 
 export enum Page {
   ANY = '',
+  HOME = 'home',
   INVEST = 'invest',
   TRADE = 'trade',
 }

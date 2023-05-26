@@ -2,6 +2,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import { Grid, Divider } from "@mui/material";
 import { VuiBox, VuiTypography } from 'traderchain-ui';
+import Heading from 'components/Heading';
 import Section from 'components/Section';
 import Chart from 'components/Chart';
 import SystemStats from '../components/SystemStats';
@@ -486,7 +487,7 @@ export default function Trade() {
     end_date.setDate(end_date.getDate() + delta);
     
     stockChart.xAxis[0].setExtremes(start_date.getTime(), end_date.getTime());
-    Utils.scrollTop();
+    Utils.scrollTop(450);
   }
 
   const tradeData = trades.map(trade => {
@@ -532,7 +533,8 @@ export default function Trade() {
   });
 
   return (
-    <div id="trade">
+    <div id="trade">      
+      <Heading title={`${symbol.toUpperCase()} - TRADING SYSTEM`} />
       <SystemStats param={param} balanceStats={balanceStats} more={'performance'} />
       <Divider />
 
