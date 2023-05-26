@@ -40,6 +40,7 @@ export default function Trade() {
     async function init() {
       if (isEmpty(pids))  return;
       
+      Utils.scrollTop(0);
       getData();
     }
     init();

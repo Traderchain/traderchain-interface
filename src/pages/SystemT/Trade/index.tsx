@@ -40,6 +40,7 @@ export default function Trade() {
     async function init() {
       if (!symbol || !pid)  return;
 
+      Utils.scrollTop(0);
       getPrices();
       getParam();
       getTrades();      
