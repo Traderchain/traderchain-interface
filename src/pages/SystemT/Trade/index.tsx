@@ -362,13 +362,13 @@ export default function Trade() {
           tooltip: {valueDecimals: 4},
         },
         {
-          name: 'Extend Percent',
+          name: 'Overbought/Oversold',
           data: extend_data,
           yAxis: 2,
           lineWidth: 1,
           color: 'darkgray',
           marker: {enabled: false},
-          tooltip: {valueDecimals: 2},
+          tooltip: {valueDecimals: 2, valueSuffix: '%'},
         },
         // {
         //   name: 'ATR',
@@ -379,13 +379,13 @@ export default function Trade() {
         //   marker: {enabled: false},
         // },
         {
-          name: 'ATR Percent',
+          name: 'Daily Volatility',
           data: atr_percent_data,
           yAxis: 1,
           lineWidth: 1,
           color: 'red',
           marker: {enabled: false},
-          tooltip: {valueDecimals: 2},
+          tooltip: {valueDecimals: 2, valueSuffix: '%'},
         },
         {
           type: 'flags',
@@ -533,6 +533,8 @@ export default function Trade() {
     );
   });
 
+  const percent_tooltip: any = { pointFormatter: function() { return `${Utils.numberFormat(this.y, 2, 2)}%`; } };
+
   return (
     <div id="trade">      
       <Heading title={`${symbol.toUpperCase()} - TRADING SYSTEM`} />
@@ -542,10 +544,10 @@ export default function Trade() {
       <div id="stock-chart" style={{height: "700px"}}></div>
       <Divider />
 
-      <Chart chart_id="chart-extends" type="stock" title="Extend Percent (Over Bought & Over Sold)" data={extend_data} chart_type="area" marker={{enabled: false}} onClick={clickChartTrade} style={{height:'400px'}} />
+      <Chart chart_id="chart-extends" type="stock" title="Overbought/Oversold Indicator" data={extend_data} chart_type="area" marker={{enabled: false}} onClick={clickChartTrade} style={{height:'400px'}} tooltip={percent_tooltip} />
       <Divider />
 
-      <Chart chart_id="chart-trades" type="stock" title="Trade Results" data={tradeData} chart_type="area" onClick={clickChartTrade} style={{height:'400px'}} tooltip={{ pointFormatter: function() { return `${this.y}%`; } }} />
+      <Chart chart_id="chart-trades" type="stock" title="Trade Results" data={tradeData} chart_type="area" onClick={clickChartTrade} style={{height:'400px'}} tooltip={percent_tooltip} />
       <Divider />
 
       <Section        

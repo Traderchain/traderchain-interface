@@ -178,11 +178,11 @@ export default function Trade() {
       <Divider />
 
       <Section        
-        title = "Down Percents"
+        title = "Drawdown Percents"
         titleSize = "small"
         body = {
           <VuiBox>                       
-            <Chart chart_id="chart-downs-percent" type="stock" title="Down Percents & Distributions" data={downs_percents.data} chart_type="area" style={{height:'300px'}} tooltip={percent_tooltip} />
+            <Chart chart_id="chart-downs-percent" type="stock" title="Drawdown Percents & Distributions" data={downs_percents.data} chart_type="area" style={{height:'300px'}} tooltip={percent_tooltip} />
             <Chart chart_id="chart-downs-percent-dist5" type="column" data={downs_percents.dist5} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} />
             <Chart chart_id="chart-downs-percent-dist" type="column" data={downs_percents.dist} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} />
           </VuiBox>
@@ -191,11 +191,11 @@ export default function Trade() {
       <Divider />
 
       <Section        
-        title = "Down Times"
+        title = "Drawdown Periods"
         titleSize = "small"
         body = {
           <VuiBox>                       
-            <Chart chart_id="chart-downs-time" type="stock" title="Down Times & Distributions" data={downs_times.data} chart_type="area" tooltip={down_time_tooltip} style={{height:'300px'}} />
+            <Chart chart_id="chart-downs-time" type="stock" title="Drawdown Periods & Distributions" data={downs_times.data} chart_type="area" tooltip={down_time_tooltip} style={{height:'300px'}} />
             <Chart chart_id="chart-downs-time-dist20" type="column" data={downs_times.dist20} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} />
             <Chart chart_id="chart-downs-time-dist" type="column" data={downs_times.dist} column_color="#ff000047" style={{height:'200px'}} tooltip={percent_tooltip} />
           </VuiBox>
