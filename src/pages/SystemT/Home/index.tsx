@@ -25,7 +25,7 @@ export default function Home() {
   const watchList = watches.map((watch,k) => {
     const {id, symbol, pid, start_date, bt, market} = watch;    
     
-    let desc = [`Start Date: ${start_date}`, `Market: ${Utils.firstCap(market)}`];
+    let desc = [`Start Date: ${start_date}`, `Market: ${Utils.everyCap(market)}`];
     let description = desc.map((d, k) => <span key={k}>{d}<br/></span>);
 
     return (

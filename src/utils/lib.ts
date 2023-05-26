@@ -143,3 +143,10 @@ export function firstCap(str: string) {
   if (!str)  return '';  
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function everyCap(str: string) {
+  if (!str)  return '';
+  str = str.replaceAll('-',' ');
+  str = str.replaceAll('_',' ');
+  return str.split(' ').map(word => { return firstCap(word); }).join(' ');
+}
