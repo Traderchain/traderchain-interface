@@ -174,7 +174,7 @@ export default function Trade() {
       <SystemStats param={param} balanceStats={balanceStats} more={'trade'} />
       <Divider />
       
-      <Chart chart_id="chart-balances" type="stock" title="Balance" data={balancesData} chart_type="line" style={{height:'600px'}} />
+      <Chart chart_id="chart-balances" type="stock" title="Balance" data={balancesData} chart_type="line" style={{height:'600px'}} tooltip={{valueDecimals: 2, valuePrefix: '$'}} />
       <Divider />
 
       <Section        

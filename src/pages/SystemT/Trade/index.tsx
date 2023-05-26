@@ -326,7 +326,7 @@ export default function Trade() {
           name: 'Price',
           data: data,
           id: 'dataseries',
-          tooltip: {valueDecimals: 4},
+          tooltip: {valueDecimals: 4, valuePrefix: '$'},
           zIndex: 2,          
         },
         {
@@ -334,16 +334,17 @@ export default function Trade() {
           linkedTo: 'dataseries',
           params: {period: fast_mv},
           color: 'orange',
-          lineWidth: 1,
+          lineWidth: 1,          
           zIndex: 1,
           marker: {enabled: false},
+          tooltip: {valueDecimals: 4, valuePrefix: '$'},
         },
         {
           name: 'Stop',
           data: stops_data,
           color: 'darkgray',
-          lineWidth: 1,
-          tooltip: {valueDecimals: 4},
+          lineWidth: 1,          
+          tooltip: {valueDecimals: 4, valuePrefix: '$'},
         },
         {
           name: 'Resistance',
@@ -351,7 +352,7 @@ export default function Trade() {
           color: 'gray',
           lineWidth: 1,
           dashStyle: 'dash',
-          tooltip: {valueDecimals: 4},
+          tooltip: {valueDecimals: 4, valuePrefix: '$'},
         },
         {
           name: 'Support',
@@ -359,7 +360,7 @@ export default function Trade() {
           color: 'gray',
           lineWidth: 1,
           dashStyle: 'dash',
-          tooltip: {valueDecimals: 4},
+          tooltip: {valueDecimals: 4, valuePrefix: '$'},
         },
         {
           name: 'Overbought/Oversold',

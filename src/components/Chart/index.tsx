@@ -146,7 +146,7 @@ export default class Chart extends React.Component <any> {
           id, 
           name: id,
           data: data[id],
-          tooltip: {valueDecimals: data_decimal || 0},
+          tooltip: tooltip || {valueDecimals: data_decimal || 0},
           lineWidth: (id=='portfolio' ? 4 : 2),
         });
       }
