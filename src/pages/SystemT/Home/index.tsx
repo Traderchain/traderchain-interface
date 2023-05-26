@@ -35,8 +35,7 @@ export default function Home() {
           title = {symbol.toUpperCase()}
           body = {<VuiTypography color="text">{description}</VuiTypography>}
           more = {{label: "See Trades", to: `/SystemT/trade/${symbol}?pid=${pid}`}}
-        />
-        <Divider />
+        />        
       </Grid>                
     );
   });
@@ -78,8 +77,9 @@ export default function Home() {
         </Grid>
       </VuiBox>      
       <Divider />
-      
-      <Heading title="FEATURED TRADING SYSTEMS" />            
+      <Divider />
+
+      <Heading title="FEATURED TRADING SYSTEMS" />                  
       <VuiBox>
         <Grid container spacing={2}>
           {watchList}  
