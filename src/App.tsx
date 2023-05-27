@@ -5,6 +5,7 @@ import { Context, VuiTheme, VuiBox } from 'traderchain-ui';
 
 import Header from 'components/Header';
 import Footer from 'components/Footer';
+import Sidemenu from 'components/Sidemenu';
 import CommonDialog from 'components/CommonDialog';
 import Spinner from 'components/Spinner';
 
@@ -43,7 +44,7 @@ export default function App() {
   );
 }
 
-function Layout() {  
+function Layout() {    
   return (
     <VuiBox
       sx={({ breakpoints }: any) => ({        
@@ -59,6 +60,7 @@ function Layout() {
         <Outlet />
       </VuiBox>
       <Footer />
+      <Sidemenu />
       <CommonDialog />
       <Spinner />
     </VuiBox>

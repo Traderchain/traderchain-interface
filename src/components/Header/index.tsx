@@ -41,24 +41,24 @@ export default function Header() {
   async function onConnect() {
     await checkConnect();
   }
-  
-  return (
+
+  return (    
     <AppBar
       position="sticky"
       color="inherit"   
-      sx={(theme: any) => navbar(theme, { transparentNavbar, absolute, light })}   
+      sx={(theme: any) => Utils.merge(navbar(theme, { transparentNavbar, absolute, light }), {display: { xs: "none", md: "grid" }})}
     >
       <Toolbar sx={(theme: any) => navbarContainer(theme)}>
         <VuiBox color="inherit" sx={(theme: any) => navbarRow(theme, { isMini })}>          
           <VuiBox mr="30px">
-            <Link to="/">
+            <Link to="/SystemT">
               <IconButton color="inherit" sx={navbarIconButton}>
                 <img src="/logo64.png" width="32px" />
               </IconButton>
             </Link>
           </VuiBox>                              
           <VuiBox mr="30px">
-            <Link to="/">
+            <Link to="/SystemT">
               <VuiTypography variant="button" color="white">
                 Home
               </VuiTypography>
@@ -101,8 +101,7 @@ export default function Header() {
             </VuiBox>        
           </VuiBox>        
         </VuiBox>        
-      </Toolbar>
-      
+      </Toolbar>      
     </AppBar>
   );
 }
