@@ -1,6 +1,6 @@
 import { Grid, Divider } from "@mui/material";
 import { IconButton, Icon } from '@mui/material';
-import { GitHub as GitHubIcon, Article as ArticleIcon } from '@mui/icons-material';
+import { Twitter as TwitterIcon, GitHub as GitHubIcon, Article as ArticleIcon } from '@mui/icons-material';
 import { VuiBox, VuiTypography } from 'traderchain-ui';
 import Link from 'components/Link';
 import { Outlink } from 'utils/constants';
@@ -30,9 +30,14 @@ export default function Footer() {
           >
             @ 2022 Traderchain
           </VuiTypography>
-        </VuiBox>
-        {/*
+        </VuiBox>        
         <VuiBox item="true">
+          <Link to={Outlink.TRADERCHAIN_TWITTER}>
+            <IconButton>
+              <TwitterIcon sx={{ color: "#a0aec0" }} />
+            </IconButton>
+          </Link>
+          {/*
           <Link to={Outlink.TRADERCHAIN_GITHUB}>
             <IconButton>
               <GitHubIcon sx={{ color: "#a0aec0" }} />
@@ -43,8 +48,8 @@ export default function Footer() {
               <ArticleIcon sx={{ color: "#a0aec0" }} />
             </IconButton>
           </Link>
-        </VuiBox>
-        */}
+          */}
+        </VuiBox>        
       </VuiBox>
     </VuiBox>
   );

@@ -40,6 +40,7 @@ export enum Page {
 }
 
 export enum Outlink {
+  TRADERCHAIN_TWITTER = 'https://twitter.com/TraderchainDAO',
   TRADERCHAIN_GITHUB = 'https://github.com/Traderchain',
   TRADERCHAIN_WHITEPAPER = 'https://traderchain.org/traderchain.pdf',
 }
