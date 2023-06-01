@@ -40,7 +40,9 @@ export default function Trade() {
     async function init() {
       if (isEmpty(pids))  return;
       
+      document.title = `System Performance | Traderchain`;      
       Utils.scrollTop(0);
+
       getData();
     }
     init();
@@ -156,6 +158,8 @@ export default function Trade() {
 
   const param: any = notEmpty(params) ? params[Object.keys(params)[0]] : {};
   const {symbol} = param;
+
+  if (document !== undefined && document.title.startsWith('System Performance'))  document.title = `${Utils.formatSymbol(symbol)} - System Performance | Traderchain`;
 
   const percent_tooltip: any = { pointFormatter: function() { return `${Utils.numberFormat(this.y)}%`; } };
 

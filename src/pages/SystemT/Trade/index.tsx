@@ -40,7 +40,9 @@ export default function Trade() {
     async function init() {
       if (!symbol || !pid)  return;
 
+      document.title = `${Utils.formatSymbol(symbol)} - System T | Traderchain`;
       Utils.scrollTop(0);
+
       getPrices();
       getParam();
       getTrades();      

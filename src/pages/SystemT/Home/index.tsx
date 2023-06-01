@@ -12,6 +12,8 @@ export default function Home() {
 
   useEffect(() => {
     async function init() {
+      document.title = `System T | Traderchain`;
+
       await getWatchlist();
     }
     init();
