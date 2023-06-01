@@ -286,6 +286,7 @@ export default function Trade() {
       {type: 'month', count: 6, text: '6m', title: 'View 6 months'}, 
       {type: 'ytd', text: 'YTD', title: 'View year to date'}, 
       {type: 'year', count: 1, text: '1y', title: 'View 1 year'}, 
+      {type: 'year', count: 2, text: '2y', title: 'View 2 years'}, 
       {type: 'all', text: 'All', title: 'View all'}
     ];    
     let range_selected = 2;
