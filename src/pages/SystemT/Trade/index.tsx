@@ -289,7 +289,7 @@ export default function Trade() {
       {type: 'year', count: 2, text: '2y', title: 'View 2 years'}, 
       {type: 'all', text: 'All', title: 'View all'}
     ];    
-    let range_selected = 2;
+    let range_selected = Utils.isMobile() ? 2 : 5;
             
     // if (intraday && !symbol.includes('1d')) {
     //   range_buttons.unshift(
@@ -337,6 +337,16 @@ export default function Trade() {
           linkedTo: 'dataseries',
           params: {period: fast_mv},
           color: 'orange',
+          lineWidth: 1,          
+          zIndex: 1,
+          marker: {enabled: false},
+          tooltip: {valueDecimals: 4, valuePrefix: '$'},
+        },
+        {
+          type: 'sma',
+          linkedTo: 'dataseries',
+          params: {period: (cc_fsym || symbol == 'btcusd') ? 210 : 150},
+          color: 'pink',
           lineWidth: 1,          
           zIndex: 1,
           marker: {enabled: false},

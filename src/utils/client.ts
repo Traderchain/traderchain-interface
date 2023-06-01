@@ -52,8 +52,27 @@ export function useAuth() {
   return { isAuthenticated, setAuthenticated };
 }
 
+export function isMobile() { 
+  return getClient().viewXS || false; 
+}
+
 export function isBrowser() { 
   return (typeof window !== 'undefined'); 
+}
+
+export function getClient() {
+  let client: any = {};
+  if (typeof window !== 'undefined') {
+    const viewWidth = $(window).width() || 520;
+    client.viewXS = viewWidth < 768;
+    client.viewSM = viewWidth >= 768 && viewWidth < 992;
+    client.viewMD = viewWidth >= 992 && viewWidth < 1200;
+    client.viewLG = viewWidth >= 1200;
+  }
+  else {
+    client.server = true;
+  }
+  return client;
 }
 
 export function scrollTop(top: number = 0) {
