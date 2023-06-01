@@ -26,7 +26,7 @@ export default function SystemStats({param, balanceStats, more}: any) {
     if (format == 'percent')  value = Utils.numberFormat(value) + '%';
     else if (format == 'number')  value = Utils.numberFormat(value);
     else if (format == 'integer')  value = Utils.numberFormat(value, 0, 0);
-    else if (prop == 'symbol')  value = `${value}`.toUpperCase();
+    else if (prop == 'symbol')  value = Utils.formatSymbol(`${value}`);
     systemStatsRows.push({ label, value });
   }
 

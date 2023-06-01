@@ -150,3 +150,9 @@ export function everyCap(str: string) {
   str = str.replaceAll('_',' ');
   return str.split(' ').map(word => { return firstCap(word); }).join(' ');
 }
+
+export function formatSymbol(symbol: string) {
+  if (!symbol)  return '';
+  if (symbol.startsWith('i_'))  symbol = symbol.replace('i_', '');
+  return symbol.toUpperCase();
+}

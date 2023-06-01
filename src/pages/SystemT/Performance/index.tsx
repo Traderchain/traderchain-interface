@@ -170,7 +170,7 @@ export default function Trade() {
 
   return (
     <div id="performance">      
-      <Heading title={`${symbol ? symbol.toUpperCase() + ' - ' : ''}SYSTEM PERFORMANCE`} />      
+      <Heading title={`${symbol ? Utils.formatSymbol(symbol) + ' - ' : ''}SYSTEM PERFORMANCE`} />      
       <SystemStats param={param} balanceStats={balanceStats} more={'trade'} />
       <Divider />
       

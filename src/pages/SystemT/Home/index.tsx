@@ -32,7 +32,7 @@ export default function Home() {
       <Grid key={k} item xs={12} md={3}>
         <Section
           type = "blue"
-          title = {symbol.toUpperCase()}
+          title = {Utils.formatSymbol(symbol)}
           body = {<VuiTypography color="text">{description}</VuiTypography>}
           more = {{label: "See Trades", to: `/SystemT/trade/${symbol}?pid=${pid}`}}
         />        

@@ -110,7 +110,7 @@ export default function Trade() {
     if (isEmpty(prices) || isEmpty(param) || isEmpty(trades))  return;
     
     let intraday = PriceUtils.isIntraday(symbol);  
-    let title = symbol.toUpperCase();    
+    let title = Utils.formatSymbol(symbol);
     let fast_mv = param.fast_mv || 4;
     
     let data = prices.map(p => {
@@ -538,7 +538,7 @@ export default function Trade() {
 
   return (
     <div id="trade">      
-      <Heading title={`${symbol.toUpperCase()} - TRADING SYSTEM`} />
+      <Heading title={`${Utils.formatSymbol(symbol)} - TRADING SYSTEM`} />
       <SystemStats param={param} balanceStats={balanceStats} more={'performance'} />
       <Divider />
 
