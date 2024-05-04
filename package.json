@@ -16,6 +16,7 @@
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "@vercel/analytics": "^1.2.2",
     "apexcharts": "^3.36.3",
     "ethers": "^5.7.2",
     "mongodb": "^4.12.0",
